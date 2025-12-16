@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using WpfApp1.pages;
 
@@ -9,29 +10,44 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Page1());
+            ramka.Navigate(new Page1());
         }
 
-        private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void ramka_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            // Обновляем прогресс и заголовок
-            string[] stepTitles = {
-                "Шаг 1: Выбор модели и двигателя",
-                "Шаг 2: Выбор цвета и опций",
-                "Шаг 3: Расчет кредита",
-                "Шаг 4: Контактные данные",
-                "Шаг 5: Итоговая сводка"
-            };
+            // определяем текущий шаг
+            int shag = 1;
+            string text = "Шаг 1: Выбор модели";
 
-            int stepIndex = 0;
-            if (e.Content is Page1) stepIndex = 0;
-            else if (e.Content is Page2) stepIndex = 1;
-            else if (e.Content is Page3) stepIndex = 2;
-            else if (e.Content is Page4) stepIndex = 3;
-            else if (e.Content is Page5_Summary) stepIndex = 4;
+            if (e.Content is Page1)
+            {
+                shag = 1;
+                text = "Шаг 1: Выбор модели";
+            }
+            else if (e.Content is Page2)
+            {
+                shag = 2;
+                text = "Шаг 2: Цвет и опции";
+            }
+            else if (e.Content is Page3)
+            {
+                shag = 3;
+                text = "Шаг 3: Кредит";
+            }
+            else if (e.Content is Page4)
+            {
+                shag = 4;
+                text = "Шаг 4: Контакты";
+            }
+            else if (e.Content is Page5)
+            {
+                shag = 5;
+                text = "Шаг 5: Итог";
+            }
 
-            AppProgressBar.Value = (stepIndex + 1) * 20; // 20% за шаг
-            StepTitle.Text = stepTitles[stepIndex];
+            // обновляем прогресс
+            progress.Value = shag * 20;
+            zagolovok.Text = text;
         }
     }
 }

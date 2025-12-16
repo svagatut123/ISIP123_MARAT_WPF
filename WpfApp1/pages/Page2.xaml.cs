@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WpfApp1.Models;
 
 namespace WpfApp1.pages
@@ -10,51 +11,91 @@ namespace WpfApp1.pages
         public Page2()
         {
             InitializeComponent();
-            LoadData();
+            Zagruzit();
         }
 
-        private void LoadData()
+        private void Zagruzit()
         {
-            // Цвета
-            CmbColor.ItemsSource = new List<CarColor>
+            // цвета
+            spisokCvet.ItemsSource = new List<Cvet>
             {
-                new CarColor { Name = "Белый", Price = 0, HexCode = "#FFFFFF" },
-                new CarColor { Name = "Черный металлик", Price = 35000, HexCode = "#000000" },
-                new CarColor { Name = "Синий металлик", Price = 50000, HexCode = "#0000FF" },
-                new CarColor { Name = "Красный", Price = 45000, HexCode = "#FF0000" }
+                new Cvet { nazvanie = "Белый", cenaDop = 0, kodCveta = "#FFFFFF" },
+                new Cvet { nazvanie = "Черный", cenaDop = 30000, kodCveta = "#000000" },
+                new Cvet { nazvanie = "Серый металлик", cenaDop = 40000, kodCveta = "#808080" },
+                new Cvet { nazvanie = "Синий", cenaDop = 45000, kodCveta = "#0000FF" }
             };
 
-            // Инициализируем опции один раз
-            if (AppConfig.Current.Options.Count == 0)
-                AppConfig.InitializeOptions();
+            // инициализация опций
+            if (Dannye.tecushaa.VseOpcii.Count == 0)
+            {
+                Dannye.tecushaa.VseOpcii = new List<Opcia>
+                {
+                    new Opcia { nazvanie = "Кожаный салон", cena = 150000 },
+                    new Opcia { nazvanie = "Панорамная крыша", cena = 120000 },
+                    new Opcia { nazvanie = "Круиз-контроль", cena = 50000 },
+                    new Opcia { nazvanie = "Парктроники", cena = 40000 }
+                };
+            }
 
-            OptionsList.ItemsSource = AppConfig.Current.Options;
+            // создаем чекбоксы для опций
+            foreach (var opcia in Dannye.tecushaa.VseOpcii)
+            {
+                var chk = new CheckBox
+                {
+                    Content = $"{opcia.nazvanie} (+{opcia.cena:N0} руб.)",
+                    IsChecked = opcia.vibrano,
+                    FontSize = 14,
+                    Margin = new Thickness(0, 5, 0, 5)
+                };
 
-            // Подписываемся на изменение опций
-            foreach (var option in AppConfig.Current.Options)
-                option.PropertyChanged += (s, e) => UpdatePrice();
+                // привязка состояния
+                chk.Checked += (s, e) =>
+                {
+                    opcia.vibrano = true;
+                    ObnovitCenu();
+                };
+                chk.Unchecked += (s, e) =>
+                {
+                    opcia.vibrano = false;
+                    ObnovitCenu();
+                };
 
-            UpdatePrice();
+                panelOpcii.Children.Add(chk);
+            }
+
+            ObnovitCenu();
         }
 
-        private void CmbColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // выбран цвет
+        private void cvet_Selected(object sender, SelectionChangedEventArgs e)
         {
-            AppConfig.Current.SelectedColor = CmbColor.SelectedItem as CarColor;
-            UpdatePrice();
-            CheckCompletion();
+            Dannye.tecushaa.PoleCvet = spisokCvet.SelectedItem as Cvet;
+            ObnovitCenu();
+            Proverit();
         }
 
-        private void UpdatePrice()
+        // обновить цену
+        private void ObnovitCenu()
         {
-            TxtPrice.Text = $"Текущая стоимость: {AppConfig.Current.TotalPrice:N0} руб.";
+            tekyshayaCena.Text = $"Текущая стоимость: {Dannye.tecushaa.CenaItog:N0} руб.";
         }
 
-        private void CheckCompletion()
+        // проверка готовности
+        private void Proverit()
         {
-            BtnNext.IsEnabled = AppConfig.Current.SelectedColor != null;
+            knopkaDalee.IsEnabled = Dannye.tecushaa.PoleCvet != null;
         }
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e) => NavigationService.GoBack();
-        private void BtnNext_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Page3());
+        // назад
+        private void nazad_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        // дальше
+        private void dalee_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Page3());
+        }
     }
 }

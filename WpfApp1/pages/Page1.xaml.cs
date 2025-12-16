@@ -10,49 +10,55 @@ namespace WpfApp1.pages
         public Page1()
         {
             InitializeComponent();
-            LoadData();
+            Zagruzit();
         }
 
-        private void LoadData()
+        // загрузка данных
+        private void Zagruzit()
         {
-            // Модели
-            CmbModel.ItemsSource = new List<CarModel>
+            // модели авто
+            spisokModel.ItemsSource = new List<ModelAvto>
             {
-                new CarModel { Name = "Седан X", BasePrice = 1500000 },
-                new CarModel { Name = "Внедорожник Y", BasePrice = 2500000 },
-                new CarModel { Name = "Хэтчбек Z", BasePrice = 1200000 }
+                new ModelAvto { nazvanie = "Седан Комфорт", cenaOsn = 1600000 },
+                new ModelAvto { nazvanie = "Внедорожник Премиум", cenaOsn = 2800000 },
+                new ModelAvto { nazvanie = "Хэтчбек Стандарт", cenaOsn = 1200000 }
             };
 
-            // Двигатели
-            CmbEngine.ItemsSource = new List<Engine>
+            // двигатели
+            spisokDvig.ItemsSource = new List<Dvigatel>
             {
-                new Engine { Type = "1.6L Бензин (110 л.с.)", Price = 0 },
-                new Engine { Type = "2.0L Turbo (190 л.с.)", Price = 150000 },
-                new Engine { Type = "2.0L Дизель (170 л.с.)", Price = 180000 }
+                new Dvigatel { tip = "1.6 Бензин", cenaDop = 0 },
+                new Dvigatel { tip = "2.0 Турбо", cenaDop = 180000 },
+                new Dvigatel { tip = "2.5 Гибрид", cenaDop = 300000 }
             };
 
-            CheckCompletion();
+            Proverit();
         }
 
-        private void CmbModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // выбрана модель
+        private void model_Selected(object sender, SelectionChangedEventArgs e)
         {
-            AppConfig.Current.SelectedModel = CmbModel.SelectedItem as CarModel;
-            CheckCompletion();
+            Dannye.tecushaa.PoleModel = spisokModel.SelectedItem as ModelAvto;
+            Proverit();
         }
 
-        private void CmbEngine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // выбран двигатель
+        private void dvig_Selected(object sender, SelectionChangedEventArgs e)
         {
-            AppConfig.Current.SelectedEngine = CmbEngine.SelectedItem as Engine;
-            CheckCompletion();
+            Dannye.tecushaa.PoleDvig = spisokDvig.SelectedItem as Dvigatel;
+            Proverit();
         }
 
-        private void CheckCompletion()
+        // проверка готовности
+        private void Proverit()
         {
-            BtnNext.IsEnabled = AppConfig.Current.SelectedModel != null &&
-                               AppConfig.Current.SelectedEngine != null;
+            bool modelVybrana = Dannye.tecushaa.PoleModel != null;
+            bool dvigVybran = Dannye.tecushaa.PoleDvig != null;
+            knopkaDalee.IsEnabled = modelVybrana && dvigVybran;
         }
 
-        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        // переход дальше
+        private void dalee_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Page2());
         }

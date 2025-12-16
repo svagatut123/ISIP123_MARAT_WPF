@@ -1,0 +1,34 @@
+﻿<Page x:Class="WpfApp1.pages.Page5"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Шаг 5">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Итоговая сводка" 
+                   FontSize="20" FontWeight="Bold" 
+                   Margin="0,0,0,30"/>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="panelSvodka">
+                <!-- здесь будет сводка -->
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- навигация -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                    HorizontalAlignment="Right" Margin="0,30,0,0">
+            <Button Content="Назад" Click="nazad_Click" 
+                    Background="#95A5A6" Foreground="White"
+                    Padding="20,10" Margin="0,0,10,0"/>
+            <Button Content="ОФОРМИТЬ" Click="oformit_Click" 
+                    Background="#27AE60" Foreground="White"
+                    Padding="30,12" FontWeight="Bold" FontSize="14"/>
+        </StackPanel>
+    </Grid>
+</Page>
