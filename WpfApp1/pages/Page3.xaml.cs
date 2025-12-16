@@ -17,7 +17,6 @@ namespace WpfApp1.pages
         // Загрузка страницы - безопасный способ
         private void Page3_Loaded(object sender, RoutedEventArgs e)
         {
-            // Проверяем, что слайдеры существуют
             if (sliderProcent == null || sliderSrok == null)
             {
                 MessageBox.Show("Ошибка загрузки элементов");

@@ -12,20 +12,19 @@
         </Grid.RowDefinitions>
 
         <!-- шапка с прогрессом -->
-        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
-            <StackPanel>
-                <TextBlock Text="Конфигуратор автомобиля" 
+
+        <StackPanel>
+            <TextBlock Text="Конфигуратор автомобиля" 
                            Foreground="White" 
                            FontSize="20" 
                            FontWeight="Bold"/>
-                <ProgressBar x:Name="progress" Height="10" Margin="0,10,0,0" 
+            <ProgressBar x:Name="progress" Height="10" Margin="0,10,0,0" 
                              Minimum="0" Maximum="100" Value="20"/>
-                <TextBlock x:Name="zagolovok" Text="Шаг 1: Модель" 
+            <TextBlock x:Name="zagolovok" Text="Шаг 1: Модель" 
                            Foreground="White" 
                            HorizontalAlignment="Center" 
                            Margin="0,5"/>
-            </StackPanel>
-        </Border>
+        </StackPanel>
 
         <!-- контент -->
         <Frame x:Name="ramka" Grid.Row="1" NavigationUIVisibility="Hidden" 
