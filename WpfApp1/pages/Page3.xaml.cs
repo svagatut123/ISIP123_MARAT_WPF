@@ -68,6 +68,10 @@ namespace WpfApp1.pages
 
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
+            Dannye.tecushaa.fio = "";
+            Dannye.tecushaa.telefon = "";
+            Dannye.tecushaa.email = "";
+
             NavigationService.GoBack();
         }
 

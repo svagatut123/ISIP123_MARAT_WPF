@@ -15,7 +15,21 @@ namespace WpfApp1.pages
         // Загрузка страницы
         private void stranica_Zagruzena(object sender, RoutedEventArgs e)
         {
-            // Загружаем сохраненные данные из памяти
+            // Если пришли с 5 страницы - очищаем данные
+            var navService = NavigationService;
+            if (navService != null && navService.CanGoBack)
+            {
+                var previousPage = navService.BackStack.LastOrDefault();
+                if (previousPage != null && previousPage.Source.ToString().Contains("Page5"))
+                {
+                    // Очищаем данные в памяти
+                    Dannye.tecushaa.fio = "";
+                    Dannye.tecushaa.telefon = "";
+                    Dannye.tecushaa.email = "";
+                }
+            }
+
+            // Загружаем данные из памяти (могут быть пустые)
             poleFio.Text = Dannye.tecushaa.fio ?? "";
             poleTel.Text = Dannye.tecushaa.telefon ?? "";
             poleEmail.Text = Dannye.tecushaa.email ?? "";
@@ -160,27 +174,32 @@ namespace WpfApp1.pages
             info.Text = text;
         }
 
-        // Назад - просто переходим
+        // Назад - очищаем данные и переходим
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
+            // Очищаем данные при переходе назад
+            Dannye.tecushaa.fio = "";
+            Dannye.tecushaa.telefon = "";
+            Dannye.tecushaa.email = "";
+
             NavigationService.GoBack();
         }
 
-        // Дальше - сохраняем и переходим
+        // Дальше - сохраняем только при переходе на 5 страницу
         private void dalee_Click(object sender, RoutedEventArgs e)
         {
-            // Сохраняем введенные данные в память
-            Dannye.tecushaa.fio = poleFio.Text.Trim();
-            Dannye.tecushaa.telefon = poleTel.Text.Trim();
-            Dannye.tecushaa.email = poleEmail.Text.Trim();
-
-            // Проверяем еще раз перед переходом
+            // Проверяем перед переходом
             if (!CheckFio() || !CheckTel() || !CheckEmail())
             {
                 MessageBox.Show("Исправьте ошибки", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            // Сохраняем данные только сейчас
+            Dannye.tecushaa.fio = poleFio.Text.Trim();
+            Dannye.tecushaa.telefon = poleTel.Text.Trim();
+            Dannye.tecushaa.email = poleEmail.Text.Trim();
 
             NavigationService.Navigate(new Page5());
         }

@@ -13,6 +13,7 @@ namespace WpfApp1.pages
             PostroitSvodku();
         }
 
+
         // построить сводку
         private void PostroitSvodku()
         {
@@ -131,7 +132,7 @@ namespace WpfApp1.pages
 
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService.Navigate(new Page4());
         }
 
         // оформление

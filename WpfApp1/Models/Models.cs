@@ -31,6 +31,13 @@ namespace WpfApp1.Models
             set { _poleCvet = value; Change("PoleCvet"); }
         }
 
+        public void ClearContacts()
+        {
+            fio = "";
+            telefon = "";
+            email = "";
+        }
+
         // опции
         public List<Opcia> VseOpcii { get; set; } = new List<Opcia>();
 
@@ -154,7 +161,6 @@ namespace WpfApp1.Models
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    // статический класс для хранения
     public static class Dannye
     {
         public static Konfig tecushaa { get; } = new Konfig();
