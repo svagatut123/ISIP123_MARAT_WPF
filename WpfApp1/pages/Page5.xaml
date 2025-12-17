@@ -16,11 +16,9 @@
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="panelSvodka">
-                <!-- здесь будет сводка -->
             </StackPanel>
         </ScrollViewer>
 
-        <!-- навигация -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" 
                     HorizontalAlignment="Right" Margin="0,30,0,0">
             <Button Content="Назад" Click="nazad_Click" 

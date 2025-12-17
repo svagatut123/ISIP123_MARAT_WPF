@@ -21,7 +21,6 @@ namespace WpfApp1.pages
             {
                 new Cvet { nazvanie = "Белый", cenaDop = 0, kodCveta = "#FFFFFF" },
                 new Cvet { nazvanie = "Черный", cenaDop = 30000, kodCveta = "#000000" },
-                new Cvet { nazvanie = "Серый металлик", cenaDop = 40000, kodCveta = "#808080" },
                 new Cvet { nazvanie = "Синий", cenaDop = 45000, kodCveta = "#0000FF" }
             };
 
@@ -32,7 +31,6 @@ namespace WpfApp1.pages
                 {
                     new Opcia { nazvanie = "Кожаный салон", cena = 150000 },
                     new Opcia { nazvanie = "Панорамная крыша", cena = 120000 },
-                    new Opcia { nazvanie = "Круиз-контроль", cena = 50000 },
                     new Opcia { nazvanie = "Парктроники", cena = 40000 }
                 };
             }

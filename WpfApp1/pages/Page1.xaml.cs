@@ -19,17 +19,17 @@ namespace WpfApp1.pages
             // модели авто
             spisokModel.ItemsSource = new List<ModelAvto>
             {
-                new ModelAvto { nazvanie = "Седан Комфорт", cenaOsn = 1600000 },
-                new ModelAvto { nazvanie = "Внедорожник Премиум", cenaOsn = 2800000 },
-                new ModelAvto { nazvanie = "Хэтчбек Стандарт", cenaOsn = 1200000 }
+                new ModelAvto { nazvanie = "AUDI TT", cenaOsn = 1600000 },
+                new ModelAvto { nazvanie = "ВАЗ 2106", cenaOsn = 2800000 },
+                new ModelAvto { nazvanie = "митсубиси лансер 10 эволюшн", cenaOsn = 1200000 }
             };
 
             // двигатели
             spisokDvig.ItemsSource = new List<Dvigatel>
             {
-                new Dvigatel { tip = "1.6 Бензин", cenaDop = 0 },
-                new Dvigatel { tip = "2.0 Турбо", cenaDop = 180000 },
-                new Dvigatel { tip = "2.5 Гибрид", cenaDop = 300000 }
+                new Dvigatel { tip = "v.8", cenaDop = 0 },
+                new Dvigatel { tip = "v.7", cenaDop = 180000 },
+                new Dvigatel { tip = "v.6", cenaDop = 300000 }
             };
 
             Proverit();

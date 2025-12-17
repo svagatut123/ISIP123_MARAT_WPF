@@ -26,7 +26,6 @@
                            Margin="0,5"/>
         </StackPanel>
 
-        <!-- контент -->
         <Frame x:Name="ramka" Grid.Row="1" NavigationUIVisibility="Hidden" 
                Navigated="ramka_Navigated"/>
     </Grid>

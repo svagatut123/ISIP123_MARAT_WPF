@@ -12,7 +12,7 @@ namespace WpfApp1.Models
         public ModelAvto PoleModel
         {
             get => _poleModel;
-            set { _poleModel = value; Izmenilos("PoleModel"); }
+            set { _poleModel = value; Change("PoleModel"); }
         }
 
         // двигатель
@@ -20,7 +20,7 @@ namespace WpfApp1.Models
         public Dvigatel PoleDvig
         {
             get => _poleDvig;
-            set { _poleDvig = value; Izmenilos("PoleDvig"); }
+            set { _poleDvig = value; Change("PoleDvig"); }
         }
 
         // цвет
@@ -28,7 +28,7 @@ namespace WpfApp1.Models
         public Cvet PoleCvet
         {
             get => _poleCvet;
-            set { _poleCvet = value; Izmenilos("PoleCvet"); }
+            set { _poleCvet = value; Change("PoleCvet"); }
         }
 
         // опции
@@ -39,7 +39,7 @@ namespace WpfApp1.Models
         public decimal procentVznos
         {
             get => _procentVznos;
-            set { _procentVznos = value; Izmenilos("procentVznos"); }
+            set { _procentVznos = value; Change("procentVznos"); }
         }
 
         // срок кредита
@@ -47,7 +47,7 @@ namespace WpfApp1.Models
         public int srokMes
         {
             get => _srokMes;
-            set { _srokMes = value; Izmenilos("srokMes"); }
+            set { _srokMes = value; Change("srokMes"); }
         }
 
         // данные клиента
@@ -55,21 +55,21 @@ namespace WpfApp1.Models
         public string fio
         {
             get => _fio;
-            set { _fio = value; Izmenilos("fio"); }
+            set { _fio = value; Change("fio"); }
         }
 
         private string _telefon;
         public string telefon
         {
             get => _telefon;
-            set { _telefon = value; Izmenilos("telefon"); }
+            set { _telefon = value; Change("telefon"); }
         }
 
         private string _email;
         public string email
         {
             get => _email;
-            set { _email = value; Izmenilos("email"); }
+            set { _email = value; Change("email"); }
         }
 
         // расчетные поля
@@ -88,7 +88,7 @@ namespace WpfApp1.Models
             {
                 if (SummaCredit <= 0 || srokMes == 0) return 0;
 
-                // ставка 15% в год
+                // 15% в год
                 decimal stavka = 0.15m;
                 decimal stavkaMes = stavka / 12;
 
@@ -97,8 +97,8 @@ namespace WpfApp1.Models
                 double mesStavka = (double)stavkaMes;
                 int srok = srokMes;
 
-                double koef = System.Math.Pow(1 + mesStavka, srok);
-                double platej = osn * mesStavka * koef / (koef - 1);
+                double kf = System.Math.Pow(1 + mesStavka, srok);
+                double platej = osn * mesStavka * kf / (kf - 1);
 
                 return (decimal)platej;
             }
@@ -106,7 +106,7 @@ namespace WpfApp1.Models
 
         // уведомление об изменении
         public event PropertyChangedEventHandler PropertyChanged;
-        private void Izmenilos(string nazvanie)
+        private void Change(string nazvanie)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nazvanie));
         }

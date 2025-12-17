@@ -34,7 +34,7 @@ namespace WpfApp1.pages
         }
 
         // поле изменено
-        private void pole_Izmenilos(object sender, TextChangedEventArgs e)
+        private void pole_Change(object sender, TextChangedEventArgs e)
         {
             _estIzmeneniya = true;
             ProveritVse();
@@ -140,7 +140,7 @@ namespace WpfApp1.pages
         // показать ошибку
         private void PokazatOshibku(TextBlock pole, string text)
         {
-            pole.Text = $"✗ {text}";
+            pole.Text = $"{text}";
             pole.Visibility = Visibility.Visible;
         }
 

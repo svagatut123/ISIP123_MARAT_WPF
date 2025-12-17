@@ -6,29 +6,27 @@
     <Grid Margin="30">
         <StackPanel>
             <TextBlock Text="Выберите модель и двигатель" 
-                       FontSize="20" FontWeight="Bold" Background="Aqua"
+                       FontSize="20" FontWeight="Bold" 
                        Margin="0,0,0,30"/>
 
-            <!-- модель -->
+           
             <TextBlock Text="Модель автомобиля:" 
                        FontSize="14" Margin="0,0,0,10"/>
             <ComboBox x:Name="spisokModel" DisplayMemberPath="nazvanie" 
                       SelectionChanged="model_Selected"
                       Height="35" Width="400"/>
 
-            <!-- двигатель -->
             <TextBlock Text="Тип двигателя:" 
                        FontSize="14" Margin="0,20,0,10"/>
             <ComboBox x:Name="spisokDvig" DisplayMemberPath="tip" 
                       SelectionChanged="dvig_Selected"
                       Height="35" Width="400"/>
 
-            <!-- навигация -->
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right" 
                         Margin="0,50,0,0">
                 <Button Content="Далее" Click="dalee_Click" 
-                        Background="#3498DB" Foreground="White"
+                        Background="Green" Foreground="White"
                         Padding="20,10" FontSize="14" FontWeight="Bold"
                         x:Name="knopkaDalee" IsEnabled="False"/>
             </StackPanel>

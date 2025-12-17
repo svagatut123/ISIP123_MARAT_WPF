@@ -129,7 +129,6 @@ namespace WpfApp1.pages
             panelSvodka.Children.Add(panel);
         }
 
-        // назад
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
