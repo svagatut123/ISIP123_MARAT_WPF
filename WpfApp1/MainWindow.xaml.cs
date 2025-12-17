@@ -15,7 +15,6 @@ namespace WpfApp1
 
         private void ramka_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            // определяем текущий шаг
             int shag = 1;
             string text = "Шаг 1: Выбор модели";
 

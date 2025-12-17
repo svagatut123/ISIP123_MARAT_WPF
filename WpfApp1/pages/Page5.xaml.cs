@@ -142,10 +142,7 @@ namespace WpfApp1.pages
                 $"Автомобиль: {Dannye.tecushaa.PoleModel?.nazvanie}\n" +
                 $"Цена: {Dannye.tecushaa.CenaItog:N0} руб.\n" +
                 $"Телефон: {Dannye.tecushaa.telefon}\n\n" +
-                $"С вами свяжется менеджер.",
-                "Успех",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                $"С вами свяжется менеджер.");
         }
     }
 }

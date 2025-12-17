@@ -17,7 +17,6 @@
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Width="600">
-                <!-- общая цена -->
                 <Border Background="#ECF0F1" Padding="15" CornerRadius="8" Margin="0,0,0,20">
                     <TextBlock x:Name="cenaItog" FontSize="16" FontWeight="Bold"/>
                 </Border>
