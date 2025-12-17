@@ -35,8 +35,7 @@ namespace WpfApp1.pages
                 {
                     new Opcia { nazvanie = "Кожаный салон", cena = 150000 },
                     new Opcia { nazvanie = "Панорамная крыша", cena = 120000 },
-                    new Opcia { nazvanie = "Круиз-контроль", cena = 50000 },
-                    new Opcia { nazvanie = "Парктроники", cena = 40000 }
+                    new Opcia { nazvanie = "Круиз-контроль", cena = 50000 }
                 };
             }
 

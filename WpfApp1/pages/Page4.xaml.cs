@@ -12,24 +12,9 @@ namespace WpfApp1.pages
             InitializeComponent();
         }
 
-        // Загрузка страницы
         private void stranica_Zagruzena(object sender, RoutedEventArgs e)
         {
-            // Если пришли с 5 страницы - очищаем данные
-            var navService = NavigationService;
-            if (navService != null && navService.CanGoBack)
-            {
-                var previousPage = navService.BackStack.LastOrDefault();
-                if (previousPage != null && previousPage.Source.ToString().Contains("Page5"))
-                {
-                    // Очищаем данные в памяти
-                    Dannye.tecushaa.fio = "";
-                    Dannye.tecushaa.telefon = "";
-                    Dannye.tecushaa.email = "";
-                }
-            }
-
-            // Загружаем данные из памяти (могут быть пустые)
+            // Загружаем данные из памяти
             poleFio.Text = Dannye.tecushaa.fio ?? "";
             poleTel.Text = Dannye.tecushaa.telefon ?? "";
             poleEmail.Text = Dannye.tecushaa.email ?? "";
@@ -38,14 +23,12 @@ namespace WpfApp1.pages
             CheckAll();
         }
 
-        // Поле изменено
         private void pole_Change(object sender, TextChangedEventArgs e)
         {
             CheckAll();
             UpdateInfo();
         }
 
-        // Проверить все поля
         private void CheckAll()
         {
             bool fioOk = CheckFio();
@@ -55,7 +38,6 @@ namespace WpfApp1.pages
             knopkaDalee.IsEnabled = fioOk && telOk && emailOk;
         }
 
-        // Проверить ФИО
         private bool CheckFio()
         {
             string text = poleFio.Text.Trim();
@@ -72,7 +54,6 @@ namespace WpfApp1.pages
                 return false;
             }
 
-            // Проверяем что есть хотя бы 2 слова
             string[] words = text.Split(' ');
             int wordCount = 0;
             foreach (string word in words)
@@ -90,7 +71,6 @@ namespace WpfApp1.pages
             return true;
         }
 
-        // Проверить телефон
         private bool CheckTel()
         {
             string text = poleTel.Text.Trim();
@@ -101,7 +81,6 @@ namespace WpfApp1.pages
                 return false;
             }
 
-            // Проверяем что все символы - цифры
             bool hasLetters = false;
             foreach (char c in text)
             {
@@ -118,7 +97,6 @@ namespace WpfApp1.pages
                 return false;
             }
 
-            // Проверяем длину (от 10 до 11 цифр)
             if (text.Length < 10 || text.Length > 11)
             {
                 ShowError(oshibkaTel, "10 или 11 цифр");
@@ -129,7 +107,6 @@ namespace WpfApp1.pages
             return true;
         }
 
-        // Проверить email
         private bool CheckEmail()
         {
             string text = poleEmail.Text.Trim();
@@ -140,7 +117,6 @@ namespace WpfApp1.pages
                 return false;
             }
 
-            // Простая проверка - есть @
             if (!text.Contains("@"))
             {
                 ShowError(oshibkaEmail, "Должен быть @");
@@ -151,20 +127,17 @@ namespace WpfApp1.pages
             return true;
         }
 
-        // Показать ошибку
         private void ShowError(TextBlock field, string message)
         {
             field.Text = message;
             field.Visibility = Visibility.Visible;
         }
 
-        // Скрыть ошибку
         private void HideError(TextBlock field)
         {
             field.Visibility = Visibility.Collapsed;
         }
 
-        // Обновить информацию о заказе
         private void UpdateInfo()
         {
             string text = $"Автомобиль: {Dannye.tecushaa.PoleModel?.nazvanie ?? "не выбран"}\n";
@@ -174,10 +147,8 @@ namespace WpfApp1.pages
             info.Text = text;
         }
 
-        // Назад - очищаем данные и переходим
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
-            // Очищаем данные при переходе назад
             Dannye.tecushaa.fio = "";
             Dannye.tecushaa.telefon = "";
             Dannye.tecushaa.email = "";
@@ -185,10 +156,8 @@ namespace WpfApp1.pages
             NavigationService.GoBack();
         }
 
-        // Дальше - сохраняем только при переходе на 5 страницу
         private void dalee_Click(object sender, RoutedEventArgs e)
         {
-            // Проверяем перед переходом
             if (!CheckFio() || !CheckTel() || !CheckEmail())
             {
                 MessageBox.Show("Исправьте ошибки", "Ошибка",
@@ -196,7 +165,6 @@ namespace WpfApp1.pages
                 return;
             }
 
-            // Сохраняем данные только сейчас
             Dannye.tecushaa.fio = poleFio.Text.Trim();
             Dannye.tecushaa.telefon = poleTel.Text.Trim();
             Dannye.tecushaa.email = poleEmail.Text.Trim();
