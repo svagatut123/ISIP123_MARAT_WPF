@@ -28,7 +28,6 @@ namespace WpfApp1.pages
             };
             spisokModel.ItemsSource = _modeli;
 
-            // Двигатели
             _dvigateli = new List<Dvigatel>
             {
                 new Dvigatel { tip = "v.8", cenaDop = 0 },

@@ -14,12 +14,12 @@ namespace WpfApp1.pages
         {
             InitializeComponent();
             Zagruzit();
-            VosstanovitVibor();  // Восстанавливаем выбор при загрузке
+            VosstanovitVibor();  
         }
 
         private void Zagruzit()
         {
-            // Цвета
+            
             _cveta = new List<Cvet>
             {
                 new Cvet { nazvanie = "Белый", cenaDop = 0, kodCveta = "#FFFFFF" },
@@ -48,7 +48,7 @@ namespace WpfApp1.pages
                     IsChecked = opcia.vibrano,
                     FontSize = 14,
                     Margin = new Thickness(0, 5, 0, 5),
-                    Tag = opcia  // Сохраняем ссылку на опцию
+                    Tag = opcia  
                 };
 
                 chk.Checked += (s, e) =>

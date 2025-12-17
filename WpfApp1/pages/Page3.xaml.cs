@@ -17,7 +17,6 @@ namespace WpfApp1.pages
             if (sliderProcent == null || sliderSrok == null)
                 return;
 
-            // Восстанавливаем сохраненные значения слайдеров
             sliderProcent.Value = (double)Dannye.tecushaa.procentVznos;
             sliderSrok.Value = (double)Dannye.tecushaa.srokMes;
 
@@ -29,7 +28,6 @@ namespace WpfApp1.pages
             if (sliderProcent == null || sliderSrok == null)
                 return;
 
-            // Сохраняем в памяти
             Dannye.tecushaa.procentVznos = (decimal)sliderProcent.Value;
             Dannye.tecushaa.srokMes = (int)sliderSrok.Value;
 

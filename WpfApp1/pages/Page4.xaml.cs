@@ -1,15 +1,12 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using WpfApp1.Models;
 
 namespace WpfApp1.pages
 {
     public partial class Page4 : Page
     {
-        private bool _hasChanges = false;
-
         public Page4()
         {
             InitializeComponent();
@@ -18,7 +15,7 @@ namespace WpfApp1.pages
         // Загрузка страницы
         private void stranica_Zagruzena(object sender, RoutedEventArgs e)
         {
-            // Загружаем сохраненные данные
+            // Загружаем сохраненные данные из памяти
             poleFio.Text = Dannye.tecushaa.fio ?? "";
             poleTel.Text = Dannye.tecushaa.telefon ?? "";
             poleEmail.Text = Dannye.tecushaa.email ?? "";
@@ -27,39 +24,11 @@ namespace WpfApp1.pages
             CheckAll();
         }
 
-        // Выгрузка страницы
-        private void stranica_Vigruzhena(object sender, RoutedEventArgs e)
-        {
-            Save();
-        }
-
         // Поле изменено
         private void pole_Change(object sender, TextChangedEventArgs e)
         {
-            _hasChanges = true;
             CheckAll();
             UpdateInfo();
-        }
-
-        // Проверка ввода телефона - нельзя писать буквы
-        private void poleTel_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // Проверяем каждый символ
-            foreach (char c in e.Text)
-            {
-                if (!char.IsDigit(c))
-                {
-                    e.Handled = true;  // Блокируем ввод
-
-                    // Показываем ошибку
-                    oshibkaTel.Text = "Нельзя писать буквы";
-                    oshibkaTel.Visibility = Visibility.Visible;
-                    return;
-                }
-            }
-
-            // Если все цифры - скрываем ошибку
-            oshibkaTel.Visibility = Visibility.Collapsed;
         }
 
         // Проверить все поля
@@ -83,7 +52,11 @@ namespace WpfApp1.pages
                 return false;
             }
 
-            
+            if (text.Length < 5)
+            {
+                ShowError(oshibkaFio, "Минимум 5 символов");
+                return false;
+            }
 
             // Проверяем что есть хотя бы 2 слова
             string[] words = text.Split(' ');
@@ -115,13 +88,20 @@ namespace WpfApp1.pages
             }
 
             // Проверяем что все символы - цифры
+            bool hasLetters = false;
             foreach (char c in text)
             {
                 if (!char.IsDigit(c))
                 {
-                    ShowError(oshibkaTel, "Только цифры");
-                    return false;
+                    hasLetters = true;
+                    break;
                 }
+            }
+
+            if (hasLetters)
+            {
+                ShowError(oshibkaTel, "Только цифры");
+                return false;
             }
 
             // Проверяем длину (от 10 до 11 цифр)
@@ -170,16 +150,7 @@ namespace WpfApp1.pages
             field.Visibility = Visibility.Collapsed;
         }
 
-        // Сохранить данные
-        private void Save()
-        {
-            Dannye.tecushaa.fio = poleFio.Text.Trim();
-            Dannye.tecushaa.telefon = poleTel.Text.Trim();
-            Dannye.tecushaa.email = poleEmail.Text.Trim();
-            _hasChanges = false;
-        }
-
-        // Обновить информацию
+        // Обновить информацию о заказе
         private void UpdateInfo()
         {
             string text = $"Автомобиль: {Dannye.tecushaa.PoleModel?.nazvanie ?? "не выбран"}\n";
@@ -189,29 +160,21 @@ namespace WpfApp1.pages
             info.Text = text;
         }
 
-        // Назад
+        // Назад - просто переходим
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
-            if (_hasChanges)
-            {
-                var result = MessageBox.Show(
-                    "Есть несохраненные изменения. Продолжить?",
-                    "Вопрос",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.No)
-                    return;
-            }
-
             NavigationService.GoBack();
         }
 
-        // Дальше
+        // Дальше - сохраняем и переходим
         private void dalee_Click(object sender, RoutedEventArgs e)
         {
-            Save();
+            // Сохраняем введенные данные в память
+            Dannye.tecushaa.fio = poleFio.Text.Trim();
+            Dannye.tecushaa.telefon = poleTel.Text.Trim();
+            Dannye.tecushaa.email = poleEmail.Text.Trim();
 
+            // Проверяем еще раз перед переходом
             if (!CheckFio() || !CheckTel() || !CheckEmail())
             {
                 MessageBox.Show("Исправьте ошибки", "Ошибка",
