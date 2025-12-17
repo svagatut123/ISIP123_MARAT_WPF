@@ -18,7 +18,7 @@
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Width="500">
-                
+                <!-- ФИО -->
                 <TextBlock Text="ФИО:" 
                            FontSize="14" Margin="0,0,0,10"/>
                 <TextBox x:Name="poleFio" Height="40" Padding="10" 
@@ -26,14 +26,16 @@
                 <TextBlock x:Name="oshibkaFio" Foreground="Red" 
                            FontSize="12" Visibility="Collapsed"/>
 
-                
-                <TextBlock Text="Номер телефона:" 
+                <!-- Телефон -->
+                <TextBlock Text="Номер телефона (только цифры):" 
                            FontSize="14" Margin="0,20,0,10"/>
                 <TextBox x:Name="poleTel" Height="40" Padding="10" 
-                         FontSize="14" TextChanged="pole_Change"/>
+                         FontSize="14" TextChanged="pole_Change"
+                         MaxLength="11"/>
                 <TextBlock x:Name="oshibkaTel" Foreground="Red" 
                            FontSize="12" Visibility="Collapsed"/>
 
+                <!-- Email -->
                 <TextBlock Text="Email:" 
                            FontSize="14" Margin="0,20,0,10"/>
                 <TextBox x:Name="poleEmail" Height="40" Padding="10" 
@@ -47,6 +49,7 @@
             </StackPanel>
         </ScrollViewer>
 
+        <!-- Навигация -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" 
                     HorizontalAlignment="Right" Margin="0,30,0,0">
             <Button Content="Назад" Click="nazad_Click" 

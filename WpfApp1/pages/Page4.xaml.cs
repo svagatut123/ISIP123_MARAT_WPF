@@ -1,201 +1,218 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfApp1.Models;
 
 namespace WpfApp1.pages
 {
     public partial class Page4 : Page
     {
-        // есть ли несохраненные изменения
-        private bool _estIzmeneniya = false;
+        private bool _hasChanges = false;
 
         public Page4()
         {
             InitializeComponent();
         }
 
-        // загрузка страницы
+        // Загрузка страницы
         private void stranica_Zagruzena(object sender, RoutedEventArgs e)
         {
-            // загружаем сохраненные данные
+            // Загружаем сохраненные данные
             poleFio.Text = Dannye.tecushaa.fio ?? "";
             poleTel.Text = Dannye.tecushaa.telefon ?? "";
             poleEmail.Text = Dannye.tecushaa.email ?? "";
 
-            ObnovitInfo();
-            ProveritVse();
+            UpdateInfo();
+            CheckAll();
         }
 
-        // выгрузка страницы
+        // Выгрузка страницы
         private void stranica_Vigruzhena(object sender, RoutedEventArgs e)
         {
-            Sohranit();
+            Save();
         }
 
-        // поле изменено
+        // Поле изменено
         private void pole_Change(object sender, TextChangedEventArgs e)
         {
-            _estIzmeneniya = true;
-            ProveritVse();
-            ObnovitInfo();
+            _hasChanges = true;
+            CheckAll();
+            UpdateInfo();
         }
 
-        // проверить все поля
-        private void ProveritVse()
+        // Проверка ввода телефона - нельзя писать буквы
+        private void poleTel_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            bool fioOk = ProveritFio();
-            bool telOk = ProveritTel();
-            bool emailOk = ProveritEmail();
+            // Проверяем каждый символ
+            foreach (char c in e.Text)
+            {
+                if (!char.IsDigit(c))
+                {
+                    e.Handled = true;  // Блокируем ввод
 
-            // кнопка активна если все ок
+                    // Показываем ошибку
+                    oshibkaTel.Text = "Нельзя писать буквы";
+                    oshibkaTel.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+
+            // Если все цифры - скрываем ошибку
+            oshibkaTel.Visibility = Visibility.Collapsed;
+        }
+
+        // Проверить все поля
+        private void CheckAll()
+        {
+            bool fioOk = CheckFio();
+            bool telOk = CheckTel();
+            bool emailOk = CheckEmail();
+
             knopkaDalee.IsEnabled = fioOk && telOk && emailOk;
         }
 
-        // проверить фио
-        private bool ProveritFio()
+        // Проверить ФИО
+        private bool CheckFio()
         {
             string text = poleFio.Text.Trim();
 
-            // проверка на пустое
             if (string.IsNullOrWhiteSpace(text))
             {
-                PokazatOshibku(oshibkaFio, "введите ФИО");
+                ShowError(oshibkaFio, "Введите ФИО");
                 return false;
             }
 
-            // проверка длины
-            if (text.Length < 5)
+            
+
+            // Проверяем что есть хотя бы 2 слова
+            string[] words = text.Split(' ');
+            int wordCount = 0;
+            foreach (string word in words)
             {
-                PokazatOshibku(oshibkaFio, "минимум 5 символов");
-                return false;
+                if (word.Length > 0) wordCount++;
             }
 
-            // проверка на 2 слова
-            int slov = text.Split(' ').Count(w => w.Length > 0);
-            if (slov < 2)
+            if (wordCount < 2)
             {
-                PokazatOshibku(oshibkaFio, "введите фамилию и имя");
+                ShowError(oshibkaFio, "Введите фамилию и имя");
                 return false;
             }
 
-            SpryatatOshibku(oshibkaFio);
+            HideError(oshibkaFio);
             return true;
         }
 
-        // проверить телефон
-        private bool ProveritTel()
+        // Проверить телефон
+        private bool CheckTel()
         {
             string text = poleTel.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                PokazatOshibku(oshibkaTel, "введите телефон");
+                ShowError(oshibkaTel, "Введите телефон");
                 return false;
             }
 
-            // оставляем только цифры
-            string cifry = new string(text.Where(char.IsDigit).ToArray());
-
-            // проверка длины
-            if (cifry.Length < 10 || cifry.Length > 11)
+            // Проверяем что все символы - цифры
+            foreach (char c in text)
             {
-                PokazatOshibku(oshibkaTel, "неверная длина");
+                if (!char.IsDigit(c))
+                {
+                    ShowError(oshibkaTel, "Только цифры");
+                    return false;
+                }
+            }
+
+            // Проверяем длину (от 10 до 11 цифр)
+            if (text.Length < 10 || text.Length > 11)
+            {
+                ShowError(oshibkaTel, "10 или 11 цифр");
                 return false;
             }
 
-            SpryatatOshibku(oshibkaTel);
+            HideError(oshibkaTel);
             return true;
         }
 
-        // проверить email
-        private bool ProveritEmail()
+        // Проверить email
+        private bool CheckEmail()
         {
             string text = poleEmail.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                PokazatOshibku(oshibkaEmail, "введите email");
+                ShowError(oshibkaEmail, "Введите email");
                 return false;
             }
 
-            // проверяем @
+            // Простая проверка - есть @
             if (!text.Contains("@"))
             {
-                PokazatOshibku(oshibkaEmail, "должен быть @");
+                ShowError(oshibkaEmail, "Должен быть @");
                 return false;
             }
 
-            // проверяем точку
-            if (!text.Contains("."))
-            {
-                PokazatOshibku(oshibkaEmail, "должна быть точка");
-                return false;
-            }
-
-            SpryatatOshibku(oshibkaEmail);
+            HideError(oshibkaEmail);
             return true;
         }
 
-        // показать ошибку
-        private void PokazatOshibku(TextBlock pole, string text)
+        // Показать ошибку
+        private void ShowError(TextBlock field, string message)
         {
-            pole.Text = $"{text}";
-            pole.Visibility = Visibility.Visible;
+            field.Text = message;
+            field.Visibility = Visibility.Visible;
         }
 
-        // спрятать ошибку
-        private void SpryatatOshibku(TextBlock pole)
+        // Скрыть ошибку
+        private void HideError(TextBlock field)
         {
-            pole.Visibility = Visibility.Collapsed;
+            field.Visibility = Visibility.Collapsed;
         }
 
-        // сохранить данные
-        private void Sohranit()
+        // Сохранить данные
+        private void Save()
         {
             Dannye.tecushaa.fio = poleFio.Text.Trim();
             Dannye.tecushaa.telefon = poleTel.Text.Trim();
             Dannye.tecushaa.email = poleEmail.Text.Trim();
-            _estIzmeneniya = false;
+            _hasChanges = false;
         }
 
-        // обновить информацию
-        private void ObnovitInfo()
+        // Обновить информацию
+        private void UpdateInfo()
         {
-            string text = $"Выбран автомобиль: {Dannye.tecushaa.PoleModel?.nazvanie ?? "нет"}\n";
+            string text = $"Автомобиль: {Dannye.tecushaa.PoleModel?.nazvanie ?? "не выбран"}\n";
             text += $"Цена: {Dannye.tecushaa.CenaItog:N0} руб.\n";
             text += $"Платеж в месяц: {Dannye.tecushaa.PlatejVMes:N0} руб.";
 
             info.Text = text;
         }
 
-        // назад
+        // Назад
         private void nazad_Click(object sender, RoutedEventArgs e)
         {
-            if (_estIzmeneniya)
+            if (_hasChanges)
             {
-                // спрашиваем подтверждение
-                var otvet = MessageBox.Show(
+                var result = MessageBox.Show(
                     "Есть несохраненные изменения. Продолжить?",
                     "Вопрос",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 
-                if (otvet == MessageBoxResult.No)
+                if (result == MessageBoxResult.No)
                     return;
             }
 
             NavigationService.GoBack();
         }
 
-        // дальше
+        // Дальше
         private void dalee_Click(object sender, RoutedEventArgs e)
         {
-            // сохраняем
-            Sohranit();
+            Save();
 
-            // проверяем
-            if (!ProveritFio() || !ProveritTel() || !ProveritEmail())
+            if (!CheckFio() || !CheckTel() || !CheckEmail())
             {
                 MessageBox.Show("Исправьте ошибки", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Warning);

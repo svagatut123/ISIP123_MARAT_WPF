@@ -159,4 +159,5 @@ namespace WpfApp1.Models
     {
         public static Konfig tecushaa { get; } = new Konfig();
     }
+
 }
