@@ -9,6 +9,44 @@
       Title="Page2">
 
     <Grid>
-        
-    </Grid>
+        <StackPanel>
+                    <TextBlock Text="корзина" FontSize="20" FontWeight="Bold" 
+                       Margin="10" HorizontalAlignment="Center"/>
+
+                    <ListView x:Name="ListCart" Margin="10" Height="300">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="товар" Width="200" 
+                                        DisplayMemberBinding="{Binding NazvanieTovara}"/>
+                                <GridViewColumn Header="цена" Width="100" 
+                                        DisplayMemberBinding="{Binding Cena, StringFormat={}{0:C}}"/>
+                                <GridViewColumn Header="кол-во" Width="80" 
+                                        DisplayMemberBinding="{Binding Kolichestvo}"/>
+                                <GridViewColumn Header="сумма" Width="100" 
+                                        DisplayMemberBinding="{Binding Summa, StringFormat={}{0:C}}"/>
+                                <GridViewColumn Header="удалить" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="удалить" Click="RemoveItem_Click"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="общая сумма: " FontSize="16" 
+                           Margin="10" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TextTotal" FontSize="16" FontWeight="Bold" 
+                           Margin="10" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="продолжить покупки" Width="150" Height="30" 
+                        Margin="10" Click="ContinueShopping_Click"/>
+                        <Button Content="оформить заказ" Width="150" Height="30" 
+                        Margin="10" Click="CreateOrder_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
 </Page>
