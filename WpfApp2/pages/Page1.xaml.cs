@@ -18,7 +18,7 @@ namespace WpfApp2.pages
         {
             try
             {
-                using (var db = new MaratPrac13())
+                using (var db = new MaratPrac13Entities1())
                 {
                     var products = db.Products.ToList();
                     ListProducts.ItemsSource = products;
@@ -33,7 +33,7 @@ namespace WpfApp2.pages
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button.DataContext as Products;
+            var product = button.DataContext as Product;
 
             if (product != null)
             {
