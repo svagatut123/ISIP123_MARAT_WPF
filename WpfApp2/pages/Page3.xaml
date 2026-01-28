@@ -9,6 +9,48 @@
       Title="Page3">
 
     <Grid>
-        
-    </Grid>
+        <StackPanel Margin="20">
+                    <TextBlock Text="оформление заказа" FontSize="20" FontWeight="Bold" 
+                       Margin="10" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="ФИО:" Margin="5,10,5,0"/>
+                    <TextBox x:Name="TextFIO" Height="25" Margin="5"/>
+
+                    <TextBlock Text="email:" Margin="5,10,5,0"/>
+                    <TextBox x:Name="TextEmail" Height="25" Margin="5"/>
+
+                    <TextBlock Text="адрес доставки:" Margin="5,10,5,0"/>
+                    <TextBox x:Name="TextAddress" Height="50" Margin="5"/>
+
+                    <TextBlock Text="товары в заказе:" Margin="5,20,5,0" FontWeight="Bold"/>
+
+                    <ListView x:Name="ListOrderItems" Margin="5" Height="150">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="товар" Width="200" 
+                                        DisplayMemberBinding="{Binding NazvanieTovara}"/>
+                                <GridViewColumn Header="цена" Width="100" 
+                                        DisplayMemberBinding="{Binding Cena, StringFormat={}{0:C}}"/>
+                                <GridViewColumn Header="кол-во" Width="80" 
+                                        DisplayMemberBinding="{Binding Kolichestvo}"/>
+                                <GridViewColumn Header="сумма" Width="100" 
+                                        DisplayMemberBinding="{Binding Summa, StringFormat={}{0:C}}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,10">
+                        <TextBlock Text="итого: " FontSize="16"/>
+                        <TextBlock x:Name="TextOrderTotal" FontSize="16" FontWeight="Bold" 
+                           Margin="10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,20">
+                        <Button Content="вернуться в корзину" Width="150" Height="30" 
+                        Margin="10" Click="BackToCart_Click"/>
+                        <Button Content="заказать" Width="150" Height="30" 
+                        Margin="10" Click="PlaceOrder_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
 </Page>
