@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button x:Name="BtnPage1" Content="товары" Width="100" Height="50" Margin="10" Click="BtnPage1_Click"></Button>
+                <Button x:Name="BtnPage2" Content="корзина" Width="100" Height="50" Margin="10" Click="BtnPage2_Click"></Button>
+                <Button x:Name="BtnPage3" Content="заказы" Width="100" Height="50" Margin="10" Click="BtnPage3_Click"></Button>
+            </StackPanel>
+
+            <Frame x:Name="MainFrame" Grid.Row="1"/>
+        </Grid> 
 </Window>
