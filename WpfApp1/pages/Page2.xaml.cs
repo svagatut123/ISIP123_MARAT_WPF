@@ -30,7 +30,7 @@ namespace WpfApp1.pages
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var item = button.DataContext as CartItem;
+            var item = button.DataContext as CartItems;
 
             if (item != null)
             {

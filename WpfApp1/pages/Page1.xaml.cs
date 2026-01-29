@@ -19,7 +19,7 @@ namespace WpfApp1.pages
         {
             try
             {
-                using (var db = new MaratPrac13Entities1())
+                using (var db = new MaratPrac13Entities2())
                 {
                     var products = db.Products.ToList();
                     ListProducts.ItemsSource = products;
@@ -34,7 +34,7 @@ namespace WpfApp1.pages
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button.DataContext as Product;
+            var product = button.DataContext as Products;
 
             if (product != null)
             {
@@ -46,7 +46,7 @@ namespace WpfApp1.pages
                 }
                 else
                 {
-                    Cart.Tovary.Add(new CartItem
+                    Cart.Tovary.Add(new CartItems
                     {
                         ProductId = product.ProductId,
                         NazvanieTovara = product.NazvanieTovara,

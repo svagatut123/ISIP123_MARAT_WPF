@@ -43,7 +43,7 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                         <TextBlock Text="добавить новый товар:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <Button Content="+" Width="30" Height="30" Click="AddNewProduct_Click"/>
+                <Button Content="+" Width="30" Height="30" Click="AddToCart_Click"/>
                     </StackPanel>
 
                     <Button Content="перейти в корзину" Width="150" Height="30" 

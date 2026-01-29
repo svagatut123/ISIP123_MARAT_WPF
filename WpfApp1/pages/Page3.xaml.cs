@@ -57,9 +57,9 @@ namespace WpfApp1.pages
 
             try
             {
-                using (var db = new MaratPrac13Entities1())
+                using (var db = new MaratPrac13Entities2())
                 {
-                    var order = new Order
+                    var order = new Orders
                     {
                         FIO = TextFIO.Text,
                         Email = TextEmail.Text,
@@ -73,7 +73,7 @@ namespace WpfApp1.pages
                     // Добавляем товары заказа
                     foreach (var item in Cart.Tovary)
                     {
-                        var orderItem = new OrderItem
+                        var orderItem = new OrderItems
                         {
                             OrderId = order.OrderId,
                             ProductId = item.ProductId,

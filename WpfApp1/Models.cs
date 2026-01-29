@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace WpfApp1
 {
     // Класс для товара
-    public class Product
+    public class Products
     {
         public int ProductId { get; set; }
         public string NazvanieTovara { get; set; }
@@ -13,7 +13,7 @@ namespace WpfApp1
     }
 
     // Класс для заказа
-    public class Order
+    public class Orders
     {
         public int OrderId { get; set; }
         public string FIO { get; set; }
@@ -23,7 +23,7 @@ namespace WpfApp1
     }
 
     // Класс для товара в заказе
-    public class OrderItem
+    public class OrderItems
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
@@ -32,7 +32,7 @@ namespace WpfApp1
     }
 
     // Класс для товара в корзине
-    public class CartItem : INotifyPropertyChanged
+    public class CartItems : INotifyPropertyChanged
     {
         private int _kolichestvo;
 
@@ -65,6 +65,6 @@ namespace WpfApp1
     // Статический класс для корзины
     public static class Cart
     {
-        public static List<CartItem> Tovary { get; set; } = new List<CartItem>();
+        public static List<CartItems> Tovary { get; set; } = new List<CartItems>();
     }
 }
