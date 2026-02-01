@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace WpfApp1
 {
     // Класс для товара
-    public class Products
+    public class Product
     {
         public int ProductId { get; set; }
         public string NazvanieTovara { get; set; }
@@ -13,7 +13,7 @@ namespace WpfApp1
     }
 
     // Класс для заказа
-    public class Orders
+    public class Order
     {
         public int OrderId { get; set; }
         public string FIO { get; set; }
@@ -23,7 +23,7 @@ namespace WpfApp1
     }
 
     // Класс для товара в заказе
-    public class OrderItems
+    public class OrderItem
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }

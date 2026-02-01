@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5a2cc250ea99439099500d67f8c6b265" Name="Diagram1">
-        <EntityTypeShape EntityType="MaratPrac13Model.OrderItems" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac13Model.Orders" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac13Model.Products" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac13Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="MaratPrac13Model.FK__OrderItem__Order__5441852A" ManuallyRouted="false" />
-        <AssociationConnector Association="MaratPrac13Model.FK__OrderItem__Produ__5535A963" ManuallyRouted="false" />
+      <Diagram DiagramId="3770ff183a27489c9dce3bff6876969a" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineShopDBModel.OrderItems" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.Orders" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.Products" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="OnlineShopDBModel.FK__OrderItem__Order__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK__OrderItem__Produ__4222D4EF" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,21 +12,22 @@ namespace WpfApp1
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
-    public partial class MaratPrac13Entities2 : DbContext
+    
+    public partial class OnlineShopDBEntities : DbContext
     {
-        public MaratPrac13Entities2()
-            : base("name=MaratPrac13Entities2")
+        public OnlineShopDBEntities()
+            : base("name=OnlineShopDBEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<OrderItems> OrderItems { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

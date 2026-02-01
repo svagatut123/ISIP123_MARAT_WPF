@@ -19,7 +19,7 @@ namespace WpfApp1.pages
         {
             try
             {
-                using (var db = new MaratPrac13Entities2())
+                using (var db = new OnlineShopDBEntities())
                 {
                     var products = db.Products.ToList();
                     ListProducts.ItemsSource = products;

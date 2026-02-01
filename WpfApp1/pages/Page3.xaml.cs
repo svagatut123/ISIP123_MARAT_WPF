@@ -57,7 +57,7 @@ namespace WpfApp1.pages
 
             try
             {
-                using (var db = new MaratPrac13Entities2())
+                using (var db = new OnlineShopDBEntities())
                 {
                     var order = new Orders
                     {
