@@ -63,5 +63,10 @@ namespace WpfApp1.pages
         {
             NavigationService.Navigate(new Page2());
         }
+
+        private void ListProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

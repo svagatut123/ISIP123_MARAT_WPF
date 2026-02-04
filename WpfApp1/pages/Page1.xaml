@@ -5,14 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="2000" d:DesignWidth="800"
       Title="Page1">
     <Grid>
                 <StackPanel>
                     <TextBlock Text="товары" FontSize="30" FontWeight="Bold" 
                        Margin="10" HorizontalAlignment="Center"/>
 
-                    <ListView x:Name="ListProducts" Margin="10" Height="400">
+                    <ListView x:Name="ListProducts" Margin="10" Height="624" SelectionChanged="ListProducts_SelectionChanged" RenderTransformOrigin="0.508,0.372">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="изображение" Width="80">
@@ -41,10 +41,7 @@
                         </ListView.View>
                     </ListView>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <TextBlock Text="добавить новый товар:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button Content="+" Width="30" Height="30" Click="AddToCart_Click"/>
-                    </StackPanel>
+                    
 
                     <Button Content="перейти в корзину" Width="150" Height="30" 
                     Margin="10" Click="GoToCart_Click"/>

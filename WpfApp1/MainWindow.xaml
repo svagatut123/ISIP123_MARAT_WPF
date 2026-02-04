@@ -20,6 +20,6 @@
                 <Button x:Name="BtnPage3" Content="заказы" Width="100" Height="50" Margin="10" Click="BtnPage3_Click"></Button>
             </StackPanel>
 
-            <Frame x:Name="MainFrame" Grid.Row="1"/>
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
         </Grid> 
 </Window>

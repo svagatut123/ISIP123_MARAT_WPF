@@ -67,4 +67,5 @@ namespace WpfApp1
     {
         public static List<CartItems> Tovary { get; set; } = new List<CartItems>();
     }
+
 }
