@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class OnlineShopDBEntities : DbContext
+    public partial class MaratPrac13Entities5 : DbContext
     {
-        public OnlineShopDBEntities()
-            : base("name=OnlineShopDBEntities")
+        public MaratPrac13Entities5()
+            : base("name=MaratPrac13Entities5")
         {
         }
     

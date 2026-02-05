@@ -18,7 +18,6 @@ namespace WpfApp1
         public int OrderId { get; set; }
         public int ProductId { get; set; }
         public int Kolichestvo { get; set; }
-        public decimal CenaNaMomentZakaza { get; set; }
     
         public virtual Orders Orders { get; set; }
         public virtual Products Products { get; set; }

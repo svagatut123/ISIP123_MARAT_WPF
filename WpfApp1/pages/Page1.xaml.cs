@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WpfApp1;
 using WpfApp1.pages;
 
-namespace WpfApp1.pages
+namespace WpfApp1
 {
     public partial class Page1 : Page
     {
@@ -19,22 +18,19 @@ namespace WpfApp1.pages
         {
             try
             {
-                using (var db = new OnlineShopDBEntities())
-                {
-                    var products = db.Products.ToList();
-                    ListProducts.ItemsSource = products;
-                }
+                var products = Core.context.Products.ToList();
+                ListProducts.ItemsSource = products;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ошибка: " + ex.Message);
+                MessageBox.Show("ошибка при загрузке товаров: " + ex.Message);
             }
         }
 
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button.DataContext as Products;
+            var product = button.DataContext as Product;
 
             if (product != null)
             {
@@ -46,11 +42,12 @@ namespace WpfApp1.pages
                 }
                 else
                 {
-                    Cart.Tovary.Add(new CartItems
+                    Cart.Tovary.Add(new CartItem
                     {
                         ProductId = product.ProductId,
                         NazvanieTovara = product.NazvanieTovara,
                         Cena = product.Cena,
+                        IzobrazhenieTovara = product.IzobrazhenieTovara,
                         Kolichestvo = 1
                     });
                 }
@@ -62,11 +59,6 @@ namespace WpfApp1.pages
         private void GoToCart_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Page2());
-        }
-
-        private void ListProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

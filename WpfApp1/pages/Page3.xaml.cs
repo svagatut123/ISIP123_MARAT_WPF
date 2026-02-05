@@ -3,11 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WpfApp1;
 using WpfApp1.pages;
 
-
-namespace WpfApp1.pages
+namespace WpfApp1
 {
     public partial class Page3 : Page
     {
@@ -15,6 +13,7 @@ namespace WpfApp1.pages
         {
             InitializeComponent();
             LoadOrderItems();
+            LoadSavedData();
         }
 
         private void LoadOrderItems()
@@ -24,8 +23,19 @@ namespace WpfApp1.pages
             TextOrderTotal.Text = total.ToString("C");
         }
 
+        private void LoadSavedData()
+        {
+            if (Cart.OrderData != null)
+            {
+                TextFIO.Text = Cart.OrderData.FIO;
+                TextEmail.Text = Cart.OrderData.Email;
+                TextAddress.Text = Cart.OrderData.AdresDostavki;
+            }
+        }
+
         private void BackToCart_Click(object sender, RoutedEventArgs e)
         {
+            SaveFormData();
             NavigationService.Navigate(new Page2());
         }
 
@@ -57,46 +67,62 @@ namespace WpfApp1.pages
 
             try
             {
-                using (var db = new OnlineShopDBEntities())
+                var order = new Order
                 {
-                    var order = new Orders
+                    FIO = TextFIO.Text,
+                    Email = TextEmail.Text,
+                    AdresDostavki = TextAddress.Text,
+                    ObshayaSumma = Cart.Tovary.Sum(item => item.Summa)
+                };
+
+                Core.context.Orders.Add(order);
+                Core.context.SaveChanges();
+
+                foreach (var item in Cart.Tovary)
+                {
+                    var orderItem = new OrderItem
                     {
-                        FIO = TextFIO.Text,
-                        Email = TextEmail.Text,
-                        AdresDostavki = TextAddress.Text,
-                        ObshayaSumma = Cart.Tovary.Sum(item => item.Summa)
+                        OrderId = order.OrderId,
+                        ProductId = item.ProductId,
+                        Kolichestvo = item.Kolichestvo
                     };
-
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-
-                    // Добавляем товары заказа
-                    foreach (var item in Cart.Tovary)
-                    {
-                        var orderItem = new OrderItems
-                        {
-                            OrderId = order.OrderId,
-                            ProductId = item.ProductId,
-                            Kolichestvo = item.Kolichestvo
-                        };
-                        db.OrderItems.Add(orderItem);
-                    }
-
-                    db.SaveChanges();
-
-                    // Очищаем корзину
-                    Cart.Tovary.Clear();
-
-                    MessageBox.Show($"заказ №{order.OrderId} оформлен!");
-
-                    // Возвращаемся на страницу товаров
-                    NavigationService.Navigate(new Page1());
+                    Core.context.OrderItems.Add(orderItem);
                 }
+
+                Core.context.SaveChanges();
+
+                Cart.Tovary.Clear();
+                Cart.OrderData = new OrderFormData();
+
+                MessageBox.Show($"заказ №{order.OrderId} оформлен!");
+                NavigationService.Navigate(new Page1());
             }
             catch (Exception ex)
             {
                 MessageBox.Show("ошибка: " + ex.Message);
             }
+        }
+
+        private void SaveFormData()
+        {
+            Cart.OrderData.FIO = TextFIO.Text;
+            Cart.OrderData.Email = TextEmail.Text;
+            Cart.OrderData.AdresDostavki = TextAddress.Text;
+        }
+
+        private void TextFIO_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Cart.OrderData.FIO = TextFIO.Text;
+        }
+
+        private void TextEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Cart.OrderData.Email = TextEmail.Text;
+        }
+
+        private void TextAddress_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Cart.OrderData.AdresDostavki = TextAddress.Text;
         }
     }
 }

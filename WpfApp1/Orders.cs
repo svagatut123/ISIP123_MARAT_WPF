@@ -24,9 +24,7 @@ namespace WpfApp1
         public string FIO { get; set; }
         public string Email { get; set; }
         public string AdresDostavki { get; set; }
-        public Nullable<System.DateTime> DataZakaza { get; set; }
         public decimal ObshayaSumma { get; set; }
-        public string StatusZakaza { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderItems> OrderItems { get; set; }

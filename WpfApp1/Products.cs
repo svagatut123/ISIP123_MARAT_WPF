@@ -24,7 +24,6 @@ namespace WpfApp1
         public string NazvanieTovara { get; set; }
         public decimal Cena { get; set; }
         public string IzobrazhenieTovara { get; set; }
-        public Nullable<System.DateTime> DataSozdaniya { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderItems> OrderItems { get; set; }

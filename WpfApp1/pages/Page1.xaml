@@ -4,47 +4,46 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="2000" d:DesignWidth="800"
-      Title="Page1">
+      mc:Ignorable="d" d:DesignWidth="1030.137"
+      Title="Page1" Height="800">
     <Grid>
-                <StackPanel>
-                    <TextBlock Text="товары" FontSize="30" FontWeight="Bold" 
+        <StackPanel>
+            <TextBlock Text="товары" FontSize="30" FontWeight="Bold" 
                        Margin="10" HorizontalAlignment="Center"/>
 
-                    <ListView x:Name="ListProducts" Margin="10" Height="624" SelectionChanged="ListProducts_SelectionChanged" RenderTransformOrigin="0.508,0.372">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="изображение" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Image Source="{Binding IzobrazhenieTovara}" 
+            <ListView x:Name="ListProducts" Margin="10" Height="624" SelectionChanged="ListProducts_SelectionChanged" RenderTransformOrigin="0.508,0.372">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="изображение" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding IzobrazhenieTovara}" 
                                            Width="60" Height="60" 
                                            Stretch="Uniform"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                                <GridViewColumn Header="название" Width="150" 
+                        <GridViewColumn Header="название" Width="150" 
                                         DisplayMemberBinding="{Binding NazvanieTovara}"/>
-                                <GridViewColumn Header="цена" Width="100" 
+                        <GridViewColumn Header="цена" Width="100" 
                                         DisplayMemberBinding="{Binding Cena, StringFormat={}{0:C}}"/>
-                                <GridViewColumn Header="действие" Width="150">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="добавить в корзину" 
+                        <GridViewColumn Header="действие" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="добавить в корзину" 
                                             Click="AddToCart_Click"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
-                    
 
-                    <Button Content="перейти в корзину" Width="150" Height="30" 
+
+            <Button Content="перейти в корзину" Width="150" Height="30" 
                     Margin="10" Click="GoToCart_Click"/>
-                </StackPanel>
-            </Grid>
+        </StackPanel>
+    </Grid>
 </Page>

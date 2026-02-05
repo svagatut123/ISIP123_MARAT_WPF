@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище OnlineShopDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище MaratPrac13Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="OrderItems">
           <Key>
             <PropertyRef Name="OrderItemId" />
@@ -13,7 +13,6 @@
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Kolichestvo" Type="int" Nullable="false" />
-          <Property Name="CenaNaMomentZakaza" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -23,9 +22,7 @@
           <Property Name="FIO" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AdresDostavki" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="DataZakaza" Type="datetime" />
           <Property Name="ObshayaSumma" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="StatusZakaza" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -35,7 +32,6 @@
           <Property Name="NazvanieTovara" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Cena" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IzobrazhenieTovara" Type="nvarchar" MaxLength="500" />
-          <Property Name="DataSozdaniya" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -47,7 +43,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK__OrderItem__Order__412EB0B6">
+        <Association Name="FK__OrderItem__Order__5441852A">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -61,7 +57,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__Produ__4222D4EF">
+        <Association Name="FK__OrderItem__Produ__5535A963">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -73,16 +69,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище OnlineShopDBModelContainer">
+        <EntityContainer Name="Хранилище MaratPrac13ModelContainer">
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__OrderItem__Order__412EB0B6" Association="Self.FK__OrderItem__Order__412EB0B6">
+          <AssociationSet Name="FK__OrderItem__Order__5441852A" Association="Self.FK__OrderItem__Order__5441852A">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__Produ__4222D4EF" Association="Self.FK__OrderItem__Produ__4222D4EF">
+          <AssociationSet Name="FK__OrderItem__Produ__5535A963" Association="Self.FK__OrderItem__Produ__5535A963">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
@@ -91,7 +87,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="OnlineShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MaratPrac13Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="OrderItems">
           <Key>
             <PropertyRef Name="OrderItemId" />
@@ -100,9 +96,8 @@
           <Property Name="OrderId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Kolichestvo" Type="Int32" Nullable="false" />
-          <Property Name="CenaNaMomentZakaza" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__OrderItem__Order__412EB0B6" FromRole="OrderItems" ToRole="Orders" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__OrderItem__Produ__4222D4EF" FromRole="OrderItems" ToRole="Products" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__OrderItem__Order__5441852A" FromRole="OrderItems" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__OrderItem__Produ__5535A963" FromRole="OrderItems" ToRole="Products" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -112,10 +107,8 @@
           <Property Name="FIO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AdresDostavki" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DataZakaza" Type="DateTime" Precision="3" />
           <Property Name="ObshayaSumma" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="StatusZakaza" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="OrderItems" Relationship="Self.FK__OrderItem__Order__412EB0B6" FromRole="Orders" ToRole="OrderItems" />
+          <NavigationProperty Name="OrderItems" Relationship="Self.FK__OrderItem__Order__5441852A" FromRole="Orders" ToRole="OrderItems" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -125,8 +118,7 @@
           <Property Name="NazvanieTovara" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Cena" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IzobrazhenieTovara" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DataSozdaniya" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="OrderItems" Relationship="Self.FK__OrderItem__Produ__4222D4EF" FromRole="Products" ToRole="OrderItems" />
+          <NavigationProperty Name="OrderItems" Relationship="Self.FK__OrderItem__Produ__5535A963" FromRole="Products" ToRole="OrderItems" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -138,7 +130,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK__OrderItem__Order__412EB0B6">
+        <Association Name="FK__OrderItem__Order__5441852A">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -152,7 +144,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__Produ__4222D4EF">
+        <Association Name="FK__OrderItem__Produ__5535A963">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -164,16 +156,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="OnlineShopDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MaratPrac13Entities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
           <EntitySet Name="Products" EntityType="Self.Products" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="FK__OrderItem__Order__412EB0B6" Association="Self.FK__OrderItem__Order__412EB0B6">
+          <AssociationSet Name="FK__OrderItem__Order__5441852A" Association="Self.FK__OrderItem__Order__5441852A">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__Produ__4222D4EF" Association="Self.FK__OrderItem__Produ__4222D4EF">
+          <AssociationSet Name="FK__OrderItem__Produ__5535A963" Association="Self.FK__OrderItem__Produ__5535A963">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
@@ -183,44 +175,40 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище OnlineShopDBModelContainer" CdmEntityContainer="OnlineShopDBEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MaratPrac13ModelContainer" CdmEntityContainer="MaratPrac13Entities5">
           <EntitySetMapping Name="OrderItems">
-            <EntityTypeMapping TypeName="OnlineShopDBModel.OrderItems">
+            <EntityTypeMapping TypeName="MaratPrac13Model.OrderItems">
               <MappingFragment StoreEntitySet="OrderItems">
                 <ScalarProperty Name="OrderItemId" ColumnName="OrderItemId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Kolichestvo" ColumnName="Kolichestvo" />
-                <ScalarProperty Name="CenaNaMomentZakaza" ColumnName="CenaNaMomentZakaza" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="OnlineShopDBModel.Orders">
+            <EntityTypeMapping TypeName="MaratPrac13Model.Orders">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="FIO" ColumnName="FIO" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="AdresDostavki" ColumnName="AdresDostavki" />
-                <ScalarProperty Name="DataZakaza" ColumnName="DataZakaza" />
                 <ScalarProperty Name="ObshayaSumma" ColumnName="ObshayaSumma" />
-                <ScalarProperty Name="StatusZakaza" ColumnName="StatusZakaza" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="OnlineShopDBModel.Products">
+            <EntityTypeMapping TypeName="MaratPrac13Model.Products">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="NazvanieTovara" ColumnName="NazvanieTovara" />
                 <ScalarProperty Name="Cena" ColumnName="Cena" />
                 <ScalarProperty Name="IzobrazhenieTovara" ColumnName="IzobrazhenieTovara" />
-                <ScalarProperty Name="DataSozdaniya" ColumnName="DataSozdaniya" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OnlineShopDBModel.sysdiagrams">
+            <EntityTypeMapping TypeName="MaratPrac13Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
