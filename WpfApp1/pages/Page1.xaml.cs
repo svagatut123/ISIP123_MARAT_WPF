@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using WpfApp1.pages;
+using System.Linq;
 
 namespace WpfApp1
 {
@@ -16,49 +14,17 @@ namespace WpfApp1
 
         private void LoadProducts()
         {
-            try
-            {
-                var products = Core.context.Products.ToList();
-                ListProducts.ItemsSource = products;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ошибка при загрузке товаров: " + ex.Message);
-            }
+            var products = Core.Context.Products.ToList();
+            ListProducts.ItemsSource = products;
         }
 
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var product = button.DataContext as Product;
-
-            if (product != null)
-            {
-                var cartItem = Cart.Tovary.FirstOrDefault(t => t.ProductId == product.ProductId);
-
-                if (cartItem != null)
-                {
-                    cartItem.Kolichestvo++;
-                }
-                else
-                {
-                    Cart.Tovary.Add(new CartItem
-                    {
-                        ProductId = product.ProductId,
-                        NazvanieTovara = product.NazvanieTovara,
-                        Cena = product.Cena,
-                        IzobrazhenieTovara = product.IzobrazhenieTovara,
-                        Kolichestvo = 1
-                    });
-                }
-
-                MessageBox.Show("товар добавлен в корзину");
-            }
-        }
-
-        private void GoToCart_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Page2());
+            var button = (Button)sender;
+            var product = (Products)button.Tag; 
+            Cart.AddProduct(product);
+            MessageBox.Show($"товар \"{product.NazvanieTovara}\" добавлен в корзину",
+                          "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

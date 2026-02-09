@@ -1,59 +1,41 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using WpfApp1;
-using WpfApp1.pages;
 
-namespace WpfApp1.pages
+namespace WpfApp1
 {
     public partial class Page2 : Page
     {
         public Page2()
         {
             InitializeComponent();
-            LoadCart();
+            UpdateCartDisplay();
         }
 
-        private void LoadCart()
+        private void UpdateCartDisplay()
         {
-            ListCart.ItemsSource = Cart.Tovary;
-            UpdateTotal();
-        }
+            CartItemsList.ItemsSource = null;
+            CartItemsList.ItemsSource = Cart.Items;
+            TotalText.Text = $"Итого: {Cart.Total:#,##0.00} ₽";
 
-        private void UpdateTotal()
-        {
-            decimal total = Cart.Tovary.Sum(item => item.Summa);
-            TextTotal.Text = total.ToString("C");
-        }
-
-        private void RemoveItem_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var item = button.DataContext as CartItems;
-
-            if (item != null)
+            if (Cart.Items.Count == 0)
             {
-                Cart.Tovary.Remove(item);
-                ListCart.Items.Refresh();
-                UpdateTotal();
+                TotalText.Text = "Корзина пуста";
             }
         }
 
-        private void ContinueShopping_Click(object sender, RoutedEventArgs e)
+        private void Checkout_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Page1());
-        }
-
-        private void CreateOrder_Click(object sender, RoutedEventArgs e)
-        {
-            if (Cart.Tovary.Count == 0)
+            if (Cart.Items.Count == 0)
             {
-                MessageBox.Show("корзина пуста");
+                MessageBox.Show("Корзина пуста", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            NavigationService.Navigate(new Page3());
+            var mainWindow = Window.GetWindow(this) as MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.ShowCheckout_Click(this, new RoutedEventArgs());
+            }
         }
     }
 }

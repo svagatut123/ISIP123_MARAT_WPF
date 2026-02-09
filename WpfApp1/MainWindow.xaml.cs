@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using WpfApp1.pages;
-
 
 namespace WpfApp1
 {
@@ -9,22 +7,29 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            BtnPage1_Click(null, null);
+            // Загружаем страницу товаров при старте
+            MainFrame.Content = new Page1();
         }
-        private void BtnPage1_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Page1());
 
+        public void ShowProducts_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new Page1();
         }
-        private void BtnPage2_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Page2());
 
+        public void ShowCart_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new Page2();
         }
-        private void BtnPage3_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Page3());
 
+        public void ShowCheckout_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cart.Items.Count == 0)
+            {
+                MessageBox.Show("Корзина пуста. Добавьте товары перед оформлением заказа.", "Пустая корзина", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MainFrame.Content = new Page2();
+                return;
+            }
+            MainFrame.Content = new Page3();
         }
     }
 }

@@ -1,56 +1,58 @@
-﻿<Page x:Class="WpfApp1.pages.Page3"
+﻿<Page x:Class="WpfApp1.Page3"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp1.pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page3">
+      Title="Оформление заказа">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-    <Grid>
-        <StackPanel Margin="20">
-                    <TextBlock Text="оформление заказа" FontSize="20" FontWeight="Bold" 
-                       Margin="10" HorizontalAlignment="Center"/>
+        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Grid.Row="0"/>
 
-                    <TextBlock Text="ФИО:" Margin="5,10,5,0"/>
-                    <TextBox x:Name="TextFIO" Height="25" Margin="5"/>
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                    <TextBlock Text="email:" Margin="5,10,5,0"/>
-                    <TextBox x:Name="TextEmail" Height="25" Margin="5"/>
+            <TextBlock Text="ФИО:" Grid.Row="0" Grid.Column="0" Margin="0,5,10,5" VerticalAlignment="Center"/>
+            <TextBox x:Name="FioBox" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-                    <TextBlock Text="адрес доставки:" Margin="5,10,5,0"/>
-                    <TextBox x:Name="TextAddress" Height="50" Margin="5"/>
+            <TextBlock Text="Email:" Grid.Row="1" Grid.Column="0" Margin="0,5,10,5" VerticalAlignment="Center"/>
+            <TextBox x:Name="EmailBox" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
 
-                    <TextBlock Text="товары в заказе:" Margin="5,20,5,0" FontWeight="Bold"/>
+            <TextBlock Text="Адрес доставки:" Grid.Row="2" Grid.Column="0" Margin="0,5,10,5" VerticalAlignment="Center"/>
+            <TextBox x:Name="AddressBox" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Padding="5"/>
+        </Grid>
 
-                    <ListView x:Name="ListOrderItems" Margin="5" Height="150">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="товар" Width="200" 
-                                        DisplayMemberBinding="{Binding NazvanieTovara}"/>
-                                <GridViewColumn Header="цена" Width="100" 
-                                        DisplayMemberBinding="{Binding Cena, StringFormat={}{0:C}}"/>
-                                <GridViewColumn Header="кол-во" Width="80" 
-                                        DisplayMemberBinding="{Binding Kolichestvo}"/>
-                                <GridViewColumn Header="сумма" Width="100" 
-                                        DisplayMemberBinding="{Binding Summa, StringFormat={}{0:C}}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+        <StackPanel Grid.Row="2" Margin="0,0,0,15">
+            <TextBlock Text="Товары в заказе:" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+            <TextBlock x:Name="TotalOrderText" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
+        </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,10">
-                        <TextBlock Text="итого: " FontSize="16"/>
-                        <TextBlock x:Name="TextOrderTotal" FontSize="16" FontWeight="Bold" 
-                           Margin="10,0"/>
-                    </StackPanel>
+        <ListView x:Name="OrderItemsList" Grid.Row="3" Margin="0,0,0,15" Height="200">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Товар" Width="250" DisplayMemberBinding="{Binding Product.NazvanieTovara}"/>
+                    <GridViewColumn Header="Цена" Width="120" DisplayMemberBinding="{Binding Product.Cena, StringFormat='{}{0:#,##0.00} ₽'}"/>
+                    <GridViewColumn Header="Количество" Width="100" DisplayMemberBinding="{Binding Quantity}"/>
+                    <GridViewColumn Header="Сумма" Width="120" DisplayMemberBinding="{Binding Total, StringFormat='{}{0:#,##0.00} ₽'}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,20">
-                        <Button Content="вернуться в корзину" Width="150" Height="30" 
-                        Margin="10" Click="BackToCart_Click"/>
-                        <Button Content="заказать" Width="150" Height="30" 
-                        Margin="10" Click="PlaceOrder_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" Click="Cancel_Click" Padding="15,8" Margin="0,0,10,0"/>
+            <Button Content="Заказать" Click="PlaceOrder_Click" Padding="15,8" Background="#FF4CAF50" Foreground="White" FontSize="14"/>
+        </StackPanel>
+    </Grid>
 </Page>

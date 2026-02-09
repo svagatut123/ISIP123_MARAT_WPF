@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using WpfApp1.pages;
 
 namespace WpfApp1
 {
@@ -12,117 +10,83 @@ namespace WpfApp1
         public Page3()
         {
             InitializeComponent();
-            LoadOrderItems();
-            LoadSavedData();
+            LoadCartItems();
         }
 
-        private void LoadOrderItems()
+        private void LoadCartItems()
         {
-            ListOrderItems.ItemsSource = Cart.Tovary;
-            decimal total = Cart.Tovary.Sum(item => item.Summa);
-            TextOrderTotal.Text = total.ToString("C");
+            OrderItemsList.ItemsSource = Cart.Items;
+            TotalOrderText.Text = $"Итого к оплате: {Cart.Total:#,##0.00} ₽";
         }
 
-        private void LoadSavedData()
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            if (Cart.OrderData != null)
+            var mainWindow = Window.GetWindow(this) as MainWindow;
+            if (mainWindow != null)
             {
-                TextFIO.Text = Cart.OrderData.FIO;
-                TextEmail.Text = Cart.OrderData.Email;
-                TextAddress.Text = Cart.OrderData.AdresDostavki;
+                mainWindow.ShowCart_Click(this, new RoutedEventArgs());
             }
-        }
-
-        private void BackToCart_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFormData();
-            NavigationService.Navigate(new Page2());
         }
 
         private void PlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TextFIO.Text))
+            string fio = FioBox.Text.Trim();
+            string email = EmailBox.Text.Trim();
+            string address = AddressBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(fio))
             {
-                MessageBox.Show("введите ФИО");
+                MessageBox.Show("Введите ФИО", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(TextEmail.Text))
+            if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                MessageBox.Show("введите email");
+                MessageBox.Show("Введите корректный email", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(TextAddress.Text))
+            if (string.IsNullOrWhiteSpace(address))
             {
-                MessageBox.Show("введите адрес доставки");
-                return;
-            }
-
-            if (Cart.Tovary.Count == 0)
-            {
-                MessageBox.Show("корзина пуста");
+                MessageBox.Show("Введите адрес доставки", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             try
             {
-                var order = new Order
+                var order = new Orders // Orders с "s"!
                 {
-                    FIO = TextFIO.Text,
-                    Email = TextEmail.Text,
-                    AdresDostavki = TextAddress.Text,
-                    ObshayaSumma = Cart.Tovary.Sum(item => item.Summa)
+                    FIO = fio,
+                    Email = email,
+                    AdresDostavki = address,
+                    ObshayaSumma = Cart.Total
                 };
+                Core.Context.Orders.Add(order);
+                Core.Context.SaveChanges();
 
-                Core.context.Orders.Add(order);
-                Core.context.SaveChanges();
-
-                foreach (var item in Cart.Tovary)
+                foreach (var item in Cart.Items)
                 {
-                    var orderItem = new OrderItem
+                    Core.Context.OrderItems.Add(new OrderItems // OrderItems с "s"!
                     {
                         OrderId = order.OrderId,
-                        ProductId = item.ProductId,
-                        Kolichestvo = item.Kolichestvo
-                    };
-                    Core.context.OrderItems.Add(orderItem);
+                        ProductId = item.Product.ProductId,
+                        Kolichestvo = item.Quantity
+                    });
                 }
+                Core.Context.SaveChanges();
 
-                Core.context.SaveChanges();
+                Cart.Clear();
+                MessageBox.Show($"Заказ №{order.OrderId} успешно оформлен!\nСпасибо за покупку!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                Cart.Tovary.Clear();
-                Cart.OrderData = new OrderFormData();
-
-                MessageBox.Show($"заказ №{order.OrderId} оформлен!");
-                NavigationService.Navigate(new Page1());
+                // Возвращаемся на страницу товаров
+                var mainWindow = Window.GetWindow(this) as MainWindow;
+                if (mainWindow != null)
+                {
+                    mainWindow.ShowProducts_Click(this, new RoutedEventArgs());
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ошибка: " + ex.Message);
+                MessageBox.Show($"Ошибка при сохранении заказа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void SaveFormData()
-        {
-            Cart.OrderData.FIO = TextFIO.Text;
-            Cart.OrderData.Email = TextEmail.Text;
-            Cart.OrderData.AdresDostavki = TextAddress.Text;
-        }
-
-        private void TextFIO_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Cart.OrderData.FIO = TextFIO.Text;
-        }
-
-        private void TextEmail_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Cart.OrderData.Email = TextEmail.Text;
-        }
-
-        private void TextAddress_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Cart.OrderData.AdresDostavki = TextAddress.Text;
         }
     }
 }

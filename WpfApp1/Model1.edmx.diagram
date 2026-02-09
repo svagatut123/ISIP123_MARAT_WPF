@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1928ac97b68e4bb49b264d62eac55061" Name="Diagram1">
+      <Diagram DiagramId="eafd7e6e483b4668ad15ed4c2d39de5e" Name="Diagram1">
         <EntityTypeShape EntityType="MaratPrac13Model.OrderItems" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MaratPrac13Model.Orders" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MaratPrac13Model.Products" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
