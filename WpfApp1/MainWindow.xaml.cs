@@ -7,7 +7,6 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            // Загружаем страницу товаров при старте
             MainFrame.Content = new Page1();
         }
 

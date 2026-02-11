@@ -39,7 +39,7 @@ namespace WpfApp1
                 MessageBox.Show("Введите ФИО", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            if (!email.Contains("@"))
             {
                 MessageBox.Show("Введите корректный email", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -52,7 +52,7 @@ namespace WpfApp1
 
             try
             {
-                var order = new Orders // Orders с "s"!
+                var order = new Orders 
                 {
                     FIO = fio,
                     Email = email,
@@ -64,7 +64,7 @@ namespace WpfApp1
 
                 foreach (var item in Cart.Items)
                 {
-                    Core.Context.OrderItems.Add(new OrderItems // OrderItems с "s"!
+                    Core.Context.OrderItems.Add(new OrderItems 
                     {
                         OrderId = order.OrderId,
                         ProductId = item.Product.ProductId,
@@ -74,9 +74,8 @@ namespace WpfApp1
                 Core.Context.SaveChanges();
 
                 Cart.Clear();
-                MessageBox.Show($"Заказ №{order.OrderId} успешно оформлен!\nСпасибо за покупку!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Заказ №{order.OrderId} успешно оформлен!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Возвращаемся на страницу товаров
                 var mainWindow = Window.GetWindow(this) as MainWindow;
                 if (mainWindow != null)
                 {

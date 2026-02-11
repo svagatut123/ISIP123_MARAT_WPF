@@ -52,7 +52,7 @@
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Отмена" Click="Cancel_Click" Padding="15,8" Margin="0,0,10,0"/>
-            <Button Content="Заказать" Click="PlaceOrder_Click" Padding="15,8" Background="#FF4CAF50" Foreground="White" FontSize="14"/>
+            <Button Content="Заказать" Click="PlaceOrder_Click" Padding="15,8" Background="#50C878" Foreground="#FFFFFF" FontSize="14"/>
         </StackPanel>
     </Grid>
 </Page>

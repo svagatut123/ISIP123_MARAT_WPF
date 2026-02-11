@@ -12,13 +12,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#FFEEEEEE" >
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#FFFFFF" >
             <Button Content="Товары" Click="ShowProducts_Click" Margin="5" Padding="10,5" FontSize="14"/>
             <Button Content="Корзина" Click="ShowCart_Click" Margin="5" Padding="10,5" FontSize="14"/>
-            <Button Content="Оформить заказ" Click="ShowCheckout_Click" Margin="5" Padding="10,5" FontSize="14" Background="#FF4CAF50" Foreground="White"/>
+            <Button Content="Оформить заказ" Click="ShowCheckout_Click" Margin="5" Padding="10,5" FontSize="14" Background="#50C878" Foreground="White"/>
         </StackPanel>
 
-        <!-- Контейнер для страниц -->
         <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
