@@ -1,23 +1,18 @@
 ﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="кинотеатр" Height="600" Width="900">
+        Title="Кинотеатр" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Background="LightGray">
-            <TextBox x:Name="SearchBox" Width="200" Margin="10,0,0,0" TextChanged="SearchBox_TextChanged" 
-                     VerticalContentAlignment="Center" Padding="5"/>
-            <ComboBox x:Name="SortComboBox" Width="150" Margin="10,0,0,0" SelectionChanged="SortComboBox_SelectionChanged">
-                <ComboBoxItem Content="название а-я"/>
-                <ComboBoxItem Content="название я-а"/>
-                <ComboBoxItem Content="рейтинг убыв"/>
-                <ComboBoxItem Content="рейтинг возраст"/>
-            </ComboBox>
-            <Button x:Name="AccountButton" Content="войти" Width="120" Margin="10,0,0,0" Click="AccountButton_Click"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+            <Button Content="Фильмы" Click="ShowMovies_Click" Margin="5" Padding="10,5" FontSize="14"/>
+            <Button Content="Вход" Click="ShowLogin_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="LoginButton"/>
+            <Button Content="Регистрация" Click="ShowRegister_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="RegisterButton"/>
+            <Button Content="Личный кабинет" Click="ShowProfile_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="ProfileButton" Visibility="Collapsed"/>
         </StackPanel>
 
         <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>

@@ -1,73 +1,55 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
-        public static user CurrentUser = null;
+        public static Client CurrentUser { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            ShowMoviesPage();
-            UpdateAccountButton();
+            ShowMovies_Click(null, null);
         }
 
-        private void ShowMoviesPage()
+        private void ShowMovies_Click(object sender, RoutedEventArgs e)
         {
-            var page = new MoviesPage();
-            MainFrame.Navigate(page);
+            MainFrame.Content = new MoviesPage();
         }
 
-        private void UpdateAccountButton()
+        private void ShowLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentUser == null)
+            MainFrame.Content = new LoginPage();
+        }
+
+        private void ShowRegister_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new RegisterPage();
+        }
+
+        private void ShowProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentUser != null)
             {
-                AccountButton.Content = "войти";
+                MainFrame.Content = new ProfilePage();
+            }
+        }
+
+        public void UpdateAuthButtons()
+        {
+            if (CurrentUser != null)
+            {
+                LoginButton.Visibility = Visibility.Collapsed;
+                RegisterButton.Visibility = Visibility.Collapsed;
+                ProfileButton.Visibility = Visibility.Visible;
+                ProfileButton.Content = "Личный кабинет: " + CurrentUser.FirstName;
             }
             else
             {
-                AccountButton.Content = "профиль (" + CurrentUser.first_name + ")";
+                LoginButton.Visibility = Visibility.Visible;
+                RegisterButton.Visibility = Visibility.Visible;
+                ProfileButton.Visibility = Visibility.Collapsed;
             }
-        }
-
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (MainFrame.Content is MoviesPage)
-            {
-                var page = (MoviesPage)MainFrame.Content;
-                page.ApplyFilter(SearchBox.Text);
-            }
-        }
-
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (MainFrame.Content is MoviesPage && SortComboBox.SelectedItem != null)
-            {
-                var page = (MoviesPage)MainFrame.Content;
-                var item = (ComboBoxItem)SortComboBox.SelectedItem;
-                page.ApplySort(item.Content.ToString());
-            }
-        }
-
-        private void AccountButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentUser == null)
-            {
-                var page = new LoginPage();
-                MainFrame.Navigate(page);
-            }
-            else
-            {
-                var page = new ProfilePage();
-                MainFrame.Navigate(page);
-            }
-        }
-
-        public void RefreshAccountButton()
-        {
-            UpdateAccountButton();
         }
     }
 }
