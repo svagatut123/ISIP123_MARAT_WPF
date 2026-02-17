@@ -1,0 +1,17 @@
+﻿<Page x:Class="WpfApp1.Pages.MoviePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Фильм">
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Name="TitleText" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock x:Name="DescriptionText" TextWrapping="Wrap" Margin="0,0,0,10"/>
+            <TextBlock x:Name="RatingText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="GenresText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="AgeRatingText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="ReleaseDateText" Margin="0,0,0,20"/>
+            <TextBlock Text="Сеансы:" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+            <StackPanel x:Name="SessionsPanel"/>
+        </StackPanel>
+    </Grid>
+</Page>

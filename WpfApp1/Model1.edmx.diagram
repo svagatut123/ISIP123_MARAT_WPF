@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="16490b0aa1754534b44917966411e0e6" Name="Diagram1">
+        <EntityTypeShape EntityType="MaratPrac14Model.AgeRating" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.genres" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.halls" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.Movies" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.seats" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.sessions" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.tickets" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.users" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <AssociationConnector Association="MaratPrac14Model.FK_Movies_AgeRating" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_seats_halls" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_sessions_halls" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_tickets_halls" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_sessions_Movies" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_tickets_seats" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_tickets_sessions" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_tickets_users" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.movie_genres" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

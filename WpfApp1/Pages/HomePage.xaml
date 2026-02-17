@@ -1,0 +1,19 @@
+﻿<Page x:Class="WpfApp1.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Главная">
+    <Grid>
+        <StackPanel>
+            <TextBox x:Name="SearchBox" Width="200" Margin="10"/>
+            <Button Content="Поиск" Click="Search_Click" Width="80" Margin="10"/>
+            <ComboBox x:Name="SortComboBox" Width="150" Margin="10">
+                <ComboBoxItem Content="По названию"/>
+                <ComboBoxItem Content="По рейтингу"/>
+            </ComboBox>
+            <Button Content="Сортировать" Click="Sort_Click" Width="80" Margin="10"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400">
+                <WrapPanel x:Name="MoviesPanel"/>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

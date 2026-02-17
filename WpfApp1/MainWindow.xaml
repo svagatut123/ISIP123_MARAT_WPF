@@ -3,18 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Кинотеатр" Height="600" Width="900">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
-            <Button Content="Фильмы" Click="ShowMovies_Click" Margin="5" Padding="10,5" FontSize="14"/>
-            <Button Content="Вход" Click="ShowLogin_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="LoginButton"/>
-            <Button Content="Регистрация" Click="ShowRegister_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="RegisterButton"/>
-            <Button Content="Личный кабинет" Click="ShowProfile_Click" Margin="5" Padding="10,5" FontSize="14" x:Name="ProfileButton" Visibility="Collapsed"/>
-        </StackPanel>
-
-        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

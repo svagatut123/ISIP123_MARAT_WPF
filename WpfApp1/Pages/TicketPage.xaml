@@ -1,0 +1,16 @@
+﻿<Page x:Class="WpfApp1.Pages.TicketPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Билет">
+    <Grid>
+        <StackPanel Width="400">
+            <TextBlock Text="Подтверждение" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+            <TextBlock x:Name="MovieText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="HallText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="DateTimeText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="SeatText" Margin="0,0,0,5"/>
+            <TextBlock x:Name="PriceText" Margin="0,0,0,20"/>
+            <Button Content="Подтвердить" Click="Confirm_Click" Width="200" Height="40"/>
+        </StackPanel>
+    </Grid>
+</Page>
