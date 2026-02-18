@@ -39,6 +39,7 @@ namespace WpfApp1.Pages
             movieBorder.Margin = new Thickness(5);
             movieBorder.Width = 200;
             movieBorder.Height = 300;
+            movieBorder.Cursor = System.Windows.Input.Cursors.Hand;
             movieBorder.MouseLeftButtonDown += (s, e) => Movie_Click(movie);
 
             StackPanel moviePanel = new StackPanel();
@@ -50,6 +51,7 @@ namespace WpfApp1.Pages
                 movieImage.Source = new BitmapImage(new Uri(movie.image_path));
                 movieImage.Width = 180;
                 movieImage.Height = 200;
+                movieImage.Stretch = Stretch.UniformToFill;
                 moviePanel.Children.Add(movieImage);
             }
 
@@ -57,6 +59,7 @@ namespace WpfApp1.Pages
             titleText.Text = movie.tittle;
             titleText.FontWeight = FontWeights.Bold;
             titleText.Height = 40;
+            titleText.TextWrapping = TextWrapping.Wrap;
             moviePanel.Children.Add(titleText);
 
             TextBlock ratingText = new TextBlock();
