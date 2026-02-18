@@ -3,17 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Главная">
     <Grid>
-        <StackPanel>
-            <TextBox x:Name="SearchBox" Width="200" Margin="10"/>
-            <Button Content="Поиск" Click="Search_Click" Width="80" Margin="10"/>
-            <ComboBox x:Name="SortComboBox" Width="150" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="SearchBox" Width="200" Margin="5"/>
+            <Button Content="Найти" Click="Search_Click" Width="80" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10">
+            <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="SortComboBox" Width="150" Margin="5">
                 <ComboBoxItem Content="По названию"/>
                 <ComboBoxItem Content="По рейтингу"/>
             </ComboBox>
-            <Button Content="Сортировать" Click="Sort_Click" Width="80" Margin="10"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400">
-                <WrapPanel x:Name="MoviesPanel"/>
-            </ScrollViewer>
+            <Button Content="Применить" Click="Sort_Click" Width="100" Margin="5"/>
         </StackPanel>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <WrapPanel x:Name="MoviesPanel" Margin="10"/>
+        </ScrollViewer>
     </Grid>
 </Page>

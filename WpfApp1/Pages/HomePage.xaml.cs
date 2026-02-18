@@ -10,11 +10,13 @@ namespace WpfApp1.Pages
 {
     public partial class HomePage : Page
     {
+        private MainWindow mainWindow;
         private List<Movies> allMovies;
 
-        public HomePage()
+        public HomePage(MainWindow window)
         {
             InitializeComponent();
+            mainWindow = window;
             LoadMovies();
         }
 
@@ -40,6 +42,7 @@ namespace WpfApp1.Pages
             movieBorder.MouseLeftButtonDown += (s, e) => Movie_Click(movie);
 
             StackPanel moviePanel = new StackPanel();
+            moviePanel.Margin = new Thickness(5);
 
             if (!string.IsNullOrEmpty(movie.image_path))
             {
@@ -51,8 +54,9 @@ namespace WpfApp1.Pages
             }
 
             TextBlock titleText = new TextBlock();
-            titleText.Text = movie.title;
+            titleText.Text = movie.tittle;
             titleText.FontWeight = FontWeights.Bold;
+            titleText.Height = 40;
             moviePanel.Children.Add(titleText);
 
             TextBlock ratingText = new TextBlock();
@@ -69,11 +73,7 @@ namespace WpfApp1.Pages
 
         private void Movie_Click(Movies movie)
         {
-            var mainWindow = Window.GetWindow(this) as MainWindow;
-            if (mainWindow != null)
-            {
-                mainWindow.MainFrame.Content = new MoviePage(movie.movie_id);
-            }
+            mainWindow.MainFrame.Content = new MoviePage(mainWindow, movie.movie_id);
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace WpfApp1.Pages
             MoviesPanel.Children.Clear();
 
             var filteredMovies = allMovies.Where(m =>
-                m.title.ToLower().Contains(searchTerm)).ToList();
+                m.tittle.ToLower().Contains(searchTerm)).ToList();
 
             foreach (var movie in filteredMovies)
             {
@@ -103,7 +103,7 @@ namespace WpfApp1.Pages
 
             if (selectedSort == "По названию")
             {
-                allMovies = allMovies.OrderBy(m => m.title).ToList();
+                allMovies = allMovies.OrderBy(m => m.tittle).ToList();
             }
             else if (selectedSort == "По рейтингу")
             {

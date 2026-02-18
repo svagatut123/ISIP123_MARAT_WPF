@@ -12,12 +12,13 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class seats
+    public partial class movie_genres
     {
-        public int Seats_id { get; set; }
-        public Nullable<int> Seats_number { get; set; }
-        public int hall_id { get; set; }
+        public int movie_id { get; set; }
+        public int genre_id { get; set; }
     
-        public virtual halls halls { get; set; }
+        public virtual genres genres { get; set; }
+        public virtual Movies Movies { get; set; }
+        public virtual Movies Movies1 { get; set; }
     }
 }

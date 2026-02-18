@@ -25,7 +25,6 @@ namespace WpfApp1
         public string password { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        public string phone_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tickets> tickets { get; set; }

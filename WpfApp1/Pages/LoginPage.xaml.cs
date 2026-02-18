@@ -6,9 +6,12 @@ namespace WpfApp1.Pages
 {
     public partial class LoginPage : Page
     {
-        public LoginPage()
+        private MainWindow mainWindow;
+
+        public LoginPage(MainWindow window)
         {
             InitializeComponent();
+            mainWindow = window;
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -16,17 +19,24 @@ namespace WpfApp1.Pages
             string email = EmailBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
 
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                MessageBox.Show("Введите email");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Введите пароль");
+                return;
+            }
+
             var user = Core.Context.users.FirstOrDefault(u => u.email == email && u.password == password);
 
             if (user != null)
             {
-                MainWindow.CurrentUserId = user.user_id;
-
-                var mainWindow = Window.GetWindow(this) as MainWindow;
-                if (mainWindow != null)
-                {
-                    mainWindow.MainFrame.Content = new HomePage();
-                }
+                MessageBox.Show($"Добро пожаловать, {user.firstname} {user.lastname}!");
+                mainWindow.MainFrame.Content = new HomePage(mainWindow);
             }
             else
             {

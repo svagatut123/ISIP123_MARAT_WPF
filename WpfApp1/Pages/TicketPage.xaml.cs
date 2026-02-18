@@ -7,12 +7,15 @@ namespace WpfApp1.Pages
 {
     public partial class TicketPage : Page
     {
+        private MainWindow mainWindow;
         private int sessionId;
         private int seatId;
+        private decimal price;
 
-        public TicketPage(int session_id, int seat_id)
+        public TicketPage(MainWindow window, int session_id, int seat_id)
         {
             InitializeComponent();
+            mainWindow = window;
             sessionId = session_id;
             seatId = seat_id;
             LoadTicketInfo();
@@ -23,42 +26,38 @@ namespace WpfApp1.Pages
             var session = Core.Context.sessions.FirstOrDefault(s => s.session_id == sessionId);
             if (session == null)
             {
-                var mainWindow = Window.GetWindow(this) as MainWindow;
-                if (mainWindow != null)
-                {
-                    mainWindow.MainFrame.Content = new HomePage();
-                }
+                MessageBox.Show("Сеанс не найден");
+                mainWindow.MainFrame.Content = new HomePage(mainWindow);
                 return;
             }
 
             var movie = Core.Context.Movies.FirstOrDefault(m => m.movie_id == session.movie_id);
             if (movie != null)
             {
-                MovieText.Text = $"Фильм: {movie.title}";
+                MovieText.Text = $"Фильм: {movie.tittle}";
             }
 
-            DateTimeText.Text = $"Дата: {session.session_datetime}";
-            PriceText.Text = $"Цена: {session.price}";
+            var hall = Core.Context.halls.FirstOrDefault(h => h.hall_id == session.hall_id);
+            if (hall != null)
+            {
+                HallText.Text = $"Зал: {hall.hallNumber}";
+            }
+
+            DateTimeText.Text = $"Дата и время: {session.session_datetime}";
+            price = (decimal)session.price;
+            PriceText.Text = $"Стоимость: {price} руб.";
+
+            var seat = Core.Context.seats.FirstOrDefault(s => s.Seats_id == seatId);
+            if (seat != null)
+            {
+                SeatText.Text = $"Место: {seat.Seats_number}";
+            }
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            var ticket = new tickets
-            {
-                user_id = MainWindow.CurrentUserId,
-                session_id = sessionId,
-                hall_id = 1,
-                seats_id = seatId
-            };
-
-            Core.Context.tickets.Add(ticket);
-            Core.Context.SaveChanges();
-
-            var mainWindow = Window.GetWindow(this) as MainWindow;
-            if (mainWindow != null)
-            {
-                mainWindow.MainFrame.Content = new HomePage();
-            }
+            MessageBox.Show("Пожалуйста, войдите в аккаунт для оформления билета");
+            mainWindow.MainFrame.Content = new LoginPage(mainWindow);
         }
     }
 }

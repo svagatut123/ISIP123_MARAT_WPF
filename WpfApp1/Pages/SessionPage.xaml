@@ -1,13 +1,26 @@
 ﻿<Page x:Class="WpfApp1.Pages.SessionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Сеанс">
+      Title="Выбор места">
     <Grid>
-        <StackPanel>
-            <TextBlock x:Name="MovieTitleText" Margin="10"/>
-            <TextBlock x:Name="SessionInfoText" Margin="10"/>
-            <WrapPanel x:Name="SeatsPanel" Margin="10"/>
-            <Button Content="Выбрать место" Click="BookTicket_Click" Margin="10" Width="150"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="10">
+            <TextBlock x:Name="MovieTitleText" FontSize="18" FontWeight="Bold"/>
+            <TextBlock x:Name="SessionInfoText"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <WrapPanel x:Name="SeatsPanel" Margin="10" Width="600"/>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Очистить выбор" Click="ClearSelection_Click" Margin="5" Width="120"/>
+            <Button Content="Оформить билет" Click="BookTicket_Click" Margin="5" Width="120"/>
         </StackPanel>
     </Grid>
 </Page>

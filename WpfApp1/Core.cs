@@ -8,6 +8,6 @@ namespace WpfApp1
 {
     class Core
     {
-        public static MaratPrac14Entities1 Context = new MaratPrac14Entities1();   
+        public static MaratPrac14Entities4 Context = new MaratPrac14Entities4();   
     }
 }

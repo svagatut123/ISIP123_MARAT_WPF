@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MaratPrac14Entities1 : DbContext
+    public partial class MaratPrac14Entities4 : DbContext
     {
-        public MaratPrac14Entities1()
-            : base("name=MaratPrac14Entities1")
+        public MaratPrac14Entities4()
+            : base("name=MaratPrac14Entities4")
         {
         }
     
@@ -28,6 +28,7 @@ namespace WpfApp1
         public virtual DbSet<AgeRating> AgeRating { get; set; }
         public virtual DbSet<genres> genres { get; set; }
         public virtual DbSet<halls> halls { get; set; }
+        public virtual DbSet<movie_genres> movie_genres { get; set; }
         public virtual DbSet<Movies> Movies { get; set; }
         public virtual DbSet<seats> seats { get; set; }
         public virtual DbSet<sessions> sessions { get; set; }

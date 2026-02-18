@@ -17,13 +17,13 @@ namespace WpfApp1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public genres()
         {
-            this.Movies = new HashSet<Movies>();
+            this.movie_genres = new HashSet<movie_genres>();
         }
     
         public int genre_id { get; set; }
         public string genre_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Movies> Movies { get; set; }
+        public virtual ICollection<movie_genres> movie_genres { get; set; }
     }
 }

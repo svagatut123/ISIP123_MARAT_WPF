@@ -24,7 +24,7 @@ namespace WpfApp1
         public int movie_id { get; set; }
         public int hall_id { get; set; }
         public Nullable<System.DateTime> session_datetime { get; set; }
-        public Nullable<int> price { get; set; }
+        public Nullable<decimal> price { get; set; }
     
         public virtual halls halls { get; set; }
         public virtual Movies Movies { get; set; }

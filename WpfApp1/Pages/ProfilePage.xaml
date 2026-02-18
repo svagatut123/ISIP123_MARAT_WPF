@@ -3,11 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Профиль">
     <Grid>
-        <StackPanel>
+        <StackPanel Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Профиль" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
-            <TextBlock x:Name="UserInfoText" Margin="10"/>
-            <TextBlock Text="Билеты" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-            <StackPanel x:Name="TicketsPanel"/>
+            <TextBlock Text="Пожалуйста, войдите в аккаунт" Margin="0,0,0,20"/>
+            <Button Content="Войти" Click="Login_Click" Width="150" Height="35" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>
