@@ -23,13 +23,13 @@ namespace WpfApp1
         }
     
         public int movie_id { get; set; }
-        public string tittle { get; set; }
+        public string title { get; set; }
         public string description { get; set; }
         public Nullable<double> rating { get; set; }
         public Nullable<System.DateTime> release_date { get; set; }
         public int age_ratingId { get; set; }
-        public string image_path { get; set; }
         public string movie_genres { get; set; }
+        public string image_path { get; set; }
     
         public virtual AgeRating AgeRating { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

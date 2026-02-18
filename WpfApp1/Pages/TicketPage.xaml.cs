@@ -34,7 +34,7 @@ namespace WpfApp1.Pages
             var movie = Core.Context.Movies.FirstOrDefault(m => m.movie_id == session.movie_id);
             if (movie != null)
             {
-                MovieText.Text = $"Фильм: {movie.tittle}";
+                MovieText.Text = $"Фильм: {movie.title}";
             }
 
             var hall = Core.Context.halls.FirstOrDefault(h => h.hall_id == session.hall_id);

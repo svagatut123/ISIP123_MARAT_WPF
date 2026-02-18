@@ -28,7 +28,7 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            TitleText.Text = movie.tittle;
+            TitleText.Text = movie.title;
             DescriptionText.Text = movie.description ?? "Описание отсутствует";
             RatingText.Text = $"Рейтинг: {movie.rating}";
             ReleaseDateText.Text = $"Дата выхода: {movie.release_date}";

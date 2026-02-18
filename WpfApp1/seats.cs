@@ -14,10 +14,18 @@ namespace WpfApp1
     
     public partial class seats
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public seats()
+        {
+            this.tickets = new HashSet<tickets>();
+        }
+    
         public int Seats_id { get; set; }
         public Nullable<int> Seats_number { get; set; }
         public int hall_id { get; set; }
     
         public virtual halls halls { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tickets> tickets { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace WpfApp1.Pages
                     var movie = Core.Context.Movies.FirstOrDefault(m => m.movie_id == session.movie_id);
                     if (movie != null)
                     {
-                        ticketsInfo += $"\n• {movie.tittle}\n  Дата: {session.session_datetime}\n";
+                        ticketsInfo += $"\n• {movie.title}\n  Дата: {session.session_datetime}\n";
                     }
                 }
             }

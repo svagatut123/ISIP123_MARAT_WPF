@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2f470fd2e9494ae89d7e04cd026d0bc6" Name="Diagram1">
-        <EntityTypeShape EntityType="MaratPrac14Model.AgeRating" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.genres" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.halls" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.movie_genres" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.Movies" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.seats" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.sessions" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.tickets" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaratPrac14Model.users" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+      <Diagram DiagramId="330e89fcb2f8414a937c36032b137bb5" Name="Diagram1">
+        <EntityTypeShape EntityType="MaratPrac14Model.AgeRating" Width="1.5" PointX="1.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.genres" Width="1.5" PointX="1.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.halls" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.movie_genres" Width="1.5" PointX="4" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.Movies" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.seats" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.sessions" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.tickets" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaratPrac14Model.users" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <AssociationConnector Association="MaratPrac14Model.FK_Movies_AgeRating" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_movie_genres_genres" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_seats_halls" ManuallyRouted="false" />
@@ -23,6 +23,7 @@
         <AssociationConnector Association="MaratPrac14Model.FK_movie_genres_Movies" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_movie_genres_Movies1" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_sessions_Movies" ManuallyRouted="false" />
+        <AssociationConnector Association="MaratPrac14Model.FK_tickets_seats" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_tickets_sessions" ManuallyRouted="false" />
         <AssociationConnector Association="MaratPrac14Model.FK_tickets_users" ManuallyRouted="false" />
       </Diagram>

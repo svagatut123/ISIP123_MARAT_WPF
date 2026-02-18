@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="limitation" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="genres">
@@ -40,13 +40,13 @@
             <PropertyRef Name="movie_id" />
           </Key>
           <Property Name="movie_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="tittle" Type="nvarchar" MaxLength="40" />
+          <Property Name="title" Type="nvarchar" MaxLength="40" />
           <Property Name="description" Type="nvarchar" MaxLength="400" />
           <Property Name="rating" Type="float" />
           <Property Name="release_date" Type="date" />
           <Property Name="age_ratingId" Type="int" Nullable="false" />
+          <Property Name="movie_genres" Type="nvarchar" MaxLength="4" />
           <Property Name="image_path" Type="nvarchar" MaxLength="400" />
-          <Property Name="movie_genres" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="seats">
           <Key>
@@ -60,11 +60,11 @@
           <Key>
             <PropertyRef Name="session_id" />
           </Key>
-          <Property Name="session_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="session_id" Type="int" Nullable="false" />
           <Property Name="movie_id" Type="int" Nullable="false" />
           <Property Name="hall_id" Type="int" Nullable="false" />
           <Property Name="session_datetime" Type="datetime" />
-          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -96,6 +96,7 @@
           <Property Name="password" Type="nvarchar" MaxLength="100" />
           <Property Name="firstname" Type="nvarchar" MaxLength="50" />
           <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="17" />
         </EntityType>
         <Association Name="FK_movie_genres_genres">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
@@ -193,6 +194,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tickets_seats">
+          <End Role="seats" Type="Self.seats" Multiplicity="1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seats">
+              <PropertyRef Name="Seats_id" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="seats_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tickets_sessions">
           <End Role="sessions" Type="Self.sessions" Multiplicity="1" />
           <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
@@ -260,6 +273,10 @@
             <End Role="halls" EntitySet="halls" />
             <End Role="tickets" EntitySet="tickets" />
           </AssociationSet>
+          <AssociationSet Name="FK_tickets_seats" Association="Self.FK_tickets_seats">
+            <End Role="seats" EntitySet="seats" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
           <AssociationSet Name="FK_tickets_sessions" Association="Self.FK_tickets_sessions">
             <End Role="sessions" EntitySet="sessions" />
             <End Role="tickets" EntitySet="tickets" />
@@ -278,7 +295,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="limitation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Movies" Relationship="Self.FK_Movies_AgeRating" FromRole="AgeRating" ToRole="Movies" />
         </EntityType>
@@ -317,13 +334,13 @@
             <PropertyRef Name="movie_id" />
           </Key>
           <Property Name="movie_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tittle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="rating" Type="Double" />
           <Property Name="release_date" Type="DateTime" Precision="0" />
           <Property Name="age_ratingId" Type="Int32" Nullable="false" />
+          <Property Name="movie_genres" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Name="image_path" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="movie_genres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AgeRating" Relationship="Self.FK_Movies_AgeRating" FromRole="Movies" ToRole="AgeRating" />
           <NavigationProperty Name="movie_genres1" Relationship="Self.FK_movie_genres_Movies" FromRole="Movies" ToRole="movie_genres" />
           <NavigationProperty Name="movie_genres2" Relationship="Self.FK_movie_genres_Movies1" FromRole="Movies" ToRole="movie_genres" />
@@ -337,16 +354,17 @@
           <Property Name="Seats_number" Type="Int32" />
           <Property Name="hall_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="halls" Relationship="Self.FK_seats_halls" FromRole="seats" ToRole="halls" />
+          <NavigationProperty Name="tickets" Relationship="Self.FK_tickets_seats" FromRole="seats" ToRole="tickets" />
         </EntityType>
         <EntityType Name="sessions">
           <Key>
             <PropertyRef Name="session_id" />
           </Key>
-          <Property Name="session_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="session_id" Type="Int32" Nullable="false" />
           <Property Name="movie_id" Type="Int32" Nullable="false" />
           <Property Name="hall_id" Type="Int32" Nullable="false" />
           <Property Name="session_datetime" Type="DateTime" Precision="3" />
-          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Int32" />
           <NavigationProperty Name="halls" Relationship="Self.FK_sessions_halls" FromRole="sessions" ToRole="halls" />
           <NavigationProperty Name="Movies" Relationship="Self.FK_sessions_Movies" FromRole="sessions" ToRole="Movies" />
           <NavigationProperty Name="tickets" Relationship="Self.FK_tickets_sessions" FromRole="sessions" ToRole="tickets" />
@@ -372,6 +390,7 @@
           <Property Name="hall_id" Type="Int32" Nullable="false" />
           <Property Name="seats_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="halls" Relationship="Self.FK_tickets_halls" FromRole="tickets" ToRole="halls" />
+          <NavigationProperty Name="seats" Relationship="Self.FK_tickets_seats" FromRole="tickets" ToRole="seats" />
           <NavigationProperty Name="sessions" Relationship="Self.FK_tickets_sessions" FromRole="tickets" ToRole="sessions" />
           <NavigationProperty Name="users" Relationship="Self.FK_tickets_users" FromRole="tickets" ToRole="users" />
         </EntityType>
@@ -384,6 +403,7 @@
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tickets" Relationship="Self.FK_tickets_users" FromRole="users" ToRole="tickets" />
         </EntityType>
         <Association Name="FK_Movies_AgeRating">
@@ -482,6 +502,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tickets_seats">
+          <End Role="seats" Type="Self.seats" Multiplicity="1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seats">
+              <PropertyRef Name="Seats_id" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="seats_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tickets_sessions">
           <End Role="sessions" Type="Self.sessions" Multiplicity="1" />
           <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
@@ -506,7 +538,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MaratPrac14Entities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MaratPrac14Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AgeRating" EntityType="Self.AgeRating" />
           <EntitySet Name="genres" EntityType="Self.genres" />
           <EntitySet Name="halls" EntityType="Self.halls" />
@@ -549,6 +581,10 @@
             <End Role="Movies" EntitySet="Movies" />
             <End Role="sessions" EntitySet="sessions" />
           </AssociationSet>
+          <AssociationSet Name="FK_tickets_seats" Association="Self.FK_tickets_seats">
+            <End Role="seats" EntitySet="seats" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
           <AssociationSet Name="FK_tickets_sessions" Association="Self.FK_tickets_sessions">
             <End Role="sessions" EntitySet="sessions" />
             <End Role="tickets" EntitySet="tickets" />
@@ -563,7 +599,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище MaratPrac14ModelContainer" CdmEntityContainer="MaratPrac14Entities4">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MaratPrac14ModelContainer" CdmEntityContainer="MaratPrac14Entities">
           <EntitySetMapping Name="AgeRating">
             <EntityTypeMapping TypeName="MaratPrac14Model.AgeRating">
               <MappingFragment StoreEntitySet="AgeRating">
@@ -601,13 +637,13 @@
             <EntityTypeMapping TypeName="MaratPrac14Model.Movies">
               <MappingFragment StoreEntitySet="Movies">
                 <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-                <ScalarProperty Name="tittle" ColumnName="tittle" />
+                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="release_date" ColumnName="release_date" />
                 <ScalarProperty Name="age_ratingId" ColumnName="age_ratingId" />
-                <ScalarProperty Name="image_path" ColumnName="image_path" />
                 <ScalarProperty Name="movie_genres" ColumnName="movie_genres" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -662,6 +698,7 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="firstname" ColumnName="firstname" />
                 <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

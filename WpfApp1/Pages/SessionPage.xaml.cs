@@ -33,7 +33,7 @@ namespace WpfApp1.Pages
             var movie = Core.Context.Movies.FirstOrDefault(m => m.movie_id == session.movie_id);
             if (movie != null)
             {
-                MovieTitleText.Text = $"Фильм: {movie.tittle}";
+                MovieTitleText.Text = $"Фильм: {movie.title}";
             }
 
             SessionInfoText.Text = $"Дата: {session.session_datetime} Цена: {session.price} руб.";

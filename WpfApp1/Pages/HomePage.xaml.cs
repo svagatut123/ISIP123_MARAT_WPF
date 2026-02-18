@@ -56,7 +56,7 @@ namespace WpfApp1.Pages
             }
 
             TextBlock titleText = new TextBlock();
-            titleText.Text = movie.tittle;
+            titleText.Text = movie.title;
             titleText.FontWeight = FontWeights.Bold;
             titleText.Height = 40;
             titleText.TextWrapping = TextWrapping.Wrap;
@@ -85,7 +85,7 @@ namespace WpfApp1.Pages
             MoviesPanel.Children.Clear();
 
             var filteredMovies = allMovies.Where(m =>
-                m.tittle.ToLower().Contains(searchTerm)).ToList();
+                m.title.ToLower().Contains(searchTerm)).ToList();
 
             foreach (var movie in filteredMovies)
             {
@@ -106,7 +106,7 @@ namespace WpfApp1.Pages
 
             if (selectedSort == "По названию")
             {
-                allMovies = allMovies.OrderBy(m => m.tittle).ToList();
+                allMovies = allMovies.OrderBy(m => m.title).ToList();
             }
             else if (selectedSort == "По рейтингу")
             {

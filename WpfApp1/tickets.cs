@@ -22,6 +22,7 @@ namespace WpfApp1
         public int seats_id { get; set; }
     
         public virtual halls halls { get; set; }
+        public virtual seats seats { get; set; }
         public virtual sessions sessions { get; set; }
         public virtual users users { get; set; }
     }

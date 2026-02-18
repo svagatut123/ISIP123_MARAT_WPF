@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MaratPrac14Entities4 : DbContext
+    public partial class MaratPrac14Entities : DbContext
     {
-        public MaratPrac14Entities4()
-            : base("name=MaratPrac14Entities4")
+        public MaratPrac14Entities()
+            : base("name=MaratPrac14Entities")
         {
         }
     
