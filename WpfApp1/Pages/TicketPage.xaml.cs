@@ -56,8 +56,34 @@ namespace WpfApp1.Pages
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Пожалуйста, войдите в аккаунт для оформления билета");
-            mainWindow.MainFrame.Content = new LoginPage(mainWindow);
+            if (Core.CurrentUser == null)
+            {
+                MessageBox.Show("Пожалуйста, войдите в аккаунт для оформления билета");
+                mainWindow.MainFrame.Content = new LoginPage(mainWindow);
+                return;
+            }
+
+            try
+            {
+                var ticket = new tickets
+                {
+                    user_id = Core.CurrentUser.user_id,
+                    session_id = sessionId,
+                    purchase_datetime = DateTime.Now,
+                    hall_id = Core.Context.sessions.FirstOrDefault(s => s.session_id == sessionId).hall_id,
+                    seats_id = seatId
+                };
+
+                Core.Context.tickets.Add(ticket);
+                Core.Context.SaveChanges();
+
+                MessageBox.Show("Билет успешно оформлен!");
+                mainWindow.MainFrame.Content = new HomePage(mainWindow);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Ошибка при оформлении билета: {ex.Message}");
+            }
         }
     }
 }

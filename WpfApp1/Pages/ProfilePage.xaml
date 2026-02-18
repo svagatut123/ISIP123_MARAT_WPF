@@ -4,9 +4,9 @@
       Title="Профиль">
     <Grid>
         <StackPanel Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Профиль" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
-            <TextBlock Text="Пожалуйста, войдите в аккаунт" Margin="0,0,0,20"/>
-            <Button Content="Войти" Click="Login_Click" Width="150" Height="35" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="WelcomeText" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+            <TextBlock x:Name="UserInfoText" Margin="0,0,0,20"/>
+            <Button x:Name="LoginButton" Content="Войти" Click="Login_Click" Width="150" Height="35" HorizontalAlignment="Center" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Page>

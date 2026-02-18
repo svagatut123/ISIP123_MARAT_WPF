@@ -35,6 +35,7 @@ namespace WpfApp1.Pages
 
             if (user != null)
             {
+                Core.CurrentUser = user; 
                 MessageBox.Show($"Добро пожаловать, {user.firstname} {user.lastname}!");
                 mainWindow.MainFrame.Content = new HomePage(mainWindow);
             }
