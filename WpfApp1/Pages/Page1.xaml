@@ -1,0 +1,59 @@
+﻿<Page x:Class="WpfApp1.Pages.Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Выбор комплектующих">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="SearchBox" Width="200" Margin="0,0,10,0" TextChanged="SearchChanged"/>
+                <ComboBox x:Name="TypeFilter" Width="150" Margin="0,0,10,0" SelectionChanged="FilterChanged"/>
+                <ComboBox x:Name="ManufFilter" Width="150" SelectionChanged="FilterChanged"/>
+            </StackPanel>
+
+            <DataGrid Grid.Row="1" x:Name="PartsGrid" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="PartsGridDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding name}" Width="*"/>
+                    <DataGridTextColumn Header="Производитель" Binding="{Binding manufacturer.name}" Width="150"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding price, StringFormat={}{0:N0} ₽}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="10,0,0,0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Выбрано:" FontWeight="Bold" Margin="0,0,0,10"/>
+                <ListBox Grid.Row="1" x:Name="SelectedList" Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Value.name}" Margin="0,2"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Grid.Row="2" x:Name="TotalText" FontWeight="Bold" Margin="0,10"/>
+
+                <StackPanel Grid.Row="3">
+                    <Button Content="Проверить" Click="CheckClick" Margin="0,0,0,5"/>
+                    <Button Content="Сохранить" Click="SaveClick" Background="#DDDDDD"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
