@@ -12,20 +12,11 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class motherboard_
+    public partial class hdd
     {
         public int id { get; set; }
-        public int socketid { get; set; }
-        public int formfactorid { get; set; }
-        public int memoryslots { get; set; }
-        public int memorytypeid { get; set; }
-        public int pcislots { get; set; }
-        public int sataports { get; set; }
-        public int usbports { get; set; }
+        public int rotationspeed { get; set; }
     
-        public virtual basepart_ basepart_ { get; set; }
-        public virtual formfactor_ formfactor_ { get; set; }
-        public virtual memorytype_ memorytype_ { get; set; }
-        public virtual socket_ socket_ { get; set; }
+        public virtual storagedevice storagedevice { get; set; }
     }
 }

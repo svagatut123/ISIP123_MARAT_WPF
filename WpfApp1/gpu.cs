@@ -12,18 +12,24 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class certificate_
+    public partial class gpu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public certificate_()
+        public gpu()
         {
-            this.powersupply_ = new HashSet<powersupply_>();
+            this.videoconnectorgpu = new HashSet<videoconnectorgpu>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
+        public int gpuinterfaceid { get; set; }
+        public int chipfrequency { get; set; }
+        public int videomemory { get; set; }
+        public int memorybus { get; set; }
+        public Nullable<int> recommendpower { get; set; }
     
+        public virtual basepart basepart { get; set; }
+        public virtual gpuinterface gpuinterface { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<powersupply_> powersupply_ { get; set; }
+        public virtual ICollection<videoconnectorgpu> videoconnectorgpu { get; set; }
     }
 }

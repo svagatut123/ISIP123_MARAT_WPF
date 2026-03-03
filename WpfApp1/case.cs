@@ -12,24 +12,22 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class gpu_
+    public partial class @case
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public gpu_()
+        public @case()
         {
-            this.videoconnectorgpu_ = new HashSet<videoconnectorgpu_>();
+            this.boardformfactorcase = new HashSet<boardformfactorcase>();
         }
     
         public int id { get; set; }
-        public int gpuinterfaceid { get; set; }
-        public int chipfrequency { get; set; }
-        public int videomemory { get; set; }
-        public int memorybus { get; set; }
-        public Nullable<int> recommendpower { get; set; }
+        public int sizeid { get; set; }
+        public int expansionslots { get; set; }
+        public int fans { get; set; }
     
-        public virtual basepart_ basepart_ { get; set; }
-        public virtual gpuinterface_ gpuinterface_ { get; set; }
+        public virtual basepart basepart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<videoconnectorgpu_> videoconnectorgpu_ { get; set; }
+        public virtual ICollection<boardformfactorcase> boardformfactorcase { get; set; }
+        public virtual casesize casesize { get; set; }
     }
 }

@@ -12,21 +12,32 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class fandimension_
+    public partial class basepart
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public fandimension_()
+        public basepart()
         {
-            this.powersupply_ = new HashSet<powersupply_>();
-            this.processorcooler_ = new HashSet<processorcooler_>();
+            this.partassembly = new HashSet<partassembly>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
+        public int manufacturerid { get; set; }
+        public int parttypeid { get; set; }
+        public string image { get; set; }
+        public decimal price { get; set; }
     
+        public virtual manufacturer manufacturer { get; set; }
+        public virtual parttype parttype { get; set; }
+        public virtual @case @case { get; set; }
+        public virtual cpu cpu { get; set; }
+        public virtual gpu gpu { get; set; }
+        public virtual motherboard motherboard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<powersupply_> powersupply_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<processorcooler_> processorcooler_ { get; set; }
+        public virtual ICollection<partassembly> partassembly { get; set; }
+        public virtual powersupply powersupply { get; set; }
+        public virtual processorcooler processorcooler { get; set; }
+        public virtual ram ram { get; set; }
+        public virtual storagedevice storagedevice { get; set; }
     }
 }

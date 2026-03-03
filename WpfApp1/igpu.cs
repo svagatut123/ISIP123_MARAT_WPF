@@ -12,21 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class formfactor_
+    public partial class igpu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public formfactor_()
+        public igpu()
         {
-            this.boardformfactorcase_ = new HashSet<boardformfactorcase_>();
-            this.motherboard_ = new HashSet<motherboard_>();
+            this.cpu = new HashSet<cpu>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<boardformfactorcase_> boardformfactorcase_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<motherboard_> motherboard_ { get; set; }
+        public virtual ICollection<cpu> cpu { get; set; }
     }
 }

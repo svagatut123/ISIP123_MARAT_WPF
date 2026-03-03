@@ -1,36 +1,65 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace WpfApp1.Pages
 {
     public partial class Page3 : Page
     {
-        public Page3()
+        private List<basepart> _buildItems;
+
+        public Page3(List<basepart> items)
         {
             InitializeComponent();
-            AssembliesGrid.ItemsSource = Core.Context.assembly_.ToList();
+            _buildItems = items;
         }
 
-        private void ShowDetails(object sender, MouseButtonEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (AssembliesGrid.SelectedItem is assembly_ asm)
+            string name = BuildNameBox.Text.Trim();
+            string author = AuthorBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(author))
             {
-                var parts = Core.Context.partassembly_.Where(pa => pa.assemblyid == asm.id)
-                    .Select(pa => pa.basepart_).ToList();
+                MessageBox.Show("Заполните все поля", "Ошибка");
+                return;
+            }
 
-                string msg = $"Сборка: {asm.name}\nАвтор: {asm.author}\n\n";
-                foreach (var p in parts) msg += $"{p.name} - {p.price:N0} ₽\n";
+            try
+            {
+                var newBuild = new assembly
+                {
+                    name = name,
+                    author = author
+                };
 
-                MessageBox.Show(msg);
+                Core.Context.assembly.Add(newBuild);
+                Core.Context.SaveChanges();
+
+                foreach (var item in _buildItems)
+                {
+                    Core.Context.partassembly.Add(new partassembly
+                    {
+                        partid = item.id,
+                        assemblyid = newBuild.id
+                    });
+                }
+                Core.Context.SaveChanges();
+
+                MessageBox.Show("Сборка успешно сохранена!", "Успех");
+                NavigationService.Navigate(new Page2());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка БД: {ex.Message}", "Ошибка");
             }
         }
 
-        private void BackClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            var wnd = Window.GetWindow(this) as MainWindow;
-            wnd?.MainFrame.Navigate(new Page1());
+            NavigationService.GoBack();
         }
     }
 }

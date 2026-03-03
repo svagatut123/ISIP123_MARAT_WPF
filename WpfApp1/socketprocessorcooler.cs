@@ -12,18 +12,13 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class igpu_
+    public partial class socketprocessorcooler
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public igpu_()
-        {
-            this.cpu_ = new HashSet<cpu_>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int socketid { get; set; }
+        public int processorcoolerid { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cpu_> cpu_ { get; set; }
+        public virtual processorcooler processorcooler { get; set; }
+        public virtual socket socket { get; set; }
     }
 }

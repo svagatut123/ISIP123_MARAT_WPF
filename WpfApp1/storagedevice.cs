@@ -12,13 +12,17 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class partassembly_
+    public partial class storagedevice
     {
         public int id { get; set; }
-        public int partid { get; set; }
-        public int assemblyid { get; set; }
+        public int capacity { get; set; }
+        public int storagedeviceinterfaceid { get; set; }
+        public int storagedevicetypeid { get; set; }
     
-        public virtual assembly_ assembly_ { get; set; }
-        public virtual basepart_ basepart_ { get; set; }
+        public virtual basepart basepart { get; set; }
+        public virtual hdd hdd { get; set; }
+        public virtual ssd ssd { get; set; }
+        public virtual storagedeviceinterface storagedeviceinterface { get; set; }
+        public virtual storagedevicetype storagedevicetype { get; set; }
     }
 }

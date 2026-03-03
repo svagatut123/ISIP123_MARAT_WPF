@@ -12,13 +12,19 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class boardformfactorcase_
+    public partial class assembly
     {
-        public int id { get; set; }
-        public int caseid { get; set; }
-        public int formfactorid { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public assembly()
+        {
+            this.partassembly = new HashSet<partassembly>();
+        }
     
-        public virtual case_ case_ { get; set; }
-        public virtual formfactor_ formfactor_ { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string author { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<partassembly> partassembly { get; set; }
     }
 }

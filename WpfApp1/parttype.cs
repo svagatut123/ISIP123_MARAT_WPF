@@ -12,21 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class memorytype_
+    public partial class parttype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public memorytype_()
+        public parttype()
         {
-            this.motherboard_ = new HashSet<motherboard_>();
-            this.ram_ = new HashSet<ram_>();
+            this.basepart = new HashSet<basepart>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<motherboard_> motherboard_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ram_> ram_ { get; set; }
+        public virtual ICollection<basepart> basepart { get; set; }
     }
 }

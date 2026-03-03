@@ -12,22 +12,24 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class case_
+    public partial class socket
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public case_()
+        public socket()
         {
-            this.boardformfactorcase_ = new HashSet<boardformfactorcase_>();
+            this.cpu = new HashSet<cpu>();
+            this.motherboard = new HashSet<motherboard>();
+            this.socketprocessorcooler = new HashSet<socketprocessorcooler>();
         }
     
         public int id { get; set; }
-        public int sizeid { get; set; }
-        public int expansionslots { get; set; }
-        public int fans { get; set; }
+        public string name { get; set; }
     
-        public virtual basepart_ basepart_ { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<boardformfactorcase_> boardformfactorcase_ { get; set; }
-        public virtual casesize_ casesize_ { get; set; }
+        public virtual ICollection<cpu> cpu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<motherboard> motherboard { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<socketprocessorcooler> socketprocessorcooler { get; set; }
     }
 }

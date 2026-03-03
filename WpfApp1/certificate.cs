@@ -12,11 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class ssd_
+    public partial class certificate
     {
-        public int id { get; set; }
-        public int tbw { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public certificate()
+        {
+            this.powersupply = new HashSet<powersupply>();
+        }
     
-        public virtual storagedevice_ storagedevice_ { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<powersupply> powersupply { get; set; }
     }
 }

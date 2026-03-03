@@ -12,20 +12,16 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class cpu_
+    public partial class ram
     {
         public int id { get; set; }
-        public int socketid { get; set; }
-        public int numberofcores { get; set; }
-        public double basecorefrequency { get; set; }
-        public double maxcorefrequency { get; set; }
-        public int cachel3 { get; set; }
-        public Nullable<int> igpuid { get; set; }
-        public int thermalpower { get; set; }
-        public bool hasigpu { get; set; }
+        public int memorytypeid { get; set; }
+        public int capacity { get; set; }
+        public int count { get; set; }
+        public int ghz { get; set; }
+        public string timings { get; set; }
     
-        public virtual basepart_ basepart_ { get; set; }
-        public virtual igpu_ igpu_ { get; set; }
-        public virtual socket_ socket_ { get; set; }
+        public virtual basepart basepart { get; set; }
+        public virtual memorytype memorytype { get; set; }
     }
 }

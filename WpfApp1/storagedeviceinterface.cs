@@ -12,16 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class ram_
+    public partial class storagedeviceinterface
     {
-        public int id { get; set; }
-        public int memorytypeid { get; set; }
-        public int capacity { get; set; }
-        public int count { get; set; }
-        public int ghz { get; set; }
-        public string timings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public storagedeviceinterface()
+        {
+            this.storagedevice = new HashSet<storagedevice>();
+        }
     
-        public virtual basepart_ basepart_ { get; set; }
-        public virtual memorytype_ memorytype_ { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<storagedevice> storagedevice { get; set; }
     }
 }

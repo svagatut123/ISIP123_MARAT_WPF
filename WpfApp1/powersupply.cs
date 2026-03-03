@@ -12,18 +12,15 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class manufacturer_
+    public partial class powersupply
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public manufacturer_()
-        {
-            this.basepart_ = new HashSet<basepart_>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int power { get; set; }
+        public int fandimensionid { get; set; }
+        public int certificationid { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<basepart_> basepart_ { get; set; }
+        public virtual basepart basepart { get; set; }
+        public virtual certificate certificate { get; set; }
+        public virtual fandimension fandimension { get; set; }
     }
 }

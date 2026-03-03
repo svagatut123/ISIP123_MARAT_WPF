@@ -12,18 +12,21 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class parttype_
+    public partial class fandimension
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public parttype_()
+        public fandimension()
         {
-            this.basepart_ = new HashSet<basepart_>();
+            this.powersupply = new HashSet<powersupply>();
+            this.processorcooler = new HashSet<processorcooler>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<basepart_> basepart_ { get; set; }
+        public virtual ICollection<powersupply> powersupply { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<processorcooler> processorcooler { get; set; }
     }
 }

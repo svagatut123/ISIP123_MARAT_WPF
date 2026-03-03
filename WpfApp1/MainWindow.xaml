@@ -1,19 +1,21 @@
 ﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Собери ПК" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Собери Сам ПК" Height="600" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="Сборка">
-                <MenuItem Header="Новая" Click="NewClick"/>
-                <MenuItem Header="Сохранить" Click="SaveClick"/>
-            </MenuItem>
-            <MenuItem Header="Список" Click="ListClick"/>
-        </Menu>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Конструктор" Width="150" Height="40" Margin="10" 
+                    Click="GoToBuilder_Click"/>
+            <Button Content="Мои сборки" Width="150" Height="40" Margin="10" 
+                    Click="GoToHistory_Click"/>
+        </StackPanel>
+
         <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

@@ -1,6 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
+﻿using System.Windows.Controls;
+using System.Linq;
 namespace WpfApp1.Pages
 {
     public partial class Page2 : Page
@@ -8,32 +7,12 @@ namespace WpfApp1.Pages
         public Page2()
         {
             InitializeComponent();
+            LoadHistory();
         }
 
-        private void SaveClick(object sender, RoutedEventArgs e)
+        private void LoadHistory()
         {
-            if (string.IsNullOrWhiteSpace(NameBox.Text) || string.IsNullOrWhiteSpace(AuthorBox.Text))
-            {
-                MessageBox.Show("Заполните все поля");
-                return;
-            }
-
-            if (BuildData.SaveAssembly(NameBox.Text, AuthorBox.Text))
-            {
-                MessageBox.Show("Сохранено");
-                BuildData.Clear();
-                CancelClick(sender, e);
-            }
-            else
-            {
-                MessageBox.Show("Ошибка сохранения");
-            }
-        }
-
-        private void CancelClick(object sender, RoutedEventArgs e)
-        {
-            var wnd = Window.GetWindow(this) as MainWindow;
-            wnd?.MainFrame.Navigate(new Page1());
+            HistoryGrid.ItemsSource = Core.Context.assembly.ToList();
         }
     }
 }

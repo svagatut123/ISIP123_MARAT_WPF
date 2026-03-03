@@ -12,13 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class videoconnectorgpu_
+    public partial class videoconnector
     {
-        public int id { get; set; }
-        public int gpuid { get; set; }
-        public int videoconnectorid { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public videoconnector()
+        {
+            this.videoconnectorgpu = new HashSet<videoconnectorgpu>();
+        }
     
-        public virtual gpu_ gpu_ { get; set; }
-        public virtual videoconnector_ videoconnector_ { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<videoconnectorgpu> videoconnectorgpu { get; set; }
     }
 }

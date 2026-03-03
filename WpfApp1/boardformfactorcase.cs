@@ -12,18 +12,13 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class storagedevicetype_
+    public partial class boardformfactorcase
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public storagedevicetype_()
-        {
-            this.storagedevice_ = new HashSet<storagedevice_>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int caseid { get; set; }
+        public int formfactorid { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<storagedevice_> storagedevice_ { get; set; }
+        public virtual @case @case { get; set; }
+        public virtual formfactor formfactor { get; set; }
     }
 }

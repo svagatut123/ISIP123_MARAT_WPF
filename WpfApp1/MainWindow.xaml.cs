@@ -12,20 +12,14 @@ namespace WpfApp1
             MainFrame.Navigate(new Page1());
         }
 
-        private void NewClick(object sender, RoutedEventArgs e)
+        private void GoToBuilder_Click(object sender, RoutedEventArgs e)
         {
-            BuildData.Clear();
             MainFrame.Navigate(new Page1());
         }
 
-        private void SaveClick(object sender, RoutedEventArgs e)
+        private void GoToHistory_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new Page2());
-        }
-
-        private void ListClick(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Page3());
         }
     }
 }

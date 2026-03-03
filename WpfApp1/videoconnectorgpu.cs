@@ -12,11 +12,13 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class hdd_
+    public partial class videoconnectorgpu
     {
         public int id { get; set; }
-        public int rotationspeed { get; set; }
+        public int gpuid { get; set; }
+        public int videoconnectorid { get; set; }
     
-        public virtual storagedevice_ storagedevice_ { get; set; }
+        public virtual gpu gpu { get; set; }
+        public virtual videoconnector videoconnector { get; set; }
     }
 }

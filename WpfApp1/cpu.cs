@@ -12,13 +12,20 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class socketprocessorcooler_
+    public partial class cpu
     {
         public int id { get; set; }
         public int socketid { get; set; }
-        public int processorcoolerid { get; set; }
+        public int numberofcores { get; set; }
+        public double basecorefrequency { get; set; }
+        public double maxcorefrequency { get; set; }
+        public int cachel3 { get; set; }
+        public Nullable<int> igpuid { get; set; }
+        public int thermalpower { get; set; }
+        public bool hasigpu { get; set; }
     
-        public virtual processorcooler_ processorcooler_ { get; set; }
-        public virtual socket_ socket_ { get; set; }
+        public virtual basepart basepart { get; set; }
+        public virtual igpu igpu { get; set; }
+        public virtual socket socket { get; set; }
     }
 }

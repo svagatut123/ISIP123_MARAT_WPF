@@ -12,24 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class socket_
+    public partial class gpuinterface
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public socket_()
+        public gpuinterface()
         {
-            this.cpu_ = new HashSet<cpu_>();
-            this.motherboard_ = new HashSet<motherboard_>();
-            this.socketprocessorcooler_ = new HashSet<socketprocessorcooler_>();
+            this.gpu = new HashSet<gpu>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cpu_> cpu_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<motherboard_> motherboard_ { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<socketprocessorcooler_> socketprocessorcooler_ { get; set; }
+        public virtual ICollection<gpu> gpu { get; set; }
     }
 }

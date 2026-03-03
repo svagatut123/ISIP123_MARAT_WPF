@@ -12,15 +12,18 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class powersupply_
+    public partial class storagedevicetype
     {
-        public int id { get; set; }
-        public int power { get; set; }
-        public int fandimensionid { get; set; }
-        public int certificationid { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public storagedevicetype()
+        {
+            this.storagedevice = new HashSet<storagedevice>();
+        }
     
-        public virtual basepart_ basepart_ { get; set; }
-        public virtual certificate_ certificate_ { get; set; }
-        public virtual fandimension_ fandimension_ { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<storagedevice> storagedevice { get; set; }
     }
 }

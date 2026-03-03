@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     class Core
     {
-        public static pr15Entities1 Context = new pr15Entities1();
+        public static pr15Entities2 Context = new pr15Entities2();
     }
 }
 

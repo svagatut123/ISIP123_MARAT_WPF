@@ -12,18 +12,11 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class gpuinterface_
+    public partial class ssd
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public gpuinterface_()
-        {
-            this.gpu_ = new HashSet<gpu_>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int tbw { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<gpu_> gpu_ { get; set; }
+        public virtual storagedevice storagedevice { get; set; }
     }
 }

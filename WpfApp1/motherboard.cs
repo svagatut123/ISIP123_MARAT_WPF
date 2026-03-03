@@ -12,18 +12,20 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class storagedeviceinterface_
+    public partial class motherboard
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public storagedeviceinterface_()
-        {
-            this.storagedevice_ = new HashSet<storagedevice_>();
-        }
-    
         public int id { get; set; }
-        public string name { get; set; }
+        public int socketid { get; set; }
+        public int formfactorid { get; set; }
+        public int memoryslots { get; set; }
+        public int memorytypeid { get; set; }
+        public int pcislots { get; set; }
+        public int sataports { get; set; }
+        public int usbports { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<storagedevice_> storagedevice_ { get; set; }
+        public virtual basepart basepart { get; set; }
+        public virtual formfactor formfactor { get; set; }
+        public virtual memorytype memorytype { get; set; }
+        public virtual socket socket { get; set; }
     }
 }

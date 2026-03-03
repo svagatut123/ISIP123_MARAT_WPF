@@ -12,18 +12,21 @@ namespace WpfApp1
     using System;
     using System.Collections.Generic;
     
-    public partial class casesize_
+    public partial class memorytype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public casesize_()
+        public memorytype()
         {
-            this.case_ = new HashSet<case_>();
+            this.motherboard = new HashSet<motherboard>();
+            this.ram = new HashSet<ram>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<case_> case_ { get; set; }
+        public virtual ICollection<motherboard> motherboard { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ram> ram { get; set; }
     }
 }

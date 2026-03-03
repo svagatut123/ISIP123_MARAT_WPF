@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class pr15Entities1 : DbContext
+    public partial class pr15Entities2 : DbContext
     {
-        public pr15Entities1()
-            : base("name=pr15Entities1")
+        public pr15Entities2()
+            : base("name=pr15Entities2")
         {
         }
     
@@ -25,34 +25,34 @@ namespace WpfApp1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<assembly_> assembly_ { get; set; }
-        public virtual DbSet<basepart_> basepart_ { get; set; }
-        public virtual DbSet<boardformfactorcase_> boardformfactorcase_ { get; set; }
-        public virtual DbSet<case_> case_ { get; set; }
-        public virtual DbSet<casesize_> casesize_ { get; set; }
-        public virtual DbSet<certificate_> certificate_ { get; set; }
-        public virtual DbSet<cpu_> cpu_ { get; set; }
-        public virtual DbSet<fandimension_> fandimension_ { get; set; }
-        public virtual DbSet<formfactor_> formfactor_ { get; set; }
-        public virtual DbSet<gpu_> gpu_ { get; set; }
-        public virtual DbSet<gpuinterface_> gpuinterface_ { get; set; }
-        public virtual DbSet<hdd_> hdd_ { get; set; }
-        public virtual DbSet<igpu_> igpu_ { get; set; }
-        public virtual DbSet<manufacturer_> manufacturer_ { get; set; }
-        public virtual DbSet<memorytype_> memorytype_ { get; set; }
-        public virtual DbSet<motherboard_> motherboard_ { get; set; }
-        public virtual DbSet<partassembly_> partassembly_ { get; set; }
-        public virtual DbSet<parttype_> parttype_ { get; set; }
-        public virtual DbSet<powersupply_> powersupply_ { get; set; }
-        public virtual DbSet<processorcooler_> processorcooler_ { get; set; }
-        public virtual DbSet<ram_> ram_ { get; set; }
-        public virtual DbSet<socket_> socket_ { get; set; }
-        public virtual DbSet<socketprocessorcooler_> socketprocessorcooler_ { get; set; }
-        public virtual DbSet<ssd_> ssd_ { get; set; }
-        public virtual DbSet<storagedevice_> storagedevice_ { get; set; }
-        public virtual DbSet<storagedeviceinterface_> storagedeviceinterface_ { get; set; }
-        public virtual DbSet<storagedevicetype_> storagedevicetype_ { get; set; }
-        public virtual DbSet<videoconnector_> videoconnector_ { get; set; }
-        public virtual DbSet<videoconnectorgpu_> videoconnectorgpu_ { get; set; }
+        public virtual DbSet<assembly> assembly { get; set; }
+        public virtual DbSet<basepart> basepart { get; set; }
+        public virtual DbSet<boardformfactorcase> boardformfactorcase { get; set; }
+        public virtual DbSet<@case> @case { get; set; }
+        public virtual DbSet<casesize> casesize { get; set; }
+        public virtual DbSet<certificate> certificate { get; set; }
+        public virtual DbSet<cpu> cpu { get; set; }
+        public virtual DbSet<fandimension> fandimension { get; set; }
+        public virtual DbSet<formfactor> formfactor { get; set; }
+        public virtual DbSet<gpu> gpu { get; set; }
+        public virtual DbSet<gpuinterface> gpuinterface { get; set; }
+        public virtual DbSet<hdd> hdd { get; set; }
+        public virtual DbSet<igpu> igpu { get; set; }
+        public virtual DbSet<manufacturer> manufacturer { get; set; }
+        public virtual DbSet<memorytype> memorytype { get; set; }
+        public virtual DbSet<motherboard> motherboard { get; set; }
+        public virtual DbSet<partassembly> partassembly { get; set; }
+        public virtual DbSet<parttype> parttype { get; set; }
+        public virtual DbSet<powersupply> powersupply { get; set; }
+        public virtual DbSet<processorcooler> processorcooler { get; set; }
+        public virtual DbSet<ram> ram { get; set; }
+        public virtual DbSet<socket> socket { get; set; }
+        public virtual DbSet<socketprocessorcooler> socketprocessorcooler { get; set; }
+        public virtual DbSet<ssd> ssd { get; set; }
+        public virtual DbSet<storagedevice> storagedevice { get; set; }
+        public virtual DbSet<storagedeviceinterface> storagedeviceinterface { get; set; }
+        public virtual DbSet<storagedevicetype> storagedevicetype { get; set; }
+        public virtual DbSet<videoconnector> videoconnector { get; set; }
+        public virtual DbSet<videoconnectorgpu> videoconnectorgpu { get; set; }
     }
 }
