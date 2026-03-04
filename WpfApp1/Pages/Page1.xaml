@@ -28,10 +28,10 @@
                 <DataGrid x:Name="ProductsGrid" Grid.Row="2" AutoGenerateColumns="False" 
                           IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
-                        <DataGridTextColumn Header="Тип" Binding="{Binding PartType.Name}" Width="100"/>
-                        <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer.Name}" Width="120"/>
-                        <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat={}{0:C0}}" Width="80"/>
+                        <DataGridTextColumn Header="Название" Binding="{Binding name}" Width="150"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding parttype.name}" Width="100"/>
+                        <DataGridTextColumn Header="Производитель" Binding="{Binding manufacturer.name}" Width="120"/>
+                        <DataGridTextColumn Header="Цена" Binding="{Binding price, StringFormat={}{0}руб}" Width="80"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -41,7 +41,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="Ваша сборка" Grid.Column="1" Margin="5,0,0,0">
+        <GroupBox Header="Ваша сборка" Grid.Column="1" Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -50,19 +50,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ListBox x:Name="BuildList" Grid.Row="0" Margin="5" DisplayMemberPath="Name"/>
+                <ListBox x:Name="BuildList" Grid.Row="0" Margin="5" DisplayMemberPath="name"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-                    <TextBlock Text="Итого: " FontWeight="Bold" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TotalPriceText" Text="0" FontWeight="Bold" FontSize="16" 
+                    <TextBlock Text="Итого: " VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TotalPriceText" Text="0" 
                                VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <TextBlock x:Name="ErrorText" Grid.Row="2" TextWrapping="Wrap" Foreground="Red" 
+                <TextBlock x:Name="ErrorText" Grid.Row="2" Foreground="Red" 
                            Margin="5" FontWeight="Bold"/>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                     <Button Content="Сохранить сборку" Width="120" Margin="5" Click="SaveBuild_Click"/>
+                    <Button Content="Удалить из сборки" Width="130" Margin="5" Click="RemoveFromBuild_Click"/>
                     <Button Content="Очистить" Width="80" Margin="5" Click="ClearBuild_Click"/>
                 </StackPanel>
             </Grid>

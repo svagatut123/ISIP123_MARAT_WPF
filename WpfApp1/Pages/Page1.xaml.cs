@@ -46,7 +46,19 @@ namespace WpfApp1.Pages
         {
             ApplyFilters();
         }
-
+        private void RemoveFromBuild_Click(object sender, RoutedEventArgs e)
+        {
+            if (BuildList.SelectedItem is basepart selectedProduct)
+            {
+                _currentBuild.Remove(selectedProduct);
+                UpdateBuildUI();
+                CheckCompatibility();
+            }
+            else
+            {
+                MessageBox.Show("Выберите компонент для удаления из списка");
+            }
+        }
         private void ApplyFilters()
         {
             string search = SearchBox.Text.ToLower();
@@ -183,7 +195,7 @@ namespace WpfApp1.Pages
 
             if (errors.Count > 0)
             {
-                ErrorText.Text = "ВНИМАНИЕ! Ошибки совместимости:\n- " + string.Join("\n- ", errors);
+                ErrorText.Text = "Ошибки совместимости:\n- " + string.Join("\n- ", errors);
             }
         }
 

@@ -13,7 +13,7 @@
         <DataGrid x:Name="HistoryGrid" Grid.Row="1" AutoGenerateColumns="False" 
                   IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название" Binding="{Binding name}" Width="*"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding name}" Width="150"/>
                 <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>

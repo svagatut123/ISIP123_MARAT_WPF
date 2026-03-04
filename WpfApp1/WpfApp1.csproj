@@ -153,6 +153,9 @@
     <Compile Include="storagedevicetype.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="videoconnector.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
