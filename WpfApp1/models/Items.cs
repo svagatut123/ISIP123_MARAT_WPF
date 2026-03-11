@@ -1,46 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WpfApp1.models
+﻿namespace WpfApp1.Models
 {
-    
-        public class Weapon
-        {
-            public string Name { get; set; }
-            public int AttackBonus { get; set; }
-            public int DefenseBonus { get; set; }
+    public abstract class Item
+    {
+        public string Name { get; protected set; }
+        public int Value { get; protected set; }
 
-            public Weapon(string name, int attack, int defense)
-            {
-                Name = name;
-                AttackBonus = attack;
-                DefenseBonus = defense;
-            }
+        protected Item(string name, int value)
+        {
+            Name = name;
+            Value = value;
         }
 
-        public class Armor
-        {
-            public string Name { get; set; }
-            public int DefenseBonus { get; set; }
-            public int AttackBonus { get; set; }
+        public abstract void ApplyEffect(Player player);
+    }
 
-            public Armor(string name, int defense, int attack)
-            {
-                Name = name;
-                DefenseBonus = defense;
-                AttackBonus = attack;
-            }
+    public class Weapon : Item
+    {
+        public int Attack { get; private set; }
+
+        public Weapon(string name, int value, int attack) : base(name, value)
+        {
+            Attack = attack;
         }
 
-        public class Item
+        public override void ApplyEffect(Player player) => player.EquipWeapon(this);
+
+        public override string ToString() => $"{Name} (Атака: {Attack})";
+    }
+
+    public class Armor : Item
+    {
+        public int Defense { get; private set; }
+
+        public Armor(string name, int value, int defense) : base(name, value)
         {
-            public string Name { get; set; }
-            public string Type { get; set; }
-            public object Data { get; set; }
+            Defense = defense;
         }
-    
+
+        public override void ApplyEffect(Player player) => player.EquipArmor(this);
+
+        public override string ToString() => $"{Name} (Защита: {Defense})";
+    }
+
+    public class HealthPotion : Item
+    {
+        public HealthPotion(string name, int value) : base(name, value) { }
+
+        public override void ApplyEffect(Player player)
+        {
+            player.Heal(player.MaxHP);
+        }
+
+        public override string ToString() => $"{Name} (полное лечение)";
+    }
 }
-
