@@ -240,7 +240,7 @@ namespace WpfApp1
             if (take)
             {
                 CurrentChestItem.ApplyEffect(Player);
-                Log($"✅ Вы взяли: {CurrentChestItem.Name}");
+                Log($" Вы взяли: {CurrentChestItem.Name}");
             }
             else
             {
