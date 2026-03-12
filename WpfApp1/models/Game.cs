@@ -6,7 +6,6 @@ namespace WpfApp1
 {
     public class Game
     {
-        // События для связи с UI
         public event Action<string> OnLogUpdated;
         public event Action OnPlayerStatsUpdated;
         public event Action OnGameStateChanged;
@@ -85,14 +84,12 @@ namespace WpfApp1
 
             TurnCount++;
 
-            // Босс каждые 10 ходов
             if (TurnCount % 10 == 0)
             {
                 EncounterBoss();
             }
             else
             {
-                // 50/50 сундук или враг
                 if (RandomGenerator.NextBool())
                 {
                     EncounterChest();
@@ -117,13 +114,13 @@ namespace WpfApp1
         {
             CurrentEnemy = _fabrica.CreateRandomBoss();
             IsCombat = true;
-            Log($"👹 БОСС: {CurrentEnemy.Name}!");
+            Log($"БОСС: {CurrentEnemy.Name}!");
         }
 
         private void EncounterChest()
         {
             IsChest = true;
-            Log("📦 Вы нашли сундук!");
+            Log("Вы нашли сундук!");
 
             int itemType = RandomGenerator.Next(3);
             Item item = null;
@@ -132,15 +129,15 @@ namespace WpfApp1
             {
                 case 0:
                     item = new HealthPotion("Зелье лечения", 15);
-                    Log("💚 В сундуке: Зелье лечения");
+                    Log("В сундуке: Зелье лечения");
                     break;
                 case 1:
                     item = RandomGenerator.GetRandomItem(_weapons.ToArray());
-                    Log($"🗡️ В сундуке: {item.Name} (Атака +{((Weapon)item).Attack})");
+                    Log($"В сундуке: {item.Name} (Атака +{((Weapon)item).Attack})");
                     break;
                 case 2:
                     item = RandomGenerator.GetRandomItem(_armors.ToArray());
-                    Log($"🛡️ В сундуке: {item.Name} (Защита +{((Armor)item).Defense})");
+                    Log($"В сундуке: {item.Name} (Защита +{((Armor)item).Defense})");
                     break;
             }
 
@@ -148,7 +145,6 @@ namespace WpfApp1
             OnItemFound?.Invoke(item);
         }
 
-        // === ДЕЙСТВИЯ ИГРОКА ===
 
         public void PlayerAttack()
         {
@@ -156,7 +152,7 @@ namespace WpfApp1
 
             if (Player.Frozen)
             {
-                Log("❄️ Вы заморожены! Пропуск хода.");
+                Log("Вы заморожены! Пропуск хода.");
                 Player.Frozen = false;
                 EnemyTurn();
                 return;
@@ -168,9 +164,9 @@ namespace WpfApp1
 
             if (!CurrentEnemy.IsAlive)
             {
-                Log($"💀 {CurrentEnemy.Name} побеждён!");
+                Log($"{CurrentEnemy.Name} побеждён!");
                 TurnCount++;
-                Log($"📈 Этаж: {TurnCount}");
+                Log($"Этаж: {TurnCount}");
                 NextEncounter();
             }
             else
@@ -188,7 +184,7 @@ namespace WpfApp1
 
             if (Player.Frozen)
             {
-                Log("❄️ Вы заморожены! Пропуск хода.");
+                Log("Вы заморожены! Пропуск хода.");
                 Player.Frozen = false;
                 EnemyTurn();
                 return;
@@ -197,11 +193,11 @@ namespace WpfApp1
             bool dodged = Player.TryDefend();
             if (dodged)
             {
-                Log("💨 Вы уклонились от атаки!");
+                Log("Вы уклонились от атаки!");
             }
             else
             {
-                Log("🛡️ Вы встали в защиту.");
+                Log("Вы встали в защиту.");
             }
 
             EnemyTurn(dodged);
@@ -219,7 +215,7 @@ namespace WpfApp1
             int finalDamage = Player.CalculateBlockedDamage(damage);
 
             Player.TakeDamage(finalDamage);
-            Log($"❤️ {CurrentEnemy.Name} наносит {finalDamage} урона! (ваше HP: {Player.HP})");
+            Log($" {CurrentEnemy.Name} наносит {finalDamage} урона! (ваше HP: {Player.HP})");
 
             CurrentEnemy.ApplyEffectDamage(Player);
 
@@ -227,7 +223,7 @@ namespace WpfApp1
             {
                 Player.HP = 0;
                 GameOver = true;
-                Log("☠️ ВЫ ПОГИБЛИ! Игра окончена.");
+                Log(" ВЫ ПОГИБЛИ! Игра окончена.");
             }
 
             UpdateStats();
@@ -244,7 +240,7 @@ namespace WpfApp1
             }
             else
             {
-                Log($"❌ Вы выбросили: {CurrentChestItem.Name}");
+                Log($" Вы выбросили: {CurrentChestItem.Name}");
             }
 
             if (CurrentChestItem is HealthPotion)

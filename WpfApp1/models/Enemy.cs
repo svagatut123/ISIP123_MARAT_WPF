@@ -38,7 +38,6 @@ namespace WpfApp1.Models
         }
     }
 
-    // === ОБЫЧНЫЕ ВРАГИ (partial) ===
     public partial class Goblin : Enemy
     {
         private double ChanceCrit = 0.2;
@@ -95,7 +94,6 @@ namespace WpfApp1.Models
         public override void ApplyEffectDamage(Player player) { }
     }
 
-    // === БОССЫ (partial) ===
     public partial class VVG : Goblin
     {
         public VVG() : base()

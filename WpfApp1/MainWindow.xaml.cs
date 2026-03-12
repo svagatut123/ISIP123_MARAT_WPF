@@ -84,14 +84,7 @@ namespace WpfApp1
             ItemInfo.Text = item?.ToString() ?? "";
         }
 
-        // === ОБРАБОТЧИКИ КНОПОК ===
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            StartScreen.Visibility = Visibility.Collapsed;
-            GameScreen.Visibility = Visibility.Visible;
-            _game.StartNewGame();
-        }
+        
 
         private void AttackBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -116,7 +109,6 @@ namespace WpfApp1
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
             GameOverScreen.Visibility = Visibility.Collapsed;
-            StartScreen.Visibility = Visibility.Visible;
             LogText.Text = "";
             ItemInfo.Text = "";
         }

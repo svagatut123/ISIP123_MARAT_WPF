@@ -5,16 +5,7 @@
         WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <!-- СТАРТОВОЕ МЕНЮ -->
-        <Grid x:Name="StartScreen" Visibility="Visible">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="ROGUELIKE" FontSize="48" Margin="0,0,0,50"/>
-                <Button Content="Начать игру" Width="200" Height="50" FontSize="18"
-                        Click="StartButton_Click"/>
-            </StackPanel>
-        </Grid>
 
-        <!-- ИГРОВОЙ ЭКРАН -->
         <Grid x:Name="GameScreen" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -23,11 +14,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
             <TextBlock Grid.Row="0" Text="ROGUELIKE" FontSize="36" 
                        HorizontalAlignment="Center" Margin="10"/>
 
-            <!-- Статистика игрока -->
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -46,7 +35,6 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Основная область -->
             <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Margin="10">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -54,7 +42,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Визуальная часть -->
                     <Grid Grid.Row="0" Background="#F5F5F5">
                         <TextBlock x:Name="EnemyDisplay" Text="" FontSize="24"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -63,7 +50,6 @@
                                    Visibility="Collapsed"/>
                     </Grid>
 
-                    <!-- Кнопки действий -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Center" Margin="10">
                         <Button x:Name="AttackBtn" Content="Атака" Width="100" Height="40" 
@@ -78,14 +64,12 @@
                 </Grid>
             </Border>
 
-            <!-- Нижняя панель -->
             <Grid Grid.Row="3" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Лог событий -->
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
                     <ScrollViewer Height="120" VerticalScrollBarVisibility="Auto">
                         <TextBlock x:Name="LogText" Text="" FontSize="12" 
@@ -93,7 +77,6 @@
                     </ScrollViewer>
                 </Border>
 
-                <!-- Информация о предмете -->
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
                     <StackPanel Margin="10">
                         <TextBlock Text="Предмет в сундуке:" FontSize="14" FontWeight="Bold"/>
@@ -103,7 +86,6 @@
             </Grid>
         </Grid>
 
-        <!-- ЭКРАН GAME OVER -->
         <Grid x:Name="GameOverScreen" Visibility="Collapsed" Background="#80000000">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
                         Background="White">
