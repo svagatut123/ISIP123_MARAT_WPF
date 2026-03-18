@@ -5,21 +5,27 @@ namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
-        private Game _game;
+        private Game game;
+        private bool gameStarted = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            _game = new Game();
+            game = new Game();
             SetupEvents();
+
+            AttackBtn.Visibility = Visibility.Collapsed;
+            DefendBtn.Visibility = Visibility.Collapsed;
+            TakeBtn.Visibility = Visibility.Collapsed;
+            DropBtn.Visibility = Visibility.Collapsed;
         }
 
         private void SetupEvents()
         {
-            _game.OnLogUpdated += AddLog;
-            _game.OnPlayerStatsUpdated += UpdatePlayerUI;
-            _game.OnGameStateChanged += UpdateGameStateUI;
-            _game.OnItemFound += ShowItemInfo;
+            game.OnLogUpdated += AddLog;
+            game.OnPlayerStatsUpdated += UpdatePlayerUI;
+            game.OnGameStateChanged += UpdateGameStateUI;
+            game.OnItemFound += ShowItemInfo;
         }
 
         private void AddLog(string message)
@@ -29,32 +35,37 @@ namespace WpfApp1
 
         private void UpdatePlayerUI()
         {
-            HealthText.Text = $"HP: {_game.Player.HP}/{_game.Player.MaxHP}";
-            HealthBar.Value = _game.Player.HP;
-            FloorText.Text = $"Этаж: {_game.TurnCount}";
-            EquipText.Text = $"{_game.Player.CurrentWeapon.Name} | {_game.Player.CurrentArmor.Name}";
+            if (game.Player == null) return;
+
+            HealthText.Text = $"HP: {game.Player.HP}/{game.Player.MaxHP}";
+            HealthBar.Value = game.Player.HP;
+            FloorText.Text = $"уровень: {game.TurnCount}";
+            EquipText.Text = $"{game.Player.CurrentWeapon.Name}, {game.Player.CurrentArmor.Name}";
         }
 
         private void UpdateGameStateUI()
         {
-            // Скрыть/показать кнопки в зависимости от состояния
-            if (_game.IsCombat)
+            if (!gameStarted) return;
+
+            if (game.IsCombat)
             {
                 AttackBtn.Visibility = Visibility.Visible;
                 DefendBtn.Visibility = Visibility.Visible;
                 TakeBtn.Visibility = Visibility.Collapsed;
                 DropBtn.Visibility = Visibility.Collapsed;
+                StartBtn.Visibility = Visibility.Collapsed;
 
-                EnemyDisplay.Text = _game.CurrentEnemy?.GetStatus() ?? "";
+                EnemyDisplay.Text = game.CurrentEnemy?.GetStatus() ?? "";
                 EnemyDisplay.Visibility = Visibility.Visible;
                 ChestDisplay.Visibility = Visibility.Collapsed;
             }
-            else if (_game.IsChest && _game.CurrentChestItem != null)
+            else if (game.IsChest && game.CurrentChestItem != null)
             {
                 AttackBtn.Visibility = Visibility.Collapsed;
                 DefendBtn.Visibility = Visibility.Collapsed;
                 TakeBtn.Visibility = Visibility.Visible;
                 DropBtn.Visibility = Visibility.Visible;
+                StartBtn.Visibility = Visibility.Collapsed;
 
                 EnemyDisplay.Visibility = Visibility.Collapsed;
                 ChestDisplay.Visibility = Visibility.Visible;
@@ -65,17 +76,17 @@ namespace WpfApp1
                 DefendBtn.Visibility = Visibility.Visible;
                 TakeBtn.Visibility = Visibility.Collapsed;
                 DropBtn.Visibility = Visibility.Collapsed;
+                StartBtn.Visibility = Visibility.Collapsed;
+
                 EnemyDisplay.Text = "Исследование...";
                 EnemyDisplay.Visibility = Visibility.Visible;
                 ChestDisplay.Visibility = Visibility.Collapsed;
             }
 
-            // Проверка конца игры
-            if (_game.GameOver)
+            if (game.GameOver)
             {
-                FinalFloor.Text = $"Достигнут этаж: {_game.TurnCount}";
+                FinalFloor.Text = $"Достигнут уровень: {game.TurnCount}";
                 GameOverScreen.Visibility = Visibility.Visible;
-                GameScreen.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -84,26 +95,39 @@ namespace WpfApp1
             ItemInfo.Text = item?.ToString() ?? "";
         }
 
-        
+
+        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            gameStarted = true;
+            StartBtn.Visibility = Visibility.Collapsed;
+            AttackBtn.Visibility = Visibility.Visible;
+            DefendBtn.Visibility = Visibility.Visible;
+
+            game.StartNewGame();
+        }
 
         private void AttackBtn_Click(object sender, RoutedEventArgs e)
         {
-            _game.PlayerAttack();
+            if (!gameStarted) return;
+            game.PlayerAttack();
         }
 
         private void DefendBtn_Click(object sender, RoutedEventArgs e)
         {
-            _game.PlayerDefend();
+            if (!gameStarted) return;
+            game.PlayerDefend();
         }
 
         private void TakeBtn_Click(object sender, RoutedEventArgs e)
         {
-            _game.TakeItem(true);
+            if (!gameStarted) return;
+            game.TakeItem(true);
         }
 
         private void DropBtn_Click(object sender, RoutedEventArgs e)
         {
-            _game.TakeItem(false);
+            if (!gameStarted) return;
+            game.TakeItem(false);
         }
 
         private void RestartButton_Click(object sender, RoutedEventArgs e)
@@ -111,6 +135,14 @@ namespace WpfApp1
             GameOverScreen.Visibility = Visibility.Collapsed;
             LogText.Text = "";
             ItemInfo.Text = "";
+            EnemyDisplay.Text = "";
+
+            gameStarted = false;
+            StartBtn.Visibility = Visibility.Visible;
+            AttackBtn.Visibility = Visibility.Collapsed;
+            DefendBtn.Visibility = Visibility.Collapsed;
+            TakeBtn.Visibility = Visibility.Collapsed;
+            DropBtn.Visibility = Visibility.Collapsed;
         }
     }
 }

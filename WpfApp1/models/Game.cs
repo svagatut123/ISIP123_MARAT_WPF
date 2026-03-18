@@ -20,14 +20,14 @@ namespace WpfApp1
         public bool GameOver { get; private set; }
         public int TurnCount { get; private set; }
 
-        private Fabrica _fabrica;
-        private List<Weapon> _weapons;
-        private List<Armor> _armors;
+        private Fabrica fabrica;
+        private List<Weapon> weapons;
+        private List<Armor> armors;
 
         public Game()
         {
-            _fabrica = new Fabrica();
-            _weapons = new List<Weapon>
+            fabrica = new Fabrica();
+            weapons = new List<Weapon>
             {
                 new Weapon("Деревянный меч", 10, 10),
                 new Weapon("Железный меч", 20, 20),
@@ -35,7 +35,7 @@ namespace WpfApp1
                 new Weapon("Аганим скипетр", 30, 30),
                 new Weapon("Алмазный меч", 50, 50)
             };
-            _armors = new List<Armor>
+            armors = new List<Armor>
             {
                 new Armor("Кожаная броня", 10, 10),
                 new Armor("Кольчуга", 20, 20),
@@ -105,14 +105,14 @@ namespace WpfApp1
 
         private void EncounterEnemy()
         {
-            CurrentEnemy = _fabrica.CreateRandomEnemy();
+            CurrentEnemy = fabrica.CreateRandomEnemy();
             IsCombat = true;
-            Log($"⚔️ Появился: {CurrentEnemy.Name}!");
+            Log($"Появился: {CurrentEnemy.Name}!");
         }
 
         private void EncounterBoss()
         {
-            CurrentEnemy = _fabrica.CreateRandomBoss();
+            CurrentEnemy = fabrica.CreateRandomBoss();
             IsCombat = true;
             Log($"БОСС: {CurrentEnemy.Name}!");
         }
@@ -132,11 +132,11 @@ namespace WpfApp1
                     Log("В сундуке: Зелье лечения");
                     break;
                 case 1:
-                    item = RandomGenerator.GetRandomItem(_weapons.ToArray());
+                    item = RandomGenerator.GetRandomItem(weapons.ToArray());
                     Log($"В сундуке: {item.Name} (Атака +{((Weapon)item).Attack})");
                     break;
                 case 2:
-                    item = RandomGenerator.GetRandomItem(_armors.ToArray());
+                    item = RandomGenerator.GetRandomItem(armors.ToArray());
                     Log($"В сундуке: {item.Name} (Защита +{((Armor)item).Defense})");
                     break;
             }
@@ -160,13 +160,13 @@ namespace WpfApp1
 
             int damage = Player.CalculateDamage();
             CurrentEnemy.TakeDamage(damage);
-            Log($"⚔️ Вы нанесли {damage} урона!");
+            Log($"Вы нанесли {damage} урона!");
 
             if (!CurrentEnemy.IsAlive)
             {
                 Log($"{CurrentEnemy.Name} побеждён!");
                 TurnCount++;
-                Log($"Этаж: {TurnCount}");
+                Log($"уровень: {TurnCount}");
                 NextEncounter();
             }
             else

@@ -2,7 +2,7 @@
 
 namespace WpfApp1.Models
 {
-    // === БАЗОВЫЙ КЛАСС ===
+    
     public abstract partial class Enemy
     {
         public string Name { get; set; }

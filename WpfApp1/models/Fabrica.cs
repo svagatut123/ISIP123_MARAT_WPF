@@ -1,4 +1,6 @@
-﻿namespace WpfApp1.Models
+﻿using System;
+
+namespace WpfApp1.Models
 {
     public class Fabrica
     {
@@ -14,7 +16,9 @@
                 case EnemyType.Kovalsky: return new Kovalsky();
                 case EnemyType.ArchimageCPP: return new ArchimageCPP();
                 case EnemyType.PestovCmm: return new PestovCmm();
-                default: throw new System.ArgumentException($"Неизвестный тип: {type}");
+                default:
+                    Console.WriteLine($"Ошибка: неизвестный тип врага: {type}");
+                    return new Goblin(); 
             }
         }
 

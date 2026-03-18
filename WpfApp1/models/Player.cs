@@ -17,8 +17,8 @@ namespace WpfApp1.Models
         {
             MaxHP = maxHP;
             HP = maxHP;
-            CurrentWeapon = new Weapon("меч", 5, 13);
-            CurrentArmor = new Armor("армор", 5, 12);
+            CurrentWeapon = new Weapon("меч", 5, 3);
+            CurrentArmor = new Armor("армор", 5, 2);
         }
 
         public void TakeDamage(int damage)

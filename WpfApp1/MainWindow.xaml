@@ -5,8 +5,7 @@
         WindowStartupLocation="CenterScreen">
 
     <Grid>
-
-        <Grid x:Name="GameScreen" Visibility="Collapsed">
+        <Grid x:Name="GameScreen" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -24,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock x:Name="FloorText" Text="Этаж: 1" FontSize="16"/>
+                    <TextBlock x:Name="FloorText" Text="уровень: 0" FontSize="16"/>
                     <TextBlock x:Name="EquipText" Text="" FontSize="14" Margin="0,5,0,0"/>
                 </StackPanel>
 
@@ -45,7 +44,7 @@
                     <Grid Grid.Row="0" Background="#F5F5F5">
                         <TextBlock x:Name="EnemyDisplay" Text="" FontSize="24"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="ChestDisplay" Text="📦 СУНДУК" FontSize="48"
+                        <TextBlock x:Name="ChestDisplay" Text="СУНДУК" FontSize="48"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Visibility="Collapsed"/>
                     </Grid>
@@ -60,6 +59,8 @@
                                 Margin="5" Click="TakeBtn_Click" Visibility="Collapsed"/>
                         <Button x:Name="DropBtn" Content="Выбросить" Width="100" Height="40" 
                                 Margin="5" Click="DropBtn_Click" Visibility="Collapsed"/>
+                        <Button x:Name="StartBtn" Content="Начать игру" Width="150" Height="40" 
+                                Margin="5" Click="StartBtn_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -72,7 +73,7 @@
 
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
                     <ScrollViewer Height="120" VerticalScrollBarVisibility="Auto">
-                        <TextBlock x:Name="LogText" Text="" FontSize="12" 
+                        <TextBlock x:Name="LogText" Text="Нажмите 'Начать игру'" FontSize="12" 
                                    TextWrapping="Wrap" Margin="10"/>
                     </ScrollViewer>
                 </Border>
@@ -91,7 +92,7 @@
                         Background="White">
                 <TextBlock Text="ВЫ ПОГИБЛИ" FontSize="36" FontWeight="Bold" 
                            HorizontalAlignment="Center" Margin="0,0,0,20"/>
-                <TextBlock x:Name="FinalFloor" Text="Достигнут этаж: 1" FontSize="18" 
+                <TextBlock x:Name="FinalFloor" Text="Достигнут уровень: 0" FontSize="18" 
                            Margin="0,0,0,30"/>
                 <Button Content="Начать заново" Width="200" Height="50" FontSize="18"
                         Click="RestartButton_Click"/>
