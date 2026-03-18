@@ -6,10 +6,7 @@ namespace WpfApp1
 {
     public class Game
     {
-        public event Action<string> OnLogUpdated;
-        public event Action OnPlayerStatsUpdated;
-        public event Action OnGameStateChanged;
-        public event Action<Item> OnItemFound;
+        // УБРАНЫ ВСЕ СОБЫТИЯ (event Action...)
 
         public Player Player { get; private set; }
         public Enemy CurrentEnemy { get; private set; }
@@ -19,15 +16,17 @@ namespace WpfApp1
         public bool IsChest { get; private set; }
         public bool GameOver { get; private set; }
         public int TurnCount { get; private set; }
+        public List<string> Log { get; private set; }  // Публичный список для лога
 
-        private Fabrica fabrica;
-        private List<Weapon> weapons;
-        private List<Armor> armors;
+        private Fabrica _fabrica;
+        private List<Weapon> _weapons;
+        private List<Armor> _armors;
 
         public Game()
         {
-            fabrica = new Fabrica();
-            weapons = new List<Weapon>
+            _fabrica = new Fabrica();
+            Log = new List<string>();
+            _weapons = new List<Weapon>
             {
                 new Weapon("Деревянный меч", 10, 10),
                 new Weapon("Железный меч", 20, 20),
@@ -35,7 +34,7 @@ namespace WpfApp1
                 new Weapon("Аганим скипетр", 30, 30),
                 new Weapon("Алмазный меч", 50, 50)
             };
-            armors = new List<Armor>
+            _armors = new List<Armor>
             {
                 new Armor("Кожаная броня", 10, 10),
                 new Armor("Кольчуга", 20, 20),
@@ -54,25 +53,9 @@ namespace WpfApp1
             GameOver = false;
             IsCombat = false;
             IsChest = false;
-
-            Log("=== Игра началась! ===");
-            UpdateStats();
+            Log.Clear();
+            Log.Add("=== Игра началась! ===");
             NextEncounter();
-        }
-
-        private void Log(string message)
-        {
-            OnLogUpdated?.Invoke(message);
-        }
-
-        private void UpdateStats()
-        {
-            OnPlayerStatsUpdated?.Invoke();
-        }
-
-        private void UpdateGameState()
-        {
-            OnGameStateChanged?.Invoke();
         }
 
         public void NextEncounter()
@@ -99,28 +82,26 @@ namespace WpfApp1
                     EncounterEnemy();
                 }
             }
-
-            UpdateGameState();
         }
 
         private void EncounterEnemy()
         {
-            CurrentEnemy = fabrica.CreateRandomEnemy();
+            CurrentEnemy = _fabrica.CreateRandomEnemy();
             IsCombat = true;
-            Log($"Появился: {CurrentEnemy.Name}!");
+            Log.Add($"⚔️ Появился: {CurrentEnemy.Name}!");
         }
 
         private void EncounterBoss()
         {
-            CurrentEnemy = fabrica.CreateRandomBoss();
+            CurrentEnemy = _fabrica.CreateRandomBoss();
             IsCombat = true;
-            Log($"БОСС: {CurrentEnemy.Name}!");
+            Log.Add($"👹 БОСС: {CurrentEnemy.Name}!");
         }
 
         private void EncounterChest()
         {
             IsChest = true;
-            Log("Вы нашли сундук!");
+            Log.Add("📦 Вы нашли сундук!");
 
             int itemType = RandomGenerator.Next(3);
             Item item = null;
@@ -129,22 +110,20 @@ namespace WpfApp1
             {
                 case 0:
                     item = new HealthPotion("Зелье лечения", 15);
-                    Log("В сундуке: Зелье лечения");
+                    Log.Add("💚 В сундуке: Зелье лечения");
                     break;
                 case 1:
-                    item = RandomGenerator.GetRandomItem(weapons.ToArray());
-                    Log($"В сундуке: {item.Name} (Атака +{((Weapon)item).Attack})");
+                    item = RandomGenerator.GetRandomItem(_weapons.ToArray());
+                    Log.Add($"🗡️ В сундуке: {item.Name} (Атака +{((Weapon)item).Attack})");
                     break;
                 case 2:
-                    item = RandomGenerator.GetRandomItem(armors.ToArray());
-                    Log($"В сундуке: {item.Name} (Защита +{((Armor)item).Defense})");
+                    item = RandomGenerator.GetRandomItem(_armors.ToArray());
+                    Log.Add($"🛡️ В сундуке: {item.Name} (Защита +{((Armor)item).Defense})");
                     break;
             }
 
             CurrentChestItem = item;
-            OnItemFound?.Invoke(item);
         }
-
 
         public void PlayerAttack()
         {
@@ -152,7 +131,7 @@ namespace WpfApp1
 
             if (Player.Frozen)
             {
-                Log("Вы заморожены! Пропуск хода.");
+                Log.Add("❄️ Вы заморожены! Пропуск хода.");
                 Player.Frozen = false;
                 EnemyTurn();
                 return;
@@ -160,22 +139,19 @@ namespace WpfApp1
 
             int damage = Player.CalculateDamage();
             CurrentEnemy.TakeDamage(damage);
-            Log($"Вы нанесли {damage} урона!");
+            Log.Add($"⚔️ Вы нанесли {damage} урона!");
 
             if (!CurrentEnemy.IsAlive)
             {
-                Log($"{CurrentEnemy.Name} побеждён!");
+                Log.Add($"💀 {CurrentEnemy.Name} побеждён!");
                 TurnCount++;
-                Log($"уровень: {TurnCount}");
+                Log.Add($"📈 Этаж: {TurnCount}");
                 NextEncounter();
             }
             else
             {
                 EnemyTurn();
             }
-
-            UpdateStats();
-            UpdateGameState();
         }
 
         public void PlayerDefend()
@@ -184,38 +160,26 @@ namespace WpfApp1
 
             if (Player.Frozen)
             {
-                Log("Вы заморожены! Пропуск хода.");
+                Log.Add("❄️ Вы заморожены! Пропуск хода.");
                 Player.Frozen = false;
                 EnemyTurn();
                 return;
             }
 
             bool dodged = Player.TryDefend();
-            if (dodged)
-            {
-                Log("Вы уклонились от атаки!");
-            }
-            else
-            {
-                Log("Вы встали в защиту.");
-            }
-
+            Log.Add(dodged ? "💨 Вы уклонились!" : "🛡️ Вы встали в защиту.");
             EnemyTurn(dodged);
-            UpdateStats();
-            UpdateGameState();
         }
 
         private void EnemyTurn(bool playerDodged = false)
         {
-            if (CurrentEnemy == null || !CurrentEnemy.IsAlive) return;
-
-            if (playerDodged) return;
+            if (CurrentEnemy == null || !CurrentEnemy.IsAlive || playerDodged) return;
 
             int damage = CurrentEnemy.CalculateDamage(Player);
             int finalDamage = Player.CalculateBlockedDamage(damage);
 
             Player.TakeDamage(finalDamage);
-            Log($" {CurrentEnemy.Name} наносит {finalDamage} урона! (ваше HP: {Player.HP})");
+            Log.Add($"❤️ {CurrentEnemy.Name} наносит {finalDamage} урона! (HP: {Player.HP})");
 
             CurrentEnemy.ApplyEffectDamage(Player);
 
@@ -223,10 +187,8 @@ namespace WpfApp1
             {
                 Player.HP = 0;
                 GameOver = true;
-                Log(" ВЫ ПОГИБЛИ! Игра окончена.");
+                Log.Add("☠️ ВЫ ПОГИБЛИ! Игра окончена.");
             }
-
-            UpdateStats();
         }
 
         public void TakeItem(bool take)
@@ -236,26 +198,16 @@ namespace WpfApp1
             if (take)
             {
                 CurrentChestItem.ApplyEffect(Player);
-                Log($" Вы взяли: {CurrentChestItem.Name}");
+                Log.Add($"✅ Вы взяли: {CurrentChestItem.Name}");
             }
             else
             {
-                Log($" Вы выбросили: {CurrentChestItem.Name}");
-            }
-
-            if (CurrentChestItem is HealthPotion)
-            {
-                UpdateStats();
+                Log.Add($"❌ Вы выбросили: {CurrentChestItem.Name}");
             }
 
             CurrentChestItem = null;
             IsChest = false;
             NextEncounter();
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

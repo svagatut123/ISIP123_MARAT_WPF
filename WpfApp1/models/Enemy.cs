@@ -2,7 +2,6 @@
 
 namespace WpfApp1.Models
 {
-    
     public abstract partial class Enemy
     {
         public string Name { get; set; }
@@ -11,6 +10,7 @@ namespace WpfApp1.Models
         public int Attack { get; set; }
         public int Defense { get; set; }
         public bool Frozen { get; set; }
+        public bool IsBoss { get; set; }  
 
         protected Enemy(string name, int hp, int attack, int defense)
         {
@@ -19,6 +19,7 @@ namespace WpfApp1.Models
             HP = hp;
             Attack = attack;
             Defense = defense;
+            IsBoss = false; 
         }
 
         public virtual void TakeDamage(int damage)
@@ -59,7 +60,6 @@ namespace WpfApp1.Models
     public partial class Skeleton : Enemy
     {
         public Skeleton() : base("Скелет", 25, 10, 2) { }
-
         public override int CalculateDamage(Player player) => Attack;
         public override void ApplyEffectDamage(Player player) { }
     }
@@ -102,6 +102,7 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 2.0); HP = MaxHP;
             Attack = (int)(Attack * 1.5);
             Defense = (int)(Defense * 1.2);
+            IsBoss = true; 
         }
 
         public override int CalculateDamage(Player player)
@@ -123,6 +124,7 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 2.5); HP = MaxHP;
             Attack = (int)(Attack * 1.3);
             Defense = (int)(Defense * 1.4);
+            IsBoss = true; 
         }
     }
 
@@ -134,6 +136,7 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 1.8); HP = MaxHP;
             Attack = (int)(Attack * 1.6);
             Defense = (int)(Defense * 1.1);
+            IsBoss = true;  
         }
 
         public override void ApplyEffectDamage(Player player)
@@ -154,6 +157,7 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 1.3); HP = MaxHP;
             Attack = (int)(Attack * 1.8);
             Defense = (int)(Defense * 0.6);
+            IsBoss = true;  
         }
 
         public override int CalculateDamage(Player player) => Attack;

@@ -101,5 +101,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Rogalik.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Player.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Enemy.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Chest.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skull.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

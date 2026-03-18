@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Media;
 using WpfApp1.Models;
 
 namespace WpfApp1
@@ -6,58 +8,40 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         private Game game;
-        private bool gameStarted = false;
 
         public MainWindow()
         {
             InitializeComponent();
             game = new Game();
-            SetupEvents();
-
-            AttackBtn.Visibility = Visibility.Collapsed;
-            DefendBtn.Visibility = Visibility.Collapsed;
-            TakeBtn.Visibility = Visibility.Collapsed;
-            DropBtn.Visibility = Visibility.Collapsed;
         }
 
-        private void SetupEvents()
+        private void UpdateUI()
         {
-            game.OnLogUpdated += AddLog;
-            game.OnPlayerStatsUpdated += UpdatePlayerUI;
-            game.OnGameStateChanged += UpdateGameStateUI;
-            game.OnItemFound += ShowItemInfo;
-        }
-
-        private void AddLog(string message)
-        {
-            LogText.Text = message + "\n" + LogText.Text;
-        }
-
-        private void UpdatePlayerUI()
-        {
-            if (game.Player == null) return;
-
             HealthText.Text = $"HP: {game.Player.HP}/{game.Player.MaxHP}";
             HealthBar.Value = game.Player.HP;
-            FloorText.Text = $"уровень: {game.TurnCount}";
-            EquipText.Text = $"{game.Player.CurrentWeapon.Name}, {game.Player.CurrentArmor.Name}";
-        }
+            FloorText.Text = $"ход: {game.TurnCount}";
+            EquipText.Text = $"{game.Player.CurrentWeapon.Name} | {game.Player.CurrentArmor.Name}";
 
-        private void UpdateGameStateUI()
-        {
-            if (!gameStarted) return;
+            HealthBar.Foreground = game.Player.HP < 30 ? Brushes.Red :
+                                   game.Player.HP < 60 ? Brushes.Orange : Brushes.Green;
 
-            if (game.IsCombat)
+            LogText.Text = string.Join("\n", game.Log.GetRange(
+                Math.Max(0, game.Log.Count - 10),
+                Math.Min(10, game.Log.Count)));
+
+            if (game.IsCombat && game.CurrentEnemy != null)
             {
                 AttackBtn.Visibility = Visibility.Visible;
                 DefendBtn.Visibility = Visibility.Visible;
                 TakeBtn.Visibility = Visibility.Collapsed;
                 DropBtn.Visibility = Visibility.Collapsed;
-                StartBtn.Visibility = Visibility.Collapsed;
 
-                EnemyDisplay.Text = game.CurrentEnemy?.GetStatus() ?? "";
-                EnemyDisplay.Visibility = Visibility.Visible;
-                ChestDisplay.Visibility = Visibility.Collapsed;
+                EnemyImage.Visibility = Visibility.Visible;
+                ChestImage.Visibility = Visibility.Collapsed;
+                EnemyText.Text = game.CurrentEnemy.Name +
+                    (game.CurrentEnemy.IsBoss ? " (БОСС)" : "");
+                EnemyHpText.Text = $"HP: {game.CurrentEnemy.HP}/{game.CurrentEnemy.MaxHP}";
+                ItemInfo.Text = "—";
             }
             else if (game.IsChest && game.CurrentChestItem != null)
             {
@@ -65,10 +49,12 @@ namespace WpfApp1
                 DefendBtn.Visibility = Visibility.Collapsed;
                 TakeBtn.Visibility = Visibility.Visible;
                 DropBtn.Visibility = Visibility.Visible;
-                StartBtn.Visibility = Visibility.Collapsed;
 
-                EnemyDisplay.Visibility = Visibility.Collapsed;
-                ChestDisplay.Visibility = Visibility.Visible;
+                EnemyImage.Visibility = Visibility.Collapsed;
+                ChestImage.Visibility = Visibility.Visible;
+                EnemyText.Text = "Сундук открыт!";
+                EnemyHpText.Text = "";
+                ItemInfo.Text = game.CurrentChestItem.ToString();
             }
             else
             {
@@ -76,73 +62,60 @@ namespace WpfApp1
                 DefendBtn.Visibility = Visibility.Visible;
                 TakeBtn.Visibility = Visibility.Collapsed;
                 DropBtn.Visibility = Visibility.Collapsed;
-                StartBtn.Visibility = Visibility.Collapsed;
 
-                EnemyDisplay.Text = "Исследование...";
-                EnemyDisplay.Visibility = Visibility.Visible;
-                ChestDisplay.Visibility = Visibility.Collapsed;
+                EnemyImage.Visibility = Visibility.Collapsed;
+                ChestImage.Visibility = Visibility.Collapsed;
+                EnemyText.Text = "Исследование этажа...";
+                EnemyHpText.Text = "";
+                ItemInfo.Text = "—";
             }
 
             if (game.GameOver)
             {
-                FinalFloor.Text = $"Достигнут уровень: {game.TurnCount}";
+                FinalFloor.Text = $"Достигнут этаж: {game.TurnCount}";
                 GameOverScreen.Visibility = Visibility.Visible;
+                GameScreen.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void ShowItemInfo(Item item)
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            ItemInfo.Text = item?.ToString() ?? "";
-        }
-
-
-        private void StartBtn_Click(object sender, RoutedEventArgs e)
-        {
-            gameStarted = true;
-            StartBtn.Visibility = Visibility.Collapsed;
-            AttackBtn.Visibility = Visibility.Visible;
-            DefendBtn.Visibility = Visibility.Visible;
-
+            StartScreen.Visibility = Visibility.Collapsed;
+            GameScreen.Visibility = Visibility.Visible;
             game.StartNewGame();
+            UpdateUI();
         }
 
         private void AttackBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!gameStarted) return;
             game.PlayerAttack();
+            UpdateUI();
         }
 
         private void DefendBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!gameStarted) return;
             game.PlayerDefend();
+            UpdateUI();
         }
 
         private void TakeBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!gameStarted) return;
             game.TakeItem(true);
+            UpdateUI();
         }
 
         private void DropBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!gameStarted) return;
             game.TakeItem(false);
+            UpdateUI();
         }
 
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
             GameOverScreen.Visibility = Visibility.Collapsed;
-            LogText.Text = "";
-            ItemInfo.Text = "";
-            EnemyDisplay.Text = "";
-
-            gameStarted = false;
-            StartBtn.Visibility = Visibility.Visible;
-            AttackBtn.Visibility = Visibility.Collapsed;
-            DefendBtn.Visibility = Visibility.Collapsed;
-            TakeBtn.Visibility = Visibility.Collapsed;
-            DropBtn.Visibility = Visibility.Collapsed;
+            StartScreen.Visibility = Visibility.Visible;
+            GameScreen.Visibility = Visibility.Collapsed;
         }
     }
 }
