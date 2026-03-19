@@ -10,16 +10,18 @@ namespace WpfApp1.Models
         public int Attack { get; set; }
         public int Defense { get; set; }
         public bool Frozen { get; set; }
-        public bool IsBoss { get; set; }  
+        public bool IsBoss { get; set; }
+        public string ImagePath { get; set; } 
 
-        protected Enemy(string name, int hp, int attack, int defense)
+        protected Enemy(string name, int hp, int attack, int defense, string imagePath)
         {
             Name = name;
             MaxHP = hp;
             HP = hp;
             Attack = attack;
             Defense = defense;
-            IsBoss = false; 
+            ImagePath = imagePath;
+            IsBoss = false;
         }
 
         public virtual void TakeDamage(int damage)
@@ -42,7 +44,7 @@ namespace WpfApp1.Models
     public partial class Goblin : Enemy
     {
         private double ChanceCrit = 0.2;
-        public Goblin() : base("Гоблин", 30, 8, 3) { }
+        public Goblin() : base("Гоблин", 30, 8, 3, "Images/goblin.jpg") { }
 
         public override int CalculateDamage(Player player)
         {
@@ -59,7 +61,7 @@ namespace WpfApp1.Models
 
     public partial class Skeleton : Enemy
     {
-        public Skeleton() : base("Скелет", 25, 10, 2) { }
+        public Skeleton() : base("Скелет", 25, 10, 2, "Images/skelet.jpg") { }
         public override int CalculateDamage(Player player) => Attack;
         public override void ApplyEffectDamage(Player player) { }
     }
@@ -67,7 +69,7 @@ namespace WpfApp1.Models
     public partial class Mage : Enemy
     {
         private double freezeChance = 0.25;
-        public Mage() : base("Маг", 20, 12, 1) { }
+        public Mage() : base("Маг", 20, 12, 1, "Images/Mage.jpg") { }
 
         public override int CalculateDamage(Player player) => Attack;
 
@@ -82,7 +84,7 @@ namespace WpfApp1.Models
 
     public partial class Slime : Enemy
     {
-        public Slime() : base("Слизень", 35, 6, 5) { }
+        public Slime() : base("Слизень", 35, 6, 5, "Images/slime.jpg") { }
 
         public override void TakeDamage(int damage)
         {
@@ -102,7 +104,8 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 2.0); HP = MaxHP;
             Attack = (int)(Attack * 1.5);
             Defense = (int)(Defense * 1.2);
-            IsBoss = true; 
+            ImagePath = "Images/goblin.jpg";  
+            IsBoss = true;
         }
 
         public override int CalculateDamage(Player player)
@@ -124,7 +127,8 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 2.5); HP = MaxHP;
             Attack = (int)(Attack * 1.3);
             Defense = (int)(Defense * 1.4);
-            IsBoss = true; 
+            ImagePath = "Images/skelet.jpg"; 
+            IsBoss = true;
         }
     }
 
@@ -136,7 +140,8 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 1.8); HP = MaxHP;
             Attack = (int)(Attack * 1.6);
             Defense = (int)(Defense * 1.1);
-            IsBoss = true;  
+            ImagePath = "Images/Mage.jpg";  
+            IsBoss = true;
         }
 
         public override void ApplyEffectDamage(Player player)
@@ -157,7 +162,8 @@ namespace WpfApp1.Models
             MaxHP = (int)(MaxHP * 1.3); HP = MaxHP;
             Attack = (int)(Attack * 1.8);
             Defense = (int)(Defense * 0.6);
-            IsBoss = true;  
+            ImagePath = "Images/skelet.jpg";  
+            IsBoss = true;
         }
 
         public override int CalculateDamage(Player player) => Attack;

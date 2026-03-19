@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WpfApp1.Models;
 
 namespace WpfApp1
@@ -19,15 +20,15 @@ namespace WpfApp1
         {
             HealthText.Text = $"HP: {game.Player.HP}/{game.Player.MaxHP}";
             HealthBar.Value = game.Player.HP;
-            FloorText.Text = $"ход: {game.TurnCount}";
+            FloorText.Text = $"Этаж: {game.TurnCount}";
             EquipText.Text = $"{game.Player.CurrentWeapon.Name} | {game.Player.CurrentArmor.Name}";
 
             HealthBar.Foreground = game.Player.HP < 30 ? Brushes.Red :
                                    game.Player.HP < 60 ? Brushes.Orange : Brushes.Green;
 
-            LogText.Text = string.Join("\n", game.Log.GetRange(
-                Math.Max(0, game.Log.Count - 10),
-                Math.Min(10, game.Log.Count)));
+            int start = Math.Max(0, game.Log.Count - 10);
+            int count = Math.Min(10, game.Log.Count);
+            LogText.Text = string.Join("\n", game.Log.GetRange(start, count));
 
             if (game.IsCombat && game.CurrentEnemy != null)
             {
@@ -38,6 +39,17 @@ namespace WpfApp1
 
                 EnemyImage.Visibility = Visibility.Visible;
                 ChestImage.Visibility = Visibility.Collapsed;
+
+                try
+                {
+                    EnemyImage.Source = new BitmapImage(
+                        new Uri(game.CurrentEnemy.ImagePath, UriKind.Relative));
+                }
+                catch
+                {
+                    EnemyImage.Source = null;
+                }
+
                 EnemyText.Text = game.CurrentEnemy.Name +
                     (game.CurrentEnemy.IsBoss ? " (БОСС)" : "");
                 EnemyHpText.Text = $"HP: {game.CurrentEnemy.HP}/{game.CurrentEnemy.MaxHP}";

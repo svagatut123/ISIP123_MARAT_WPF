@@ -59,23 +59,24 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Background="#F0F0F0">
-                       
-                        <Image x:Name="EnemyImage" Source="Images/Enemy.jpg" 
-                               Width="180" Height="180"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Visibility="Collapsed"/>
+                        <Image x:Name="EnemyImage" 
+                           Width="200" Height="200"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="Collapsed"
+                           Stretch="Uniform"/>
 
-                        <Image x:Name="ChestImage" Source="Images/Chest.jpg" 
-                               Width="180" Height="180"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Visibility="Collapsed"/>
+                                        <Image x:Name="ChestImage" Source="Images/chest.jpg" 
+                           Width="180" Height="180"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="Collapsed"
+                           Stretch="Uniform"/>
 
-                        <TextBlock x:Name="EnemyText" Text="" FontSize="18" FontWeight="Bold"
-                                   HorizontalAlignment="Center" VerticalAlignment="Top"
-                                   Margin="0,10,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
-                        <TextBlock x:Name="EnemyHpText" Text="" FontSize="16"
-                                   HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                                   Margin="0,0,0,10" FontWeight="Bold"/>
+                                    <TextBlock x:Name="EnemyText" Text="" FontSize="18" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                           Margin="0,10,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock x:Name="EnemyHpText" Text="" FontSize="16"
+                           HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                           Margin="0,0,0,10" FontWeight="Bold"/>
                     </Grid>
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
