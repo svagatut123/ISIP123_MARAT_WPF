@@ -15,7 +15,23 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <WrapPanel x:Name="SeatsPanel" Margin="10" Width="600"/>
+            <ItemsControl x:Name="SeatsList" Margin="10" Width="600">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Seats_number}" 
+                                Width="50" 
+                                Height="50" 
+                                Margin="2"
+                                Click="SeatButton_Click"
+                                Tag="{Binding Seats_id}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

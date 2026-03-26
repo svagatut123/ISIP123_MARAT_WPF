@@ -25,7 +25,25 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <WrapPanel x:Name="MoviesPanel" Margin="10"/>
+            <ItemsControl x:Name="MoviesList" Margin="10">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5" Width="200" Height="300" Cursor="Hand" MouseLeftButtonDown="MovieBorder_MouseLeftButtonDown">
+                            <StackPanel Margin="5">
+                                <Image Source="{Binding image_path}" Width="180" Height="200" Stretch="UniformToFill"/>
+                                <TextBlock Text="{Binding title}" FontWeight="Bold" Height="40" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding rating, StringFormat='Рейтинг: {0}'}"/>
+                                <TextBlock Text="{Binding release_date, StringFormat='Дата: {0}'}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
     </Grid>
 </Page>

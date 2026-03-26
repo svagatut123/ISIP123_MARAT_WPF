@@ -14,29 +14,43 @@ namespace WpfApp1.Pages
             mainWindow = window;
         }
 
-        private void Login_Click(object sender, RoutedEventArgs e)
+        public bool Auth(string email, string password)
         {
-            string email = EmailBox.Text.Trim();
-            string password = PasswordBox.Password.Trim();
-
             if (string.IsNullOrWhiteSpace(email))
             {
-                MessageBox.Show("Введите email");
-                return;
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Введите пароль");
-                return;
+                return false; // Просто возвращаем false
             }
+
+            // Удаляем пробелы в начале и конце
+            email = email.Trim();
+            password = password.Trim();
 
             var user = Core.Context.users.FirstOrDefault(u => u.email == email && u.password == password);
 
             if (user != null)
             {
-                Core.CurrentUser = user; 
-                MessageBox.Show($"Добро пожаловать, {user.firstname} {user.lastname}!");
+                Core.CurrentUser = user;
+                return true;
+            }
+            else
+            {
+                return false; // Без MessageBox!
+            }
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            string email = EmailBox.Text.Trim();
+            string password = PasswordBox.Password.Trim();
+
+            if (Auth(email, password))
+            {
+                MessageBox.Show($"Добро пожаловать, {Core.CurrentUser.firstname} {Core.CurrentUser.lastname}!");
                 mainWindow.MainFrame.Content = new HomePage(mainWindow);
             }
             else

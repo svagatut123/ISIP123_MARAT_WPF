@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace WpfApp1.Pages
 {
@@ -11,6 +13,7 @@ namespace WpfApp1.Pages
         private MainWindow mainWindow;
         private int sessionId;
         private int selectedSeatId = -1;
+        private WrapPanel seatsPanel;
 
         public SessionPage(MainWindow window, int id)
         {
@@ -42,31 +45,23 @@ namespace WpfApp1.Pages
 
         private void LoadSeats(int hallId)
         {
-            SeatsPanel.Children.Clear();
             var seats = Core.Context.seats.Where(s => s.hall_id == hallId).OrderBy(s => s.Seats_number).ToList();
+
+            var seatsWithOccupancy = new System.Collections.ObjectModel.ObservableCollection<SeatInfo>();
 
             foreach (var seat in seats)
             {
-                Button seatButton = new Button();
-                seatButton.Content = seat.Seats_number;
-                seatButton.Width = 50;
-                seatButton.Height = 50;
-                seatButton.Margin = new Thickness(2);
-                seatButton.Tag = seat.Seats_id;
-
-                if (IsSeatOccupied(seat.Seats_id))
+                bool isOccupied = IsSeatOccupied(seat.Seats_id);
+                seatsWithOccupancy.Add(new SeatInfo
                 {
-                    seatButton.Background = Brushes.Red;
-                    seatButton.IsEnabled = false;
-                }
-                else
-                {
-                    seatButton.Background = Brushes.LightGray;
-                    seatButton.Click += SeatButton_Click;
-                }
-
-                SeatsPanel.Children.Add(seatButton);
+                    Seats_id = seat.Seats_id,
+                    Seats_number = (int)seat.Seats_number,
+                    IsOccupied = isOccupied
+                });
             }
+
+            SeatsList.ItemsSource = seatsWithOccupancy;
+            seatsPanel = FindVisualChild<WrapPanel>(SeatsList);
         }
 
         private bool IsSeatOccupied(int seatId)
@@ -83,35 +78,49 @@ namespace WpfApp1.Pages
 
             int seatId = (int)clickedButton.Tag;
 
-            if (selectedSeatId == seatId)
+            // Обновляем цвет всех кнопок
+            if (seatsPanel != null)
             {
-                clickedButton.Background = Brushes.LightGray;
-                selectedSeatId = -1;
-            }
-            else
-            {
-                if (selectedSeatId != -1)
+                foreach (var child in seatsPanel.Children)
                 {
-                    var previousButton = FindSeatButton(selectedSeatId);
-                    if (previousButton != null)
+                    var button = child as Button;
+                    if (button != null)
                     {
-                        previousButton.Background = Brushes.LightGray;
+                        var seatInfo = button.DataContext as SeatInfo;
+                        if (seatInfo != null)
+                        {
+                            if (seatInfo.IsOccupied)
+                            {
+                                button.Background = Brushes.Red;
+                                button.IsEnabled = false;
+                            }
+                            else if (seatInfo.Seats_id == seatId)
+                            {
+                                button.Background = Brushes.Green;
+                            }
+                            else
+                            {
+                                button.Background = Brushes.LightGray;
+                            }
+                        }
                     }
                 }
-
-                clickedButton.Background = Brushes.Green;
-                selectedSeatId = seatId;
             }
+
+            selectedSeatId = seatId;
         }
 
         private Button FindSeatButton(int seatId)
         {
-            foreach (var child in SeatsPanel.Children)
+            if (seatsPanel != null)
             {
-                var button = child as Button;
-                if (button != null && (int)button.Tag == seatId)
+                foreach (var child in seatsPanel.Children)
                 {
-                    return button;
+                    var button = child as Button;
+                    if (button != null && (int)button.Tag == seatId)
+                    {
+                        return button;
+                    }
                 }
             }
             return null;
@@ -140,5 +149,31 @@ namespace WpfApp1.Pages
 
             mainWindow.MainFrame.Content = new TicketPage(mainWindow, sessionId, selectedSeatId);
         }
+
+        // Вспомогательный метод дляка дочернего элемента в визуальном дереве
+        private T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                        return (T)child;
+
+                    T childItem = FindVisualChild<T>(child);
+                    if (childItem != null)
+                        return childItem;
+                }
+            }
+            return null;
+        }
+    }
+
+    public class SeatInfo
+    {
+        public int Seats_id { get; set; }
+        public int Seats_number { get; set; }
+        public bool IsOccupied { get; set; }
     }
 }

@@ -28,7 +28,8 @@ namespace WpfApp1.Pages
             {
                 WelcomeText.Text = "Добро пожаловать!";
                 UserInfoText.Text = $"Имя: {Core.CurrentUser.firstname} {Core.CurrentUser.lastname}\n" +
-                                   $"Email: {Core.CurrentUser.email}";
+                                   $"Email: {Core.CurrentUser.email}\n" +
+                                   $"Телефон: {Core.CurrentUser.phone_number ?? "не указан"}";
 
                 LoadTickets();
             }

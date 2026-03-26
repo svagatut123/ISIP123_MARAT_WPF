@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace WpfApp1.Pages
 {
@@ -22,75 +20,28 @@ namespace WpfApp1.Pages
 
         private void LoadMovies()
         {
-            MoviesPanel.Children.Clear();
             allMovies = Core.Context.Movies.ToList();
-
-            foreach (var movie in allMovies)
-            {
-                AddMovieToPanel(movie);
-            }
+            MoviesList.ItemsSource = allMovies;
         }
 
-        private void AddMovieToPanel(Movies movie)
+        private void MovieBorder_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Border movieBorder = new Border();
-            movieBorder.BorderBrush = Brushes.Black;
-            movieBorder.BorderThickness = new Thickness(1);
-            movieBorder.Margin = new Thickness(5);
-            movieBorder.Width = 200;
-            movieBorder.Height = 300;
-            movieBorder.Cursor = System.Windows.Input.Cursors.Hand;
-            movieBorder.MouseLeftButtonDown += (s, e) => Movie_Click(movie);
-
-            StackPanel moviePanel = new StackPanel();
-            moviePanel.Margin = new Thickness(5);
-
-            if (!string.IsNullOrEmpty(movie.image_path))
+            var border = sender as Border;
+            if (border != null)
             {
-                Image movieImage = new Image();
-                movieImage.Source = new BitmapImage(new Uri(movie.image_path));
-                movieImage.Width = 180;
-                movieImage.Height = 200;
-                movieImage.Stretch = Stretch.UniformToFill;
-                moviePanel.Children.Add(movieImage);
+                var movie = border.DataContext as Movies;
+                if (movie != null)
+                {
+                    mainWindow.MainFrame.Content = new MoviePage(mainWindow, movie.movie_id);
+                }
             }
-
-            TextBlock titleText = new TextBlock();
-            titleText.Text = movie.title;
-            titleText.FontWeight = FontWeights.Bold;
-            titleText.Height = 40;
-            titleText.TextWrapping = TextWrapping.Wrap;
-            moviePanel.Children.Add(titleText);
-
-            TextBlock ratingText = new TextBlock();
-            ratingText.Text = $"Рейтинг: {movie.rating}";
-            moviePanel.Children.Add(ratingText);
-
-            TextBlock dateText = new TextBlock();
-            dateText.Text = $"Дата: {movie.release_date}";
-            moviePanel.Children.Add(dateText);
-
-            movieBorder.Child = moviePanel;
-            MoviesPanel.Children.Add(movieBorder);
-        }
-
-        private void Movie_Click(Movies movie)
-        {
-            mainWindow.MainFrame.Content = new MoviePage(mainWindow, movie.movie_id);
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             string searchTerm = SearchBox.Text.Trim().ToLower();
-            MoviesPanel.Children.Clear();
-
-            var filteredMovies = allMovies.Where(m =>
-                m.title.ToLower().Contains(searchTerm)).ToList();
-
-            foreach (var movie in filteredMovies)
-            {
-                AddMovieToPanel(movie);
-            }
+            var filteredMovies = allMovies.Where(m => m.title.ToLower().Contains(searchTerm)).ToList();
+            MoviesList.ItemsSource = filteredMovies;
         }
 
         private void Sort_Click(object sender, RoutedEventArgs e)
@@ -102,7 +53,6 @@ namespace WpfApp1.Pages
             }
 
             string selectedSort = (SortComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-            MoviesPanel.Children.Clear();
 
             if (selectedSort == "По названию")
             {
@@ -113,10 +63,7 @@ namespace WpfApp1.Pages
                 allMovies = allMovies.OrderByDescending(m => m.rating).ToList();
             }
 
-            foreach (var movie in allMovies)
-            {
-                AddMovieToPanel(movie);
-            }
+            MoviesList.ItemsSource = allMovies;
         }
     }
 }

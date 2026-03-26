@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    class Core
+    public class Core
     {
         public static MaratPrac14Entities Context = new MaratPrac14Entities();
         public static users CurrentUser = null;

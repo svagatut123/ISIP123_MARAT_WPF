@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WpfApp1.Pages
 {
@@ -90,7 +91,7 @@ namespace WpfApp1.Pages
         private void AddSessionToPanel(sessions session)
         {
             Border sessionBorder = new Border();
-            sessionBorder.BorderBrush = System.Windows.Media.Brushes.Black;
+            sessionBorder.BorderBrush = Brushes.Black;
             sessionBorder.BorderThickness = new Thickness(1);
             sessionBorder.Margin = new Thickness(0, 5, 0, 5);
             sessionBorder.Padding = new Thickness(10);
