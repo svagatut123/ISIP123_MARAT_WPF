@@ -1,0 +1,23 @@
+﻿<Page x:Class="WpfApp1.Pages.CatalogPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="10">
+        <TextBlock Text="Каталог книг" FontSize="18" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="TxtSearch" Width="200" Margin="0,0,10,0" />
+            <ComboBox x:Name="CmbSort" Width="150" Margin="0,0,10,0" SelectedIndex="0">
+                <ComboBoxItem Content="По имени" />
+                <ComboBoxItem Content="По оценке" />
+            </ComboBox>
+            <ComboBox x:Name="CmbGenre" Width="150" />
+            <Button Content="Найти" Click="BtnSearch_Click" Margin="5" />
+        </StackPanel>
+        <DataGrid x:Name="GridBooks" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="GridBooks_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" />
+                <DataGridTextColumn Header="Автор" Binding="{Binding Users.DisplayName}" Width="*" />
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="2*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Page>

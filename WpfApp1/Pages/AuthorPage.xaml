@@ -1,0 +1,9 @@
+﻿<Page x:Class="WpfApp1.Pages.AuthorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="10">
+        <TextBlock Text="Мои книги" FontSize="18" Margin="0,0,0,10"/>
+        <Button Content="Добавить книгу" Click="BtnAdd_Click" Margin="0,0,0,10"/>
+        <DataGrid x:Name="GridMyBooks" AutoGenerateColumns="True" />
+    </StackPanel>
+</Page>

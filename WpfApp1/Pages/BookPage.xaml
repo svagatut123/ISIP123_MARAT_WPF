@@ -1,0 +1,20 @@
+﻿<Page x:Class="WpfApp1.Pages.BookPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="10">
+        <TextBlock x:Name="TxtTitle" FontSize="20" Margin="0,0,0,5"/>
+        <TextBlock x:Name="TxtAuthor" Margin="0,0,0,10"/>
+        <TextBlock x:Name="TxtDesc" TextWrapping="Wrap" Margin="0,0,0,10"/>
+        <Button Content="Читать" Click="BtnRead_Click" Margin="0,0,0,5"/>
+        <ComboBox x:Name="CmbStatus" Width="150" Margin="0,0,10,0">
+            <ComboBoxItem Content="Заброшено"/>
+            <ComboBoxItem Content="В планах"/>
+            <ComboBoxItem Content="Читаю"/>
+            <ComboBoxItem Content="Прочитано"/>
+        </ComboBox>
+        <Button Content="Добавить в список" Click="BtnAddToList_Click" Margin="0,0,0,10"/>
+        <Button Content="Пожаловаться" Click="BtnComplain_Click" Margin="0,0,0,10"/>
+        <Button x:Name="BtnFreeze" Content="Заморозить книгу" Visibility="Collapsed" Click="BtnFreeze_Click"/>
+        <DataGrid x:Name="GridReviews" AutoGenerateColumns="True" Margin="0,10,0,0"/>
+    </StackPanel>
+</Page>

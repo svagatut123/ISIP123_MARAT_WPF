@@ -1,12 +1,25 @@
 ﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Читай, Пиши и не спиши" Height="600" Width="900">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="60" Margin="5">
+            <Button Margin="0,5" Click="BtnCatalog_Click" ToolTip="Каталог книг">
+                <TextBlock Text="Каталог книг" FontSize="24" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Margin="0,5" Click="BtnLists_Click" ToolTip="Списки книг">
+                <TextBlock Text="Списки книг" FontSize="24" HorizontalAlignment="Center"/>
+            </Button>
+            <Button x:Name="BtnAdmin" Margin="0,5" Click="BtnAdmin_Click" ToolTip="Администрирование" Visibility="Collapsed">
+                <TextBlock Text="Администрирование" FontSize="24" HorizontalAlignment="Center"/>
+            </Button>
+            <Button x:Name="BtnAuthor" Margin="0,5" Click="BtnAuthor_Click" ToolTip="Страница автора" Visibility="Collapsed">
+                <TextBlock Text="Страница автора" FontSize="24" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Margin="0,5" Click="BtnProfile_Click" ToolTip="Профиль">
+                <TextBlock Text="Профиль" FontSize="24" HorizontalAlignment="Center"/>
+            </Button>
+        </StackPanel>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+    </DockPanel>
 </Window>
