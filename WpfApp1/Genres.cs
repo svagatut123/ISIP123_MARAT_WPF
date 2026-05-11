@@ -17,7 +17,7 @@ namespace WpfApp1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Genres()
         {
-            this.BookGenres = new HashSet<BookGenres>();
+            this.Books = new HashSet<Books>();
         }
     
         public int GenreId { get; set; }
@@ -25,6 +25,6 @@ namespace WpfApp1
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BookGenres> BookGenres { get; set; }
+        public virtual ICollection<Books> Books { get; set; }
     }
 }

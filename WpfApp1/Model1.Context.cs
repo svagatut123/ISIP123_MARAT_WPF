@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Up11Entities : DbContext
+    public partial class up_11Entities : DbContext
     {
-        public Up11Entities()
-            : base("name=Up11Entities")
+        public up_11Entities()
+            : base("name=up_11Entities")
         {
         }
     
@@ -25,7 +25,6 @@ namespace WpfApp1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BookGenres> BookGenres { get; set; }
         public virtual DbSet<Books> Books { get; set; }
         public virtual DbSet<Complaints> Complaints { get; set; }
         public virtual DbSet<Genres> Genres { get; set; }
@@ -33,7 +32,6 @@ namespace WpfApp1
         public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<RoleRequests> RoleRequests { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UnfreezeRequests> UnfreezeRequests { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

@@ -1,0 +1,34 @@
+﻿<Page x:Class="WpfApp1.Pages.ReadingListsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="мои списки">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="выберите список: " VerticalAlignment="Center"/>
+            <ComboBox x:Name="StatusComboBox" Width="150" SelectionChanged="StatusComboBox_SelectionChanged">
+                <ComboBoxItem Content="Читаю"/>
+                <ComboBoxItem Content="В планах"/>
+                <ComboBoxItem Content="Прочитано"/>
+                <ComboBoxItem Content="Заброшено"/>
+            </ComboBox>
+        </StackPanel>
+
+        <ListView x:Name="ListsListView" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="{Binding Books.Title}" Width="200" FontWeight="Bold"/>
+                        <TextBlock Text=" — "/>
+                        <Button Content="переместить в 'Прочитано'" Click="MoveToRead_Click" Tag="{Binding ReadingListId}" Margin="5,0"/>
+                        <Button Content="удалить" Click="Delete_Click" Tag="{Binding ReadingListId}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

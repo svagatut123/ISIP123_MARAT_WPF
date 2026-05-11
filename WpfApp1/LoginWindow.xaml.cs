@@ -1,11 +1,7 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
-using WpfApp1;
 
 namespace WpfApp1
-
 {
     public partial class LoginWindow : Window
     {
@@ -14,94 +10,46 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            string login = LoginTextBox.Text;
+            string password = PasswordBox.Password;
+
+            // ищем пользователя в базе
+            var user = Core.Context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+
+            if (user != null)
             {
-                var login = TxtLogin.Text.Trim();
-                var pass = TxtPassword.Text;
-
-                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(pass))
+                if (user.IsFrozen)
                 {
-                    MessageBox.Show("Введите логин и пароль");
-                    return;
+                    MessageBox.Show("ваш аккаунт заморожен.");
                 }
 
-                // Обязательно включаем загрузку роли
-                var user = Core.Context.Users
-                    .Include(u => u.Roles)
-                    .FirstOrDefault(u => u.Login == login && u.Password == pass);
+                Core.CurrentUser = user;
 
-                if (user != null)
-                {
-                    Core.CurrentUser = user;
-                    MainWindow main = new MainWindow();
-                    main.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Неверный логин или пароль");
-                }
+                // открываем главное окно
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Ошибка входа: " + ex.Message);
+                MessageBox.Show("неверный логин или пароль");
             }
         }
 
-        private void BtnRegister_Click(object sender, RoutedEventArgs e)
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // Проверяем, что поля не пустые
-                if (string.IsNullOrEmpty(TxtLogin.Text) || string.IsNullOrEmpty(TxtPassword.Text))
-                {
-                    MessageBox.Show("Введите логин и пароль");
-                    return;
-                }
+            // здесь можно открыть окно регистрации или просто добавить логику
+            MessageBox.Show("тут должна быть регистрация по тз");
+        }
 
-                // Проверяем, что пользователь с таким логином ещё не существует
-                var existingUser = Core.Context.Users
-                    .FirstOrDefault(u => u.Login == TxtLogin.Text.Trim());
-
-                if (existingUser != null)
-                {
-                    MessageBox.Show("Пользователь с таким логином уже существует");
-                    return;
-                }
-
-                // Получаем роль "Читатель" (обычно RoleId = 1)
-                var readerRole = Core.Context.Roles
-                    .FirstOrDefault(r => r.RoleName == "Читатель");
-
-                if (readerRole == null)
-                {
-                    MessageBox.Show("Ошибка: роль 'Читатель' не найдена в базе данных");
-                    return;
-                }
-
-                // Создаём нового пользователя
-                var newUser = new Users
-                {
-                    Login = TxtLogin.Text.Trim(),
-                    Password = TxtPassword.Text, // В реальном приложении нужно хешировать!
-                    Email = TxtLogin.Text.Trim() + "@example.com", // Заглушка для email
-                    DisplayName = TxtLogin.Text.Trim(), // Заглушка для имени
-                    RoleId = readerRole.RoleId,
-                    IsFrozen = false,
-                    RegistrationDate = DateTime.Now
-                };
-
-                Core.Context.Users.Add(newUser);
-                Core.Context.SaveChanges();
-
-                MessageBox.Show("Регистрация успешна! Теперь войдите в систему.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка регистрации: " + ex.Message);
-            }
+        private void GuestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Core.CurrentUser = null; // гость
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

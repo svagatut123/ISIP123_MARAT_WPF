@@ -17,7 +17,7 @@ namespace WpfApp1
         public int ComplaintId { get; set; }
         public int UserId { get; set; }
         public string TargetType { get; set; }
-        public int TargetId { get; set; }
+        public Nullable<int> TargetId { get; set; }
         public string Reason { get; set; }
         public System.DateTime ComplaintDate { get; set; }
     

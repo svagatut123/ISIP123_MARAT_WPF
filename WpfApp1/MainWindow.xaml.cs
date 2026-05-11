@@ -1,63 +1,90 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using WpfApp1.Pages;
-using WpfApp1;
 
 namespace WpfApp1
-
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            ApplyRoleVisibility();
+            CheckAccess();
 
-            // Безопасный переход на первую страницу
-            SafeNavigate(new CatalogPage());
+            // открываем каталог по умолчанию
+            MainFrame.Navigate(new CatalogPage());
         }
 
-        private void ApplyRoleVisibility()
+        // метод для проверки ролей и скрытия кнопок
+        private void CheckAccess()
         {
-            try
+            // если зашли как гость
+            if (Core.CurrentUser == null)
             {
-                if (Core.CurrentUser == null || Core.CurrentUser.Roles == null)
-                    return;
-
-                var roleName = Core.CurrentUser.Roles.RoleName;
-
-                if (roleName == "Администратор")
-                    BtnAdmin.Visibility = Visibility.Visible;
-
-                if (roleName == "Автор")
-                    BtnAuthor.Visibility = Visibility.Visible;
-
-                if (Core.CurrentUser.IsFrozen == true)
-                    MessageBox.Show("⚠️ Ваш аккаунт заморожен. Доступ ограничен.");
+                ListsButton.Visibility = Visibility.Collapsed;
+                ProfileButton.Visibility = Visibility.Collapsed;
+                AuthorButton.Visibility = Visibility.Collapsed;
+                AdminButton.Visibility = Visibility.Collapsed;
+                return;
             }
-            catch (Exception ex)
+
+            // показываем стандартные кнопки для вошедшего
+            ListsButton.Visibility = Visibility.Visible;
+            ProfileButton.Visibility = Visibility.Visible;
+
+            // проверка на заморозку
+            if (Core.CurrentUser.IsFrozen)
             {
-                MessageBox.Show("Ошибка при загрузке профиля: " + ex.Message);
+                WarningButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                WarningButton.Visibility = Visibility.Collapsed;
+            }
+
+            // ЛОГИКА РОЛЕЙ:
+            // 3 — это Админ (по твоей БД)
+            if (Core.CurrentUser.RoleId == 3)
+            {
+                AdminButton.Visibility = Visibility.Visible;
+                AuthorButton.Visibility = Visibility.Collapsed; // админу обычно не нужна страница автора
+            }
+            // 2 — это Автор (проверь, какой ID у автора в твоей таблице Roles)
+            else if (Core.CurrentUser.RoleId == 2)
+            {
+                AdminButton.Visibility = Visibility.Collapsed;
+                AuthorButton.Visibility = Visibility.Visible;
+            }
+            // 1 — это Читатель
+            else if (Core.CurrentUser.RoleId == 1)
+            {
+                AdminButton.Visibility = Visibility.Collapsed;
+                AuthorButton.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void SafeNavigate(Page page)
+        private void CatalogButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                MainFrame.Navigate(page);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка открытия страницы:\n" + ex.Message);
-            }
+            MainFrame.Navigate(new CatalogPage());
         }
 
-        private void BtnCatalog_Click(object sender, RoutedEventArgs e) => SafeNavigate(new CatalogPage());
-        private void BtnLists_Click(object sender, RoutedEventArgs e) => SafeNavigate(new ListsPage());
-        private void BtnAdmin_Click(object sender, RoutedEventArgs e) => SafeNavigate(new AdminPage());
-        private void BtnAuthor_Click(object sender, RoutedEventArgs e) => SafeNavigate(new AuthorPage());
-        private void BtnProfile_Click(object sender, RoutedEventArgs e) => SafeNavigate(new ProfilePage());
+        private void ListsButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ReadingListsPage());
+        }
+
+        private void AuthorButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AuthorPage());
+        }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AdminPage());
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ProfilePage());
+        }
     }
 }
