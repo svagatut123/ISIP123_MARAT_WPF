@@ -44,7 +44,9 @@
                 <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="логин" Binding="{Binding Login}"/>
-                        <DataGridTextColumn Header="роль id" Binding="{Binding RoleId}"/>
+
+                        <DataGridTextColumn Header="роль" Binding="{Binding Roles.RoleName}"/>
+
                         <DataGridCheckBoxColumn Header="заморожен" Binding="{Binding IsFrozen}"/>
                     </DataGrid.Columns>
                 </DataGrid>

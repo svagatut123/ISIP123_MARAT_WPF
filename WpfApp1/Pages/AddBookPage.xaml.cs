@@ -12,7 +12,6 @@ namespace WpfApp1.Pages
 
         private void SaveBook_Click(object sender, RoutedEventArgs e)
         {
-            // создаем объект книги по нашей модели из бд
             Books newBook = new Books()
             {
                 Title = TitleBox.Text,
@@ -26,7 +25,6 @@ namespace WpfApp1.Pages
             Core.Context.SaveChanges();
 
             MessageBox.Show("книга успешно добавлена!");
-            // возвращаемся назад
             this.NavigationService.GoBack();
         }
     }

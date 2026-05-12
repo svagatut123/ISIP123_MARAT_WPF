@@ -14,10 +14,15 @@ namespace WpfApp1.Pages
 
         private void LoadData()
         {
-            ComplaintsGrid.ItemsSource = Core.Context.Complaints.ToList();
-            UsersGrid.ItemsSource = Core.Context.Users.ToList();
+            UsersGrid.ItemsSource = Core.Context.Users.Include("Roles").ToList();
+
+            ComplaintsGrid.ItemsSource = Core.Context.Complaints.Include("Users").ToList();
+
+            AuthorRequestsGrid.ItemsSource = Core.Context.RoleRequests
+                .Include("Users")
+                .Where(r => r.Status == "На рассмотрении")
+                .ToList();
         }
-        // метод для отклонения заявки на роль автора
         private void DeclineAuthor_Click(object sender, RoutedEventArgs e)
         {
             int reqId = (int)((Button)sender).Tag;
@@ -25,15 +30,13 @@ namespace WpfApp1.Pages
 
             if (request != null)
             {
-                // вместо удаления можно просто поставить статус "Отклонено"
                 request.Status = "Отклонено";
                 Core.Context.SaveChanges();
-                LoadData(); // обновляем таблицы на странице
+                LoadData(); 
                 MessageBox.Show("заявка отклонена");
             }
         }
 
-        // уточненный метод принятия заявки
         private void AcceptAuthor_Click(object sender, RoutedEventArgs e)
         {
             int reqId = (int)((Button)sender).Tag;
@@ -41,7 +44,6 @@ namespace WpfApp1.Pages
 
             if (request != null)
             {
-                // меняем роль пользователю (обычно id автора = 2, проверь свою таблицу Roles)
                 request.Users.RoleId = 2;
                 request.Status = "Принято";
 
@@ -59,7 +61,7 @@ namespace WpfApp1.Pages
             {
                 Core.Context.Complaints.Remove(complaint);
                 Core.Context.SaveChanges();
-                LoadData(); // обновляем таблицу
+                LoadData(); 
             }
         }
     }

@@ -15,7 +15,6 @@ namespace WpfApp1.Pages
             _currentBook = book;
             DataContext = _currentBook;
 
-            // заполняем данные
             TitleTxt.Text = book.Title;
             AuthorTxt.Text = "автор: " + book.Users.DisplayName;
             DescTxt.Text = book.Description;
@@ -37,23 +36,19 @@ namespace WpfApp1.Pages
                 return;
             }
 
-            // получаем текст выбранного статуса (В планах, Читаю и т.д.)
             string selectedStatus = (StatusSelectCombo.SelectedItem as ComboBoxItem).Content.ToString();
 
-            // проверяем, нет ли уже этой книги в списках пользователя
             var existingRecord = Core.Context.ReadingLists.FirstOrDefault(rl =>
                 rl.UserId == Core.CurrentUser.UserId &&
                 rl.BookId == _currentBook.BookId);
 
             if (existingRecord != null)
             {
-                // если книга уже есть, просто обновим её статус
                 existingRecord.Status = selectedStatus;
                 MessageBox.Show("статус книги обновлен на: " + selectedStatus);
             }
             else
             {
-                // если книги нет, создаем новую запись
                 ReadingLists newItem = new ReadingLists()
                 {
                     UserId = Core.CurrentUser.UserId,
@@ -67,37 +62,50 @@ namespace WpfApp1.Pages
             Core.Context.SaveChanges();
         }
 
+        private void SendReview_Click(object sender, RoutedEventArgs e)
+        {
+            if (Core.CurrentUser == null) { MessageBox.Show("войдите, чтобы оставить отзыв"); return; }
+            if (string.IsNullOrWhiteSpace(ReviewTextBox.Text)) { MessageBox.Show("напишите текст отзыва"); return; }
+
+            int userRating = int.Parse((RatingCombo.SelectedItem as ComboBoxItem).Content.ToString());
+            int dbRating = userRating * 2;
+
+            Reviews newReview = new Reviews()
+            {
+                UserId = Core.CurrentUser.UserId,
+                BookId = _currentBook.BookId,
+                ReviewText = ReviewTextBox.Text,
+                Rating = dbRating,
+                ReviewDate = DateTime.Now 
+            };
+
+            Core.Context.Reviews.Add(newReview);
+            Core.Context.SaveChanges();
+
+            ReviewTextBox.Text = ""; 
+            LoadReviews(); 
+            MessageBox.Show("спасибо за отзыв!");
+        }
+
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            if (Core.CurrentUser == null)
-            {
-                MessageBox.Show("авторизуйтесь, чтобы отправить жалобу");
-                return;
-            }
+            if (Core.CurrentUser == null) return;
+            if (ComplaintReasonCombo.SelectedItem == null) { MessageBox.Show("выберите причину"); return; }
 
-            // создаем объект жалобы
+            string reason = (ComplaintReasonCombo.SelectedItem as ComboBoxItem).Content.ToString();
+
             Complaints newComplaint = new Complaints()
             {
                 UserId = Core.CurrentUser.UserId,
                 TargetId = _currentBook.BookId,
                 TargetType = "Книга",
-                Reason = "нарушение правил",
-
-                // вот здесь мы исправляем ошибку с датой:
-                ComplaintDate = System.DateTime.Now
+                Reason = reason,
+                ComplaintDate = DateTime.Now
             };
 
-            try
-            {
-                Core.Context.Complaints.Add(newComplaint);
-                Core.Context.SaveChanges();
-                MessageBox.Show("жалоба успешно отправлена");
-            }
-            catch (Exception ex)
-            {
-                // если ошибка осталась, это поможет увидеть детали
-                MessageBox.Show("ошибка при сохранении: " + ex.Message);
-            }
+            Core.Context.Complaints.Add(newComplaint);
+            Core.Context.SaveChanges();
+            MessageBox.Show("жалоба на книгу отправлена");
         }
     }
 }

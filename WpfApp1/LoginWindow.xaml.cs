@@ -15,7 +15,6 @@ namespace WpfApp1
             string login = LoginTextBox.Text;
             string password = PasswordBox.Password;
 
-            // ищем пользователя в базе
             var user = Core.Context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
 
             if (user != null)
@@ -27,7 +26,6 @@ namespace WpfApp1
 
                 Core.CurrentUser = user;
 
-                // открываем главное окно
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
@@ -40,7 +38,6 @@ namespace WpfApp1
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            // здесь можно открыть окно регистрации или просто добавить логику
             MessageBox.Show("тут должна быть регистрация по тз");
         }
 

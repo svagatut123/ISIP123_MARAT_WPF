@@ -9,7 +9,6 @@ namespace WpfApp1.Pages
         public ReadingListsPage()
         {
             InitializeComponent();
-            // после инициализации принудительно выбираем первый пункт (например, "Читаю")
             StatusComboBox.SelectedIndex = 0;
             RefreshData();
         }
@@ -20,7 +19,6 @@ namespace WpfApp1.Pages
 
             string selectedStatus = (StatusComboBox.SelectedItem as ComboBoxItem).Content.ToString();
 
-            // фильтруем: только мои книги и только с нужным статусом
             var myBooks = Core.Context.ReadingLists
                 .Where(rl => rl.UserId == Core.CurrentUser.UserId && rl.Status == selectedStatus)
                 .ToList();
@@ -35,7 +33,6 @@ namespace WpfApp1.Pages
 
         private void MoveToRead_Click(object sender, RoutedEventArgs e)
         {
-            // получаем id записи через Tag кнопки
             int id = (int)((Button)sender).Tag;
             var record = Core.Context.ReadingLists.FirstOrDefault(r => r.ReadingListId == id);
 

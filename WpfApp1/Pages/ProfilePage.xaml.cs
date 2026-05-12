@@ -21,7 +21,6 @@ namespace WpfApp1.Pages
                 LoginTextBlock.Text = "логин: " + Core.CurrentUser.Login;
                 EmailTextBlock.Text = "почта: " + Core.CurrentUser.Email;
 
-                // подгружаем отзывы текущего пользователя
                 var userReviews = Core.Context.Reviews
                     .Where(r => r.UserId == Core.CurrentUser.UserId)
                     .ToList();
@@ -32,12 +31,11 @@ namespace WpfApp1.Pages
 
         private void ApplyAuthorButton_Click(object sender, RoutedEventArgs e)
         {
-            // создаем новую заявку на роль
             RoleRequests newRequest = new RoleRequests()
             {
                 UserId = Core.CurrentUser.UserId,
                 RequestedRole = "Автор",
-                RequestDate = DateTime.Now,
+                RequestDate = System.DateTime.Now,
                 Status = "На рассмотрении"
             };
 

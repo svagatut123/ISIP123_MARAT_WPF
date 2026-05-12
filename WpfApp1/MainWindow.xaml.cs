@@ -10,14 +10,11 @@ namespace WpfApp1
             InitializeComponent();
             CheckAccess();
 
-            // открываем каталог по умолчанию
             MainFrame.Navigate(new CatalogPage());
         }
 
-        // метод для проверки ролей и скрытия кнопок
         private void CheckAccess()
         {
-            // если зашли как гость
             if (Core.CurrentUser == null)
             {
                 ListsButton.Visibility = Visibility.Collapsed;
@@ -27,11 +24,9 @@ namespace WpfApp1
                 return;
             }
 
-            // показываем стандартные кнопки для вошедшего
             ListsButton.Visibility = Visibility.Visible;
             ProfileButton.Visibility = Visibility.Visible;
 
-            // проверка на заморозку
             if (Core.CurrentUser.IsFrozen)
             {
                 WarningButton.Visibility = Visibility.Visible;
@@ -41,20 +36,16 @@ namespace WpfApp1
                 WarningButton.Visibility = Visibility.Collapsed;
             }
 
-            // ЛОГИКА РОЛЕЙ:
-            // 3 — это Админ (по твоей БД)
             if (Core.CurrentUser.RoleId == 3)
             {
                 AdminButton.Visibility = Visibility.Visible;
-                AuthorButton.Visibility = Visibility.Collapsed; // админу обычно не нужна страница автора
+                AuthorButton.Visibility = Visibility.Collapsed;
             }
-            // 2 — это Автор (проверь, какой ID у автора в твоей таблице Roles)
             else if (Core.CurrentUser.RoleId == 2)
             {
                 AdminButton.Visibility = Visibility.Collapsed;
                 AuthorButton.Visibility = Visibility.Visible;
             }
-            // 1 — это Читатель
             else if (Core.CurrentUser.RoleId == 1)
             {
                 AdminButton.Visibility = Visibility.Collapsed;
