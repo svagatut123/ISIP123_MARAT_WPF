@@ -22,16 +22,16 @@
             </TabItem>
 
             <TabItem Header="заявки на авторов">
-                <DataGrid x:Name="AuthorRequestsGrid" AutoGenerateColumns="False">
+                <DataGrid x:Name="AuthorRequestsGrid" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="пользователь" Binding="{Binding Users.Login}"/>
-                        <DataGridTextColumn Header="дата" Binding="{Binding RequestDate}"/>
-                        <DataGridTemplateColumn Header="решение">
+                        <DataGridTextColumn Header="Пользователь" Binding="{Binding Users.DisplayName}" Width="*"/>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding RequestDate, StringFormat=\{0:dd.MM.yyyy\}}" Width="Auto"/>
+                        <DataGridTemplateColumn Header="Действия">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="✅" Click="AcceptAuthor_Click" Tag="{Binding RequestId}" Margin="2"/>
-                                        <Button Content="❌" Click="DeclineAuthor_Click" Tag="{Binding RequestId}" Margin="2"/>
+                                        <Button Content="Принять" Click="AcceptAuthor_Click" Margin="2" Background="LightGreen"/>
+                                        <Button Content="Отклонить" Click="RejectRequest_Click" Margin="2" Background="LightCoral"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -39,15 +39,21 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-
-            <TabItem Header="пользователи">
-                <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False">
+            <TabItem Header="Пользователи">
+                <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="логин" Binding="{Binding Login}"/>
-
-                        <DataGridTextColumn Header="роль" Binding="{Binding Roles.RoleName}"/>
-
-                        <DataGridCheckBoxColumn Header="заморожен" Binding="{Binding IsFrozen}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding DisplayName}" Width="*"/>
+                        <DataGridTextColumn Header="Роль" Binding="{Binding Roles.RoleName}" Width="Auto"/>
+                        <DataGridTemplateColumn Header="Действия со статусом" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Заморозить/Разморозить" 
+                                         Click="ToggleFreeze_Click" 
+                                         Padding="5,2" 
+                                         Cursor="Hand"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

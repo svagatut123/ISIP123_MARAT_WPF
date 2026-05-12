@@ -43,7 +43,7 @@ namespace WpfApp1
 
         private void GuestButton_Click(object sender, RoutedEventArgs e)
         {
-            Core.CurrentUser = null; // гость
+            Core.CurrentUser = null; 
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
