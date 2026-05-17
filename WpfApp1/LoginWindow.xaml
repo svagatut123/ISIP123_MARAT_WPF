@@ -12,7 +12,6 @@
 
             <Button Content="войти" Click="LoginButton_Click" Margin="0,0,0,10" Height="30"/>
             <Button Content="зарегистрироваться" Click="RegisterButton_Click" Margin="0,0,0,10" Height="30"/>
-            <Button Content="продолжить как гость" Click="GuestButton_Click" Height="30"/>
         </StackPanel>
     </Grid>
 </Window>

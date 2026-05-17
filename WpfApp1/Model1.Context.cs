@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class up_11Entities : DbContext
+    public partial class up_11Entities3 : DbContext
     {
-        public up_11Entities()
-            : base("name=up_11Entities")
+        public up_11Entities3()
+            : base("name=up_11Entities3")
         {
         }
     
@@ -32,6 +32,7 @@ namespace WpfApp1
         public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<RoleRequests> RoleRequests { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UnfreezeRequests> UnfreezeRequests { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

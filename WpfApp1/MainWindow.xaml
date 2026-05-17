@@ -8,32 +8,30 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="LightGray">
-
-            <Button x:Name="CatalogButton" Click="CatalogButton_Click" Margin="5" Height="120" ToolTip="каталог книг">
+        <StackPanel Grid.Column="0">
+            <Button x:Name="CatalogButton" Click="CatalogButton_Click" Margin="5" Height="80" ToolTip="каталог книг">
                 <Image Source="Images/catalog.png" Stretch="Uniform"/>
             </Button>
 
-            <Button x:Name="ListsButton" Click="ListsButton_Click" Margin="5" Height="120" ToolTip="списки книг">
+            <Button x:Name="ListsButton" Click="ListsButton_Click" Margin="5" Height="80" ToolTip="списки книг">
                 <Image Source="Images/lists.png" Stretch="Uniform"/>
             </Button>
 
-            <Button x:Name="AuthorButton" Click="AuthorButton_Click" Margin="5" Height="120" ToolTip="страница автора" Visibility="Collapsed">
+            <Button x:Name="AuthorButton" Click="AuthorButton_Click" Margin="5" Height="80" ToolTip="страница автора" Visibility="Collapsed">
                 <Image Source="Images/author.png" Stretch="Uniform"/>
             </Button>
 
-            <Button x:Name="AdminButton" Click="AdminButton_Click" Margin="5" Height="120" ToolTip="администрирование" Visibility="Collapsed">
+            <Button x:Name="AdminButton" Click="AdminButton_Click" Margin="5" Height="80" ToolTip="администрирование" Visibility="Collapsed">
                 <Image Source="Images/admin.png" Stretch="Uniform"/>
             </Button>
 
-            <Button x:Name="ProfileButton" Click="ProfileButton_Click" Margin="5" Height="120" ToolTip="профиль">
+            <Button x:Name="ProfileButton" Click="ProfileButton_Click" Margin="5" Height="80" ToolTip="профиль">
                 <Image Source="Images/profile.png" Stretch="Uniform"/>
             </Button>
 
-            <Button x:Name="WarningButton" Margin="5" Height="120" ToolTip="аккаунт заморожен!" Visibility="Collapsed" Background="Red">
+            <Button x:Name="WarningButton" Margin="5" Height="80" ToolTip="аккаунт заморожен!" Visibility="Collapsed" Background="Red">
                 <Image Source="Images/warning.png" Stretch="Uniform"/>
             </Button>
-
         </StackPanel>
 
         <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>

@@ -23,6 +23,7 @@ namespace WpfApp1
             this.Reviews = new HashSet<Reviews>();
             this.RoleRequests = new HashSet<RoleRequests>();
             this.UnfreezeRequests = new HashSet<UnfreezeRequests>();
+            this.UnfreezeRequests1 = new HashSet<UnfreezeRequests>();
         }
     
         public int UserId { get; set; }
@@ -31,8 +32,9 @@ namespace WpfApp1
         public string Email { get; set; }
         public string DisplayName { get; set; }
         public int RoleId { get; set; }
-        public bool IsFrozen { get; set; }
-        public System.DateTime RegistrationDate { get; set; }
+        public Nullable<bool> IsFrozen { get; set; }
+        public string FreezeReason { get; set; }
+        public Nullable<System.DateTime> RegistrationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books> Books { get; set; }
@@ -47,5 +49,7 @@ namespace WpfApp1
         public virtual Roles Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnfreezeRequests> UnfreezeRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnfreezeRequests> UnfreezeRequests1 { get; set; }
     }
 }

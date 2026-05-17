@@ -1,34 +1,35 @@
 ﻿<Page x:Class="WpfApp1.Pages.ReadingListsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="мои списки">
+      Title="Мои списки чтения">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="выберите список: " VerticalAlignment="Center"/>
-            <ComboBox x:Name="StatusComboBox" Width="150" SelectionChanged="StatusComboBox_SelectionChanged">
-                <ComboBoxItem Content="Читаю"/>
-                <ComboBoxItem Content="В планах"/>
-                <ComboBoxItem Content="Прочитано"/>
-                <ComboBoxItem Content="Заброшено"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Text="поиск:" VerticalAlignment="Center" Margin="5,0"/>
+            <TextBox x:Name="SearchBox" Width="130" Height="25" VerticalContentAlignment="Center" TextChanged="FilterChanged"/>
+
+            <TextBlock Text="жанр:" VerticalAlignment="Center" Margin="12,0,5,0"/>
+            <ComboBox x:Name="GenreCombo" Width="130" Height="25" SelectionChanged="FilterChanged"/>
+
+            <TextBlock Text="сортировать по:" VerticalAlignment="Center" Margin="12,0,5,0"/>
+            <ComboBox x:Name="SortCombo" Width="150" Height="25" SelectionChanged="FilterChanged">
+                <ComboBoxItem Content="Имени (Названию)" IsSelected="True"/>
+                <ComboBoxItem Content="Автору произведения"/>
+                <ComboBoxItem Content="Оценке (Популярности)"/>
             </ComboBox>
         </StackPanel>
 
-        <ListView x:Name="ListsListView" Grid.Row="1">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="{Binding Books.Title}" Width="200" FontWeight="Bold"/>
-                        <TextBlock Text=" — "/>
-                        <Button Content="переместить в 'Прочитано'" Click="MoveToRead_Click" Tag="{Binding ReadingListId}" Margin="5,0"/>
-                        <Button Content="удалить" Click="Delete_Click" Tag="{Binding ReadingListId}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <DataGrid x:Name="ListsDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название книги" Binding="{Binding Books.Title}" Width="2*"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding Books.Users.DisplayName}" Width="1.5*"/>
+                <DataGridTextColumn Header="Статус в моем списке" Binding="{Binding Status}" Width="120"/>
+                <DataGridTextColumn Header="Всего отзывов читателей" Binding="{Binding Books.Reviews.Count}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

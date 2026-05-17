@@ -18,8 +18,9 @@ namespace WpfApp1
         public int UserId { get; set; }
         public int BookId { get; set; }
         public string ReviewText { get; set; }
-        public int Rating { get; set; }
-        public System.DateTime ReviewDate { get; set; }
+        public Nullable<int> Rating { get; set; }
+        public Nullable<System.DateTime> ReviewDate { get; set; }
+        public Nullable<bool> IsFrozen { get; set; }
     
         public virtual Books Books { get; set; }
         public virtual Users Users { get; set; }

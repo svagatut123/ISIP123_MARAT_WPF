@@ -8,12 +8,12 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            CheckAccess();
+            UpdateNavigationMenu(); 
 
             MainFrame.Navigate(new CatalogPage());
         }
 
-        private void CheckAccess()
+        private void UpdateNavigationMenu()
         {
             if (Core.CurrentUser == null)
             {
@@ -27,7 +27,7 @@ namespace WpfApp1
             ListsButton.Visibility = Visibility.Visible;
             ProfileButton.Visibility = Visibility.Visible;
 
-            if (Core.CurrentUser.IsFrozen)
+            if (Core.CurrentUser.IsFrozen == true)
             {
                 WarningButton.Visibility = Visibility.Visible;
             }
@@ -53,29 +53,10 @@ namespace WpfApp1
             }
         }
 
-        private void CatalogButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new CatalogPage());
-        }
-
-        private void ListsButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new ReadingListsPage());
-        }
-
-        private void AuthorButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new AuthorPage());
-        }
-
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new AdminPage());
-        }
-
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new ProfilePage());
-        }
+        private void CatalogButton_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new CatalogPage());
+        private void ListsButton_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new ReadingListsPage());
+        private void AuthorButton_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new AuthorPage());
+        private void AdminButton_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new AdminPage());
+        private void ProfileButton_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new ProfilePage());
     }
 }

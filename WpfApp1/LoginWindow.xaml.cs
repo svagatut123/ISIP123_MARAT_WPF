@@ -19,9 +19,9 @@ namespace WpfApp1
 
             if (user != null)
             {
-                if (user.IsFrozen)
+                if (user.IsFrozen == true)
                 {
-                    MessageBox.Show("ваш аккаунт заморожен.");
+                    MessageBox.Show("Ваш аккаунт заморожен.");
                 }
 
                 Core.CurrentUser = user;
@@ -41,12 +41,5 @@ namespace WpfApp1
             MessageBox.Show("тут должна быть регистрация по тз");
         }
 
-        private void GuestButton_Click(object sender, RoutedEventArgs e)
-        {
-            Core.CurrentUser = null; 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
-        }
     }
 }

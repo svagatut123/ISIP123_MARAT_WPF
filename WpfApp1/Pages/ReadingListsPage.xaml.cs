@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,52 +10,72 @@ namespace WpfApp1.Pages
         public ReadingListsPage()
         {
             InitializeComponent();
-            StatusComboBox.SelectedIndex = 0;
-            RefreshData();
+            LoadGenres();
+            ApplyFilter();
         }
 
-        private void RefreshData()
+        private void LoadGenres()
         {
-            if (Core.CurrentUser == null || StatusComboBox.SelectedItem == null) return;
+            if (Core.Context == null || GenreCombo == null) return;
 
-            string selectedStatus = (StatusComboBox.SelectedItem as ComboBoxItem).Content.ToString();
-
-            var myBooks = Core.Context.ReadingLists
-                .Where(rl => rl.UserId == Core.CurrentUser.UserId && rl.Status == selectedStatus)
-                .ToList();
-
-            ListsListView.ItemsSource = myBooks;
-        }
-
-        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RefreshData();
-        }
-
-        private void MoveToRead_Click(object sender, RoutedEventArgs e)
-        {
-            int id = (int)((Button)sender).Tag;
-            var record = Core.Context.ReadingLists.FirstOrDefault(r => r.ReadingListId == id);
-
-            if (record != null)
+            try
             {
-                record.Status = "Прочитано";
-                Core.Context.SaveChanges();
-                RefreshData();
+                var rawGenres = Core.Context.Genres.ToList();
+                var comboItems = rawGenres.Select(g => new {
+                    Id = g.GenreId,
+                    Text = g.GetType().GetProperties().FirstOrDefault(p => p.PropertyType == typeof(string))?.GetValue(g)?.ToString() ?? "Жанр"
+                }).ToList();
+
+                comboItems.Insert(0, new { Id = 0, Text = "Все жанры" });
+
+                GenreCombo.SelectedValuePath = "Id";
+                GenreCombo.DisplayMemberPath = "Text";
+                GenreCombo.ItemsSource = comboItems;
+                GenreCombo.SelectedIndex = 0;
             }
+            catch { }
         }
 
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            int id = (int)((Button)sender).Tag;
-            var record = Core.Context.ReadingLists.FirstOrDefault(r => r.ReadingListId == id);
+        private void FilterChanged(object sender, SelectionChangedEventArgs e) => ApplyFilter();
+        private void FilterChanged(object sender, TextChangedEventArgs e) => ApplyFilter();
 
-            if (record != null)
+        private void ApplyFilter()
+        {
+            if (Core.Context == null || ListsDataGrid == null || Core.CurrentUser == null) return;
+
+            var query = Core.Context.ReadingLists
+                .Include("Books")
+                .Include("Books.Users")
+                .Include("Books.Reviews")
+                .Where(r => r.UserId == Core.CurrentUser.UserId).ToList();
+
+            string search = SearchBox.Text.Trim().ToLower();
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                Core.Context.ReadingLists.Remove(record);
-                Core.Context.SaveChanges();
-                RefreshData();
+                query = query.Where(r => (r.Books?.Title != null && r.Books.Title.ToLower().Contains(search)) ||
+                                         (r.Books?.Users?.DisplayName != null && r.Books.Users.DisplayName.ToLower().Contains(search))).ToList();
             }
+
+            if (GenreCombo.SelectedValue != null && (int)GenreCombo.SelectedValue != 0)
+            {
+                int currentGenreId = (int)GenreCombo.SelectedValue;
+                query = query.Where(r => r.Books?.GenreId == currentGenreId).ToList();
+            }
+
+            if (SortCombo.SelectedIndex == 0)
+            {
+                query = query.OrderBy(r => r.Books?.Title).ToList();
+            }
+            else if (SortCombo.SelectedIndex == 1) 
+            {
+                query = query.OrderBy(r => r.Books?.Users?.DisplayName).ToList();
+            }
+            else if (SortCombo.SelectedIndex == 2) 
+            {
+                query = query.OrderByDescending(r => r.Books?.Reviews?.Count ?? 0).ToList();
+            }
+
+            ListsDataGrid.ItemsSource = query;
         }
     }
 }

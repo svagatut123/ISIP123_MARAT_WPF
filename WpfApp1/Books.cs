@@ -17,9 +17,10 @@ namespace WpfApp1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Books()
         {
-            this.Reviews = new HashSet<Reviews>();
             this.ReadingLists = new HashSet<ReadingLists>();
-            this.Genres = new HashSet<Genres>();
+            this.Reviews = new HashSet<Reviews>();
+            this.UnfreezeRequests = new HashSet<UnfreezeRequests>();
+            this.Genres1 = new HashSet<Genres>();
         }
     
         public int BookId { get; set; }
@@ -28,14 +29,19 @@ namespace WpfApp1
         public string CoverPath { get; set; }
         public string Content { get; set; }
         public int AuthorId { get; set; }
-        public bool IsFrozen { get; set; }
+        public Nullable<bool> IsFrozen { get; set; }
+        public string FreezeReason { get; set; }
+        public Nullable<int> GenreId { get; set; }
     
+        public virtual Genres Genres { get; set; }
         public virtual Users Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reviews> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReadingLists> ReadingLists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Genres> Genres { get; set; }
+        public virtual ICollection<Reviews> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnfreezeRequests> UnfreezeRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Genres> Genres1 { get; set; }
     }
 }

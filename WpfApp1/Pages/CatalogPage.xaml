@@ -10,11 +10,10 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="поиск:" VerticalAlignment="Center" Margin="5,0"/>
-            <TextBox x:Name="SearchTextBox" Width="120" Height="25"/>
+            <TextBox x:Name="SearchTextBox" Width="120" Height="25" TextChanged="FilterChanged"/>
 
             <TextBlock Text="жанр:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-            <ComboBox x:Name="GenreFilterCombo" Width="120" Height="25"
-              DisplayMemberPath="Name" SelectionChanged="FilterChanged"/>
+            <ComboBox x:Name="GenreFilterCombo" Width="120" Height="25" SelectionChanged="FilterChanged"/>
 
             <TextBlock Text="сортировка:" VerticalAlignment="Center" Margin="10,0,5,0"/>
             <ComboBox x:Name="SortCombo" Width="120" Height="25" SelectionChanged="FilterChanged">
@@ -22,13 +21,15 @@
                 <ComboBoxItem Content="по рейтингу"/>
             </ComboBox>
 
-            <Button Content="найти" Click="SearchButton_Click" Width="70" Height="25" Margin="10,0,0,0"/>
+            <Button Content="найти" Click="SearchButton_Click" Width="70" Height="25" Margin="10,0,0,0" Cursor="Hand"/>
+
+            <Button Content="сбросить" Click="ResetFilters_Click" Width="70" Height="25" Margin="5,0,0,0" Background="#FFF0F0F0" Cursor="Hand"/>
         </StackPanel>
 
         <ListView x:Name="BooksListView" 
-          Grid.Row="1" 
-          MouseDoubleClick="BooksListView_MouseDoubleClick"
-          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  Grid.Row="1" 
+                  MouseDoubleClick="BooksListView_MouseDoubleClick"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -36,12 +37,18 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5" Width="150" Height="180">
-                        <StackPanel>
-                            <Image Source="{Binding CoverPath}" Height="100" Margin="0,0,0,5" Stretch="UniformToFill"/>
-                            <TextBlock Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap"/>
-                            <TextBlock Text="{Binding Users.DisplayName}" Foreground="DimGray" FontSize="11"/>
-                        </StackPanel>
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5" Width="150" Height="180" Background="#FAFAFA" CornerRadius="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Row="0" Source="{Binding CoverPath}" Height="100" Margin="0,0,0,5" Stretch="UniformToFill"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap" MaxHeight="45" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Row="2" Text="{Binding Users.DisplayName}" Foreground="DimGray" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>

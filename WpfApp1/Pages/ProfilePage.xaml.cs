@@ -10,39 +10,44 @@ namespace WpfApp1.Pages
         public ProfilePage()
         {
             InitializeComponent();
-            LoadUserData();
+            LoadProfile();
         }
 
-        private void LoadUserData()
+        private void LoadProfile()
         {
             if (Core.CurrentUser != null)
             {
-                NameTextBlock.Text = "имя: " + Core.CurrentUser.DisplayName;
-                LoginTextBlock.Text = "логин: " + Core.CurrentUser.Login;
-                EmailTextBlock.Text = "почта: " + Core.CurrentUser.Email;
+                NameText.Text = Core.CurrentUser.DisplayName;
+                LoginText.Text = Core.CurrentUser.Login;
+                EmailText.Text = Core.CurrentUser.Email;
 
-                var userReviews = Core.Context.Reviews
-                    .Where(r => r.UserId == Core.CurrentUser.UserId)
-                    .ToList();
+                if (Core.CurrentUser.RoleId == 3) RoleText.Text = "Администратор";
+                else if (Core.CurrentUser.RoleId == 2) RoleText.Text = "Автор";
+                else RoleText.Text = "Читатель";
 
-                ReviewsDataGrid.ItemsSource = userReviews;
+                if (Core.CurrentUser.IsFrozen == true)
+                {
+                    FrozenPanel.Visibility = Visibility.Visible;
+                    FreezeReasonText.Text = Core.CurrentUser.FreezeReason ?? "Причина не указана администратором платформы";
+                }
             }
         }
 
-        private void ApplyAuthorButton_Click(object sender, RoutedEventArgs e)
+        private void AppealUser_Click(object sender, RoutedEventArgs e)
         {
-            RoleRequests newRequest = new RoleRequests()
+            var req = new UnfreezeRequests
             {
                 UserId = Core.CurrentUser.UserId,
-                RequestedRole = "Автор",
-                RequestDate = System.DateTime.Now,
+                TargetUserId = Core.CurrentUser.UserId,
+                TargetBookId = null,
+                Reason = "Не согласен с блокировкой аккаунта, прошу перепроверить действия",
+                RequestDate = DateTime.Now,
                 Status = "На рассмотрении"
             };
 
-            Core.Context.RoleRequests.Add(newRequest);
+            Core.Context.UnfreezeRequests.Add(req);
             Core.Context.SaveChanges();
-
-            MessageBox.Show("заявка успешно отправлена");
+            MessageBox.Show("Апелляционная заявка на разморозку профиля успешно отправлена.");
         }
     }
 }

@@ -1,19 +1,42 @@
 ﻿<Page x:Class="WpfApp1.Pages.AdminPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="админка">
+      Title="Панель администратора">
     <Grid Margin="10">
         <TabControl>
-            <TabItem Header="жалобы">
-                <DataGrid x:Name="ComplaintsGrid" AutoGenerateColumns="False" CanUserAddRows="False">
+            <TabItem Header="Пользователи">
+                <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="кто" Binding="{Binding Users.DisplayName}" Width="100"/>
-                        <DataGridTextColumn Header="тип цели" Binding="{Binding TargetType}" Width="100"/>
-                        <DataGridTextColumn Header="причина" Binding="{Binding Reason}" Width="*"/>
-                        <DataGridTemplateColumn Header="действия">
+                        <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="110" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding DisplayName}" Width="130" IsReadOnly="True"/>
+
+                        <DataGridTemplateColumn Header="Текущая роль" Width="130">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="удалить жалобу" Click="DeleteComplaint_Click" Tag="{Binding ComplaintId}"/>
+                                    <TextBlock Text="{Binding RoleText}" VerticalAlignment="Center" Margin="5,0" FontWeight="SemiBold"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Изменить роль" Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox SelectedValue="{Binding RoleText, Mode=OneWay}" 
+                                              SelectionChanged="RoleCombo_SelectionChanged" 
+                                              Tag="{Binding UserId}"
+                                              VerticalContentAlignment="Center">
+                                        <ComboBoxItem Content="Пользователь"/>
+                                        <ComboBoxItem Content="Автор"/>
+                                        <ComboBoxItem Content="Администратор"/>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Изменить пароль" Click="ChangePassword_Click" Tag="{Binding UserId}" Width="120" HorizontalAlignment="Left"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -21,41 +44,24 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="заявки на авторов">
-                <DataGrid x:Name="AuthorRequestsGrid" AutoGenerateColumns="False" CanUserAddRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Пользователь" Binding="{Binding Users.DisplayName}" Width="*"/>
-                        <DataGridTextColumn Header="Дата" Binding="{Binding RequestDate, StringFormat=\{0:dd.MM.yyyy\}}" Width="Auto"/>
-                        <DataGridTemplateColumn Header="Действия">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Content="Принять" Click="AcceptAuthor_Click" Margin="2" Background="LightGreen"/>
-                                        <Button Content="Отклонить" Click="RejectRequest_Click" Margin="2" Background="LightCoral"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-            <TabItem Header="Пользователи">
-                <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False" CanUserAddRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Имя" Binding="{Binding DisplayName}" Width="*"/>
-                        <DataGridTextColumn Header="Роль" Binding="{Binding Roles.RoleName}" Width="Auto"/>
-                        <DataGridTemplateColumn Header="Действия со статусом" Width="Auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="Заморозить/Разморозить" 
-                                         Click="ToggleFreeze_Click" 
-                                         Padding="5,2" 
-                                         Cursor="Hand"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <TabItem Header="Жалобы и Заморозки">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid x:Name="ComplaintsGrid" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Тип объекта" Binding="{Binding TargetType}" Width="120"/>
+                            <DataGridTextColumn Header="ID Объекта" Binding="{Binding TargetId}" Width="100"/>
+                            <DataGridTextColumn Header="Причина / Текст жалобы" Binding="{Binding Reason}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Grid.Row="1" Content="✅ Одобрить апелляцию (Разморозить книгу)" 
+                            Click="UnfreezeBook_Click" Height="35" Margin="0,10,0,0" Background="#E6F4EA"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

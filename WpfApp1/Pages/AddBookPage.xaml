@@ -12,6 +12,9 @@
         <TextBlock Text="текст книги:"/>
         <TextBox x:Name="ContentBox" Height="200" TextWrapping="Wrap" Margin="0,5,0,10"/>
 
+        <TextBlock Text="жанр книги:" Margin="0,5,0,0"/>
+        <ComboBox x:Name="GenreCombo" DisplayMemberPath="Name" Margin="0,5,0,10" Height="25"/>
+        
         <Button Content="опубликовать" Click="SaveBook_Click" Height="30"/>
     </StackPanel>
 </Page>

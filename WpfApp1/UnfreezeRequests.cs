@@ -14,14 +14,16 @@ namespace WpfApp1
     
     public partial class UnfreezeRequests
     {
-        public int UnfreezeId { get; set; }
+        public int RequestId { get; set; }
         public int UserId { get; set; }
-        public string TargetType { get; set; }
-        public Nullable<int> TargetId { get; set; }
         public string Reason { get; set; }
-        public System.DateTime RequestDate { get; set; }
+        public Nullable<System.DateTime> RequestDate { get; set; }
         public string Status { get; set; }
+        public Nullable<int> TargetUserId { get; set; }
+        public Nullable<int> TargetBookId { get; set; }
     
+        public virtual Books Books { get; set; }
         public virtual Users Users { get; set; }
+        public virtual Users Users1 { get; set; }
     }
 }

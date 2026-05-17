@@ -17,7 +17,7 @@ namespace WpfApp1
         public int RequestId { get; set; }
         public int UserId { get; set; }
         public string RequestedRole { get; set; }
-        public System.DateTime RequestDate { get; set; }
+        public Nullable<System.DateTime> RequestDate { get; set; }
         public string Status { get; set; }
     
         public virtual Users Users { get; set; }

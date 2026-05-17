@@ -12,10 +12,23 @@
             <StackPanel Margin="25">
 
                 <TextBlock x:Name="TitleTxt" FontSize="28" FontWeight="Bold" TextWrapping="Wrap" Text="Название книги"/>
-                <TextBlock x:Name="AuthorTxt" FontSize="18" Foreground="Gray" Margin="0,5,0,15" Text="Автор: Имя автора"/>
+
+                <WrapPanel Margin="0,5,0,15" VerticalAlignment="Center">
+                    <TextBlock x:Name="AuthorTxt" FontSize="18" Foreground="Gray" Text="Автор: Имя автора" VerticalAlignment="Center"/>
+                    <Button x:Name="ReportAuthorBtn" Content="⚠️ Пожаловаться на автора" Click="ReportAuthor_Click" 
+                            Margin="15,0,0,0" Padding="8,2" Background="#FFF5F5F5" BorderBrush="LightGray" 
+                            FontSize="12" Cursor="Hand" VerticalAlignment="Center"/>
+                    <Button x:Name="FreezeBookBtn" Content="❄️ Заморозить книгу" Click="FreezeBook_Click" 
+                            Margin="15,0,0,0" Width="150" Height="35" Background="#FFEBF5FF" 
+                            BorderBrush="#FFA3C2FF" Cursor="Hand" Loaded="AdminElement_Loaded"/>
+                </WrapPanel>
 
                 <TextBlock Text="Описание:" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5"/>
                 <TextBlock x:Name="DescTxt" TextWrapping="Wrap" FontSize="14" Margin="0,0,0,20" Text="Здесь будет описание книги..."/>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Жанр: " FontWeight="Bold" Foreground="Gray" FontSize="14"/>
+                    <TextBlock x:Name="BookGenreTxt" Text="Не указан" Foreground="#2C3E50" FontSize="14"/>
+                </StackPanel>
 
                 <TextBlock Text="Текст произведения:" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5"/>
                 <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
@@ -24,35 +37,32 @@
                              FontSize="14" Background="#FAFAFA"/>
                 </Border>
 
-                <UniformGrid Columns="2" Margin="0,20">
-                    <StackPanel Margin="0,0,10,0">
-                        <TextBlock Text="Добавить в список:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <ComboBox x:Name="StatusSelectCombo" Height="30">
-                            <ComboBoxItem Content="В планах" IsSelected="True"/>
-                            <ComboBoxItem Content="Читаю"/>
-                            <ComboBoxItem Content="Прочитано"/>
-                            <ComboBoxItem Content="Заброшено"/>
-                        </ComboBox>
-                        <Button Content="Сохранить в список" Click="AddToList_Click" Margin="0,10,0,0" Height="35" Cursor="Hand"/>
-                    </StackPanel>
+                <Grid Margin="0,20">
+                    <StackPanel>
+                        <TextBlock Text="Управление и действия:" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <WrapPanel>
+                            <ComboBox x:Name="StatusSelectCombo" Height="35" Width="150" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="В планах" IsSelected="True"/>
+                                <ComboBoxItem Content="Читаю"/>
+                                <ComboBoxItem Content="Прочитано"/>
+                                <ComboBoxItem Content="Заброшено"/>
+                            </ComboBox>
 
-                    <StackPanel Margin="10,0,0,0">
-                        <TextBlock Text="Пожаловаться:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <ComboBox x:Name="ComplaintReasonCombo" Height="30">
-                            <ComboBoxItem Content="Оскорбления"/>
-                            <ComboBoxItem Content="Плагиат"/>
-                            <ComboBoxItem Content="Спойлеры"/>
-                            <ComboBoxItem Content="Другое"/>
-                        </ComboBox>
-                        <Button Content="Отправить жалобу" Click="Report_Click" Margin="0,10,0,0" Height="35" Background="#FFFFEBEB" Cursor="Hand"/>
+                            <Button Content="Сохранить в список" Click="AddToList_Click" 
+                                    Margin="10,0,0,0" Width="160" Height="35" Cursor="Hand"/>
+
+                            <Button x:Name="ReportBookBtn" Content="Пожаловаться на книгу" Click="ReportBook_Click" 
+                                    Margin="15,0,0,0" Width="180" Height="35" Background="#FFFFEBEB" 
+                                    BorderBrush="#FFA3A3" Cursor="Hand"/>
+                        </WrapPanel>
                     </StackPanel>
-                </UniformGrid>
+                </Grid>
 
                 <Separator Margin="0,10"/>
 
                 <TextBlock Text="Отзывы читателей" FontSize="20" FontWeight="Bold" Margin="0,10"/>
 
-                <Border Background="#F9F9F9" Padding="15" CornerRadius="8" Margin="0,0,0,20">
+                <Border x:Name="AddReviewBlock" Background="#F9F9F9" Padding="15" CornerRadius="8" Margin="0,0,0,20">
                     <StackPanel>
                         <TextBlock Text="Оставить свой отзыв:" FontWeight="SemiBold" Margin="0,0,0,10"/>
                         <TextBox x:Name="ReviewTextBox" Height="80" TextWrapping="Wrap" Margin="0,0,0,10" 
@@ -77,17 +87,30 @@
                         <DataTemplate>
                             <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="10,15">
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding Users.DisplayName}" FontWeight="Bold" Foreground="#2C3E50" FontSize="14"/>
-                                    <TextBlock Grid.Row="1" Text="{Binding ReviewText}" TextWrapping="Wrap" Margin="0,5,0,5" FontSize="13"/>
-                                    <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                        <TextBlock Text="Оценка системы: " FontSize="12" Foreground="Gray"/>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding Users.DisplayName}" FontWeight="Bold" Foreground="#2C3E50" FontSize="14"/>
+                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ReviewText}" TextWrapping="Wrap" Margin="0,5,0,5" FontSize="13"/>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Text="Оценка пользователя: " FontSize="12" Foreground="Gray"/>
                                         <TextBlock Text="{Binding Rating}" FontSize="12" FontWeight="Bold" Foreground="OrangeRed"/>
-                                        <TextBlock Text="/10" FontSize="12" Foreground="Gray"/>
+                                        <TextBlock Text=" / 5" FontSize="12" Foreground="Gray"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Content="🚩 Пожаловаться" Click="ReportReview_Click" Tag="{Binding ReviewId}" Margin="5,0" Padding="5,2" FontSize="11" Cursor="Hand"/>
+                                        <Button x:Name="FreezeReviewBtn" Content="❄️ Заморозить" Click="FreezeReview_Click" Tag="{Binding ReviewId}" 
+                                Padding="5,2" FontSize="11" Background="#FFEBF5FF" BorderBrush="#FFA3C2FF" Cursor="Hand"
+                                Loaded="AdminElement_Loaded"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>

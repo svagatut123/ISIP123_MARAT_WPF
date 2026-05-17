@@ -14,7 +14,7 @@ namespace WpfApp1
     
     public partial class ReadingLists
     {
-        public int ReadingListId { get; set; }
+        public int ListId { get; set; }
         public int UserId { get; set; }
         public int BookId { get; set; }
         public string Status { get; set; }

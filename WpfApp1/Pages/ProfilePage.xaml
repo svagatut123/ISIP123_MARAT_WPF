@@ -1,33 +1,40 @@
 ﻿<Page x:Class="WpfApp1.Pages.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="профиль пользователя">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+      Title="Профиль">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Личный кабинет" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="информация о пользователе" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBlock x:Name="NameTextBlock" Margin="0,0,0,5"/>
-            <TextBlock x:Name="LoginTextBlock" Margin="0,0,0,5"/>
-            <TextBlock x:Name="EmailTextBlock" Margin="0,0,0,5"/>
+            <WrapPanel Margin="0,5">
+                <TextBlock Text="Имя пользователя: "/>
+                <TextBlock x:Name="NameText" FontWeight="Bold"/>
+            </WrapPanel>
 
-            <Button Content="подать заявку на роль автора" Click="ApplyAuthorButton_Click" Width="200" HorizontalAlignment="Left" Margin="0,10,0,0"/>
-        </StackPanel>
+            <WrapPanel Margin="0,5">
+                <TextBlock Text="Логин: "/>
+                <TextBlock x:Name="LoginText"/>
+            </WrapPanel>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="мои отзывы" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+            <WrapPanel Margin="0,5">
+                <TextBlock Text="Email: "/>
+                <TextBlock x:Name="EmailText"/>
+            </WrapPanel>
 
-            <DataGrid x:Name="ReviewsDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="дата" Binding="{Binding ReviewDate, StringFormat=d}"/>
-                    <DataGridTextColumn Header="книга" Binding="{Binding Books.Title}"/>
-                    <DataGridTextColumn Header="оценка" Binding="{Binding Rating}"/>
-                    <DataGridTextColumn Header="текст" Binding="{Binding ReviewText}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <WrapPanel Margin="0,5">
+                <TextBlock Text="Роль в системе: "/>
+                <TextBlock x:Name="RoleText" FontWeight="Bold"/>
+            </WrapPanel>
+
+            <StackPanel x:Name="FrozenPanel" Visibility="Collapsed" Margin="0,20,0,0">
+                <Image Source="/Images/warning.png" Width="40" Height="40" HorizontalAlignment="Left"/>
+                <TextBlock Text="Внимание! Этот аккаунт заморожен администрацией." Foreground="Red" FontWeight="Bold"/>
+                <WrapPanel Margin="0,5">
+                    <TextBlock Text="Официальная причина: "/>
+                    <TextBlock x:Name="FreezeReasonText" Foreground="Red"/>
+                </WrapPanel>
+                <Button Content="Подать заявку на разморозку" Click="AppealUser_Click" Width="200" Margin="0,5,0,0"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
