@@ -11,7 +11,8 @@
             <PasswordBox x:Name="PasswordBox" Margin="0,0,0,20" Height="25"/>
 
             <Button Content="войти" Click="LoginButton_Click" Margin="0,0,0,10" Height="30"/>
-            <Button Content="зарегистрироваться" Click="RegisterButton_Click" Margin="0,0,0,10" Height="30"/>
+            <Button Content="Зарегистрироваться" Click="GoToRegister_Click" Margin="0,0,0,10" HorizontalAlignment="Center" Width="260" Height="30"/>
         </StackPanel>
+        <Frame x:Name="MainFrame1" Grid.Column="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

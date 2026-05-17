@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using WpfApp1.Pages;
 
 namespace WpfApp1
 {
@@ -36,9 +37,9 @@ namespace WpfApp1
             }
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void GoToRegister_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("тут должна быть регистрация по тз");
+            MainFrame1.Navigate(new RegisterPage());
         }
 
     }
